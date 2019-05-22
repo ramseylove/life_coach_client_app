@@ -6,7 +6,7 @@
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted">Survey Appliation.</span>
+                    <span class="m-r-sm text-muted"><?php echo BRAND;?></span>
                 </li>
                 <li>
                     <a href="<?php echo $this->config->item('logoutCustomer');?>">

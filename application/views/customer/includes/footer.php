@@ -1,6 +1,6 @@
  <div class="footer">
                     <div>
-                        <strong>Copyright</strong> Survey Application &copy; <?php echo date('Y').'-'.date('Y', strtotime('+1year', strtotime(date('Y-m-d'))));?>
+                        <strong>Copyright</strong> <?php echo BRAND;?> &copy; <?php echo date('Y').'-'.date('Y', strtotime('+1year', strtotime(date('Y-m-d'))));?>
                     </div>
                 </div>
             </div>

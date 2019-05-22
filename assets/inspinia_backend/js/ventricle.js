@@ -13,7 +13,6 @@
 	$.fn.ventricleSubmitForm = function(functionName){
 		var srcUrl = $(this).attr('action');
 		var serializedFormData = $(this).serializeArray();
-		console.log(serializedFormData);
 			$.ajax({
 			  type: 'POST',
 			  cache: false,
@@ -56,7 +55,7 @@
 				  },
 				}); // ajax
 			
-		/* 	this.data('search1',search1);
+		 	/* this.data('search1',search1);
 		} */
 	};
 })(jQuery);
