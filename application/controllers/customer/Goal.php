@@ -29,7 +29,7 @@ class Goal extends CE_Controller {
 		$this->pagination->initialize($config);
 		
 		$viewArr = array();
-		$goals = $this->goal_model->getGoals();
+		$goals = $this->goal_model->getGoals($page);
 		
 		$viewArr["goals"] = $goals;
 		

@@ -24,6 +24,19 @@
 			</div>
 		</div>
 		<div class="row">		  
+			<div class="col-md-12">
+				 <div class="form-group">
+					<div class="col-sm-10">
+						<p><strong>Type Of Goal</strong></p>
+						<select class="form-control" name="type" id="type">
+							<option value="0"<?php echo((count($postData)>0 && isset($postData["type"]) && trim($postData["type"])==0)?"selected":((count($goalData)>0 && $goalData->is_secondary==0)?"selected":""));?>>Primary</option>
+							<option value="1"<?php echo((count($postData)>0 && isset($postData["type"]) && trim($postData["type"])==1)?"selected":((count($goalData)>0 && $goalData->is_secondary==1)?"selected":""));?>>Secondary</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">		  
 			<div class="col-md-12">	
 				<div class="form-group">
 					<div class="col-sm-10">
