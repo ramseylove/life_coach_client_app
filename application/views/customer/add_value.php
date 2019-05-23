@@ -17,23 +17,23 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Current Happiness Level</strong><span style="color:red;">&nbsp;*</span></p>
 						<div class="currentHappinessLevel"></div>
-						<input type="hidden" id="currentHappinessLevelValue" name="current_happiness_level" value="0"/>
+						<input type="hidden" id="currentHappinessLevelValue" name="current_happiness_level" value="<?php echo((count($postData)>0 && isset($postData["current_happiness_level"]))?trim($postData["current_happiness_level"]):((count($valueData)>0)?$valueData->current_happiness_level:0));?>"/>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Expected Happiness Level</strong><span style="color:red;">&nbsp;*</span></p>
 						<div class="expectedHappinessLevel"></div>
-						<input type="hidden" id="expectedHappinessLevelValue" name="expected_happiness_level" value="0"/>
+						<input type="hidden" id="expectedHappinessLevelValue" name="expected_happiness_level" value="<?php echo((count($postData)>0 && isset($postData["expected_happiness_level"]))?trim($postData["expected_happiness_level"]):((count($valueData)>0)?$valueData->expected_happiness_level:0));?>"/>
 					</div>
 				</div>
 			</div>
