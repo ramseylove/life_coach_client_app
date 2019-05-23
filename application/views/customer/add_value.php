@@ -137,6 +137,9 @@ function saveResp(response){
                
 				$('#commonModalClose').trigger('click');
 				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>");
+				setTimeout(function(){
+					$('#viSel_'+response.valueId+'').iCheck('check');
+				}, 3000);
 				
             }, 500);
 		}
