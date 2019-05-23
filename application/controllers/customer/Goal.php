@@ -80,7 +80,7 @@ class Goal extends CE_Controller {
 		}
 		else
 		{
-			$html = "<h4>No Service Data Found.</h4>";
+			$html = "<h4>No Goal Data Found.</h4>";
 		}
 		echo $html;
 		exit;

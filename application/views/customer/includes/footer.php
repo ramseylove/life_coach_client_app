@@ -63,7 +63,7 @@
                     showMethod: 'slideDown',
                     timeOut: 4000
                 };
-                toastr.success('Survey Application', 'Welcome Admin!');
+                toastr.success('<?php echo BRAND; ?>', 'Welcome <?php echo trim($this->session->userdata('fname'));?>!');
 
             }, 1300);
 			
