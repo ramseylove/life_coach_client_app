@@ -112,6 +112,7 @@ class Value extends CE_Controller {
 			if($res && trim($res)!="exist")
 			{
 				$message[] = "<div class='alert alert-success'><p style='color:green;'>Value Indentifier saved successfully.</p></div>";
+				$valueId = $res;
 			}
 			elseif($res && trim($res)=="exist")
 			{
