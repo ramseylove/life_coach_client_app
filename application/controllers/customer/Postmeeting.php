@@ -56,9 +56,8 @@ class Postmeeting extends CE_Controller {
 			$this->session->unset_userdata("postData");
 		}
 	
-		$html = $this->load->view('customer/add_post_meeting',$viewArr,TRUE);
-		echo $html;
-		exit;
+		$viewArr["viewPage"] = "add_post_meeting";
+		$this->load->view('customer/layout',$viewArr);
 	}
 	
 	public function editPostMeeting($postMeetingId)
@@ -76,14 +75,13 @@ class Postmeeting extends CE_Controller {
 			}
 			
 			$viewArr["postMeetingData"] = $postMeetingData;
-			$html = $this->load->view('customer/add_post_meeting',$viewArr,TRUE);
+			$viewArr["viewPage"] = "add_post_meeting";
+			$this->load->view('customer/layout',$viewArr);
 		}
 		else
 		{
-			$html = "<h4>No Post Meeting Data Found.</h4>";
+			redirect($this->config->item("postMeetingCtrl"), 'refresh');
 		}
-		echo $html;
-		exit;
 	}
 	
 	public function insertPostMeeting($postMeetingId=0)
