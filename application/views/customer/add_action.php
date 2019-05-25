@@ -1,10 +1,12 @@
 <script src="<?php echo $this->config->item("ckEditorUrl");?>/ckeditor.js" type="text/javascript"></script>
 <script src="<?php echo $this->config->item("inspinia_js_url");?>/jquery.form.min.js"></script>
+<script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/chosen/chosen.jquery.js"></script>
+<link href="<?php echo $this->config->item("inspinia_css_url");?>/plugins/chosen/bootstrap-chosen.css" rel="stylesheet">
 <div class="ibox-content">
 	<div id="messages" tabindex='1'></div>
 		<form method="POST" action="<?php echo $this->config->item("insertAction")."/".((count($actionData)>0)?$actionData->id:0);?>" id="actionFrm" name="actionFrm" class="form-horizontal">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Title</strong><span style="color:red;">&nbsp;*</span></p>
@@ -12,7 +14,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				 <div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Type Of Action</strong></p>
@@ -20,6 +22,18 @@
 							<?php foreach($actionTypeData as $actionType){ ?>
 								<option value="<?php echo $actionType->id;?>"<?php echo((count($postData)>0 && isset($postData["type"]) && trim($postData["type"])==$actionType->id)?"selected":((count($actionData)>0 && $actionData->id==$actionType->id)?"selected":""));?>><?php echo $actionType->title;?></option>
 							<?php } ?>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				 <div class="form-group">
+					<div class="col-sm-10">
+						<p><strong>Multi Select</strong></p>
+						 <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
+							<option value="">Select</option>
+							<option value="United States">United States</option>
+							<option value="United Kingdom">United Kingdom</option>
 						</select>
 					</div>
 				</div>
@@ -39,8 +53,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-	//script to activate CK editor.
-	CKEDITOR.replace('description');
+	$('.chosen-select').chosen({width: "100%"});
 	
 	$("#save").click(function(){
 		CKEDITOR.instances.description.updateElement();
