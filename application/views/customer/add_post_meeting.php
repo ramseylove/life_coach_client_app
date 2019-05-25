@@ -39,6 +39,33 @@
 							</div>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="col-sm-10">
+									<p><strong>Previous Week's Unaccomplished Actions</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="col-sm-10">
+									<p>
+										<div class="row">
+											<div class="col-md-6">
+												<strong>This Weeks Actions</strong>
+											</div>
+											<div class="col-md-6">
+												<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add New Action" data-sub-text="Here you can add a new action.">Add Action</a>
+											</div>
+										</div>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="row">		  
 						<div class="col-md-12">	
 							<div class="form-group">
@@ -56,9 +83,48 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
+	$('.modalInvoke').ventricleModalViewLoad("commonModal");
+	
+	$(".delete").click(function(event){
+		var _this = $(this);
+		$("#confirmation .modal-title").html('Delete Goal');
+		$("#confirmation div.modal-body").html('<h4>Do you want to delete this goal?</h4>');
+		$("#confirmation button.btn-primary").attr('data-href', _this.attr('data-href'));
+		$("#confirmation").modal({show:true});
+	});
+	
+	$("#confirmation button.btn-primary").unbind().click(function(){
+			$(this).prop('disabled', true);
+			$(this).ventricleDirectAjax("GET",'','deleteResponse');
+	});
+	
 	$("#save").click(function(){
 		document.pmFrm.action = "<?php echo $this->config->item("insertPostMeeting")."/".((count($postMeetingData)>0)?$postMeetingData->id:0);?>";
 		document.pmFrm.submit();
 	});
 });
+
+function deleteResponse(response)
+{
+	if( (typeof response === "object") && (response !== null) )
+	{
+		setTimeout(function() {
+			toastr.options = {
+				closeButton: true,
+				progressBar: true,
+				showMethod: 'slideDown',
+				timeOut: 3000
+			};
+			
+			$.each(response.message, function( index, value ) {
+			  toastr.success('',$(value).text());
+			});
+		   
+			$('#confModalClose').trigger('click');
+			$("#confirmation button.btn-primary").prop('disabled', false);
+			$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>");
+			
+		}, 500);
+	}
+}
 </script>
