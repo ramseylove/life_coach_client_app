@@ -50,6 +50,7 @@ class Action extends CE_Controller {
 		$viewArr["actionData"] = array();
 		$viewArr["postData"] = array();
 		$viewArr["actionTypeData"] = $this->action_model->getActionTypeData();
+		$viewArr["goals"] = $this->action_model->getGoals();
 		
 		if($this->session->userdata("postData"))
 		{
@@ -78,6 +79,7 @@ class Action extends CE_Controller {
 			
 			$viewArr["actionData"] = $actionData;
 			$viewArr["actionTypeData"] = $this->action_model->getActionTypeData();
+			$viewArr["goals"] = $this->action_model->getGoals();
 			$html = $this->load->view('customer/add_action',$viewArr,TRUE);
 		}
 		else
@@ -90,6 +92,9 @@ class Action extends CE_Controller {
 	
 	public function insertAction($actionId=0)
 	{
+		print_r($_POST);
+		exit;
+		
 		$message = array();
 		$pass = true;
 		

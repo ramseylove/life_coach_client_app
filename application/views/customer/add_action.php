@@ -14,7 +14,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
 				 <div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Type Of Action</strong></p>
@@ -26,14 +26,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-5">
 				 <div class="form-group">
-					<div class="col-sm-10">
-						<p><strong>Multi Select</strong></p>
-						 <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-							<option value="">Select</option>
-							<option value="United States">United States</option>
-							<option value="United Kingdom">United Kingdom</option>
+					<div class="col-sm-12">
+						<p><strong>Select Goals</strong></p>
+						<select data-placeholder="Choose Goal.." class="chosen-select" multiple tabindex="4" name="goals[]" id="goals">
+							<?php foreach($goals as $goal){ ?>
+								<option value="<?php echo $goal->id; ?>"><?php echo $goal->title.' - ('.(($goal->is_secondary==0)?'P':'S').')'; ?></option>
+							<?php } ?>
 						</select>
 					</div>
 				</div>
@@ -43,7 +43,7 @@
 			<div class="col-md-12">	
 				<div class="form-group">
 					<div class="col-sm-10">
-						<input type="button" class="btn btn-primary" id="save" value="Save"/>
+						<input type="button" class="btn btn-primary" id="saveAction" value="Save"/>
 						<button class="btn" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>		
@@ -55,8 +55,7 @@
 $(document).ready(function(){
 	$('.chosen-select').chosen({width: "100%"});
 	
-	$("#save").click(function(){
-		CKEDITOR.instances.description.updateElement();
+	$("#saveAction").click(function(){
 		document.actionFrm.action="<?php echo $this->config->item("insertAction")."/".((count($actionData)>0)?$actionData->id:0);?>";
 		$("#actionFrm").ventricleSubmitForm('saveResp');
 		$(this).prop('disabled', true);
@@ -79,7 +78,7 @@ function saveResp(response){
 			});
 			
 			$("#messages").append(msgStr).focus();
-			$("#save").prop('disabled', false);
+			$("#saveAction").prop('disabled', false);
 		}
 		else
 		{
@@ -103,7 +102,7 @@ function saveResp(response){
 	}
 	else
 	{
-		$("#save").prop('disabled', false);
+		$("#saveAction").prop('disabled', false);
 	}
 }
 </script>
