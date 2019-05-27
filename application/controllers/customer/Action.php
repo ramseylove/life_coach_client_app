@@ -92,15 +92,16 @@ class Action extends CE_Controller {
 	
 	public function insertAction($actionId=0)
 	{
-		print_r($_POST);
-		exit;
-		
 		$message = array();
 		$pass = true;
 		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
-		$this->form_validation->set_rules('title', 'Goal Title', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('description', 'Goal Description', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('title', 'Action Title', 'trim|required|xss_clean');
+		if($this->input->post('type') && trim($this->input->post('type'))==1)
+		{
+			$this->form_validation->set_rules('remDate', 'Goal Description', 'trim|required|xss_clean');
+		}
+		$this->form_validation->set_rules('remTime', 'Goal Description', 'trim|required|xss_clean');
 	
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -109,10 +110,21 @@ class Action extends CE_Controller {
 			{
 				$message[] = form_error('title');
 			}
-			if(form_error('description'))
+			if($this->input->post('type') && trim($this->input->post('type'))==1)
 			{
-				$message[] = form_error('description');
+				if(form_error('remDate'))
+				{
+					$message[] = form_error('remDate');
+				}
 			}
+			if(form_error('remTime'))
+			{
+				$message[] = form_error('remTime');
+			}
+		}
+		elseif(!$this->input->post('goals') || !is_array($this->input->post('goals')) || (is_array($this->input->post('goals')) && count($this->input->post('goals'))==0))
+		{
+			$message[] = '<div class="alert alert-warning"><p style="color:red;">Invalid Goals. Please select correct goals.</p></div>';
 		}
 		else
 		{

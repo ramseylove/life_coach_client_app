@@ -1,7 +1,16 @@
 <script src="<?php echo $this->config->item("ckEditorUrl");?>/ckeditor.js" type="text/javascript"></script>
 <script src="<?php echo $this->config->item("inspinia_js_url");?>/jquery.form.min.js"></script>
 <script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/chosen/chosen.jquery.js"></script>
+<script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/clockpicker/clockpicker.js"></script>
 <link href="<?php echo $this->config->item("inspinia_css_url");?>/plugins/chosen/bootstrap-chosen.css" rel="stylesheet">
+<link href="<?php echo $this->config->item("inspinia_css_url");?>/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<link href="<?php echo $this->config->item("inspinia_css_url");?>/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+<style>
+.popover{
+	z-index: 10000;
+}
+</style>
 <div class="ibox-content">
 	<div id="messages" tabindex='1'></div>
 		<form method="POST" action="<?php echo $this->config->item("insertAction")."/".((count($actionData)>0)?$actionData->id:0);?>" id="actionFrm" name="actionFrm" class="form-horizontal">
@@ -10,7 +19,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Title</strong><span style="color:red;">&nbsp;*</span></p>
-						<input type="text" name="title" id="title" class="form-control" value="<?php echo((count($postData)>0 && isset($postData["title"]))?trim($postData["title"]):((count($actionData)>0)?$actionData->title:""));?>"/>
+						<input type="text" name="title" id="title" class="form-control" value="<?php echo((count($postData)>0 && isset($postData["title"]))?trim($postData["title"]):((count($actionData)>0)?$actionData->action_title:""));?>"/>
 					</div>
 				</div>
 			</div>
@@ -39,6 +48,28 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-4" id="hideShowDate">
+				<div class="form-group" id="data_1">
+					<p><strong>Select Date</strong><span style="color:red;">&nbsp;*</span></p>
+					<div class="input-group date">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input type="text" readonly name="remDate" id="remDate" class="form-control" value="<?php echo date("m/d/Y"); ?>">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group" id="data_1">
+					<p><strong>Select Time</strong><span style="color:red;">&nbsp;*</span></p>
+					<div class="input-group clockpicker" data-autoclose="true">
+						<input type="text" readonly class="form-control" name="remTime" id="remTime" value="<?php echo date("H:i");?>">
+						<span class="input-group-addon">
+							<span class="fa fa-clock-o"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row">		  
 			<div class="col-md-12">	
 				<div class="form-group">
@@ -59,6 +90,27 @@ $(document).ready(function(){
 		document.actionFrm.action="<?php echo $this->config->item("insertAction")."/".((count($actionData)>0)?$actionData->id:0);?>";
 		$("#actionFrm").ventricleSubmitForm('saveResp');
 		$(this).prop('disabled', true);
+	});
+	
+	$('#data_1 .input-group.date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+			
+	$('.clockpicker').clockpicker();
+	
+	$("#type").change(function(){
+		if($(this).val()==1)
+		{
+			$("#hideShowDate").show();
+		}
+		else
+		{
+			$("#hideShowDate").hide();
+		}
 	});
 });
 
