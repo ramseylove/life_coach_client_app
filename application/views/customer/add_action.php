@@ -95,10 +95,11 @@
 <script type="text/javascript">
 var idCounter = 0;
 $("#addRemTime").click(function(){
-	if(idCounter < 5)
+	if(idCounter < 4)
 	{
 		idCounter++;
-		var str = '<div class="col-md-4" id="remTime_'+idCounter+'">';
+		var str =	'<div class="row">';
+			str+= '<div class="col-md-4" id="remTime_'+idCounter+'">';
 			str+=	'	<div class="form-group">';
 			str+=	'		<div class="input-group clockpicker" data-autoclose="true">';
 			str+=	'			<input type="text" readonly class="form-control" name="remTime_'+idCounter+'" id="remTime_'+idCounter+'" value="<?php echo date("H:i");?>">';
@@ -108,6 +109,7 @@ $("#addRemTime").click(function(){
 			str+=	'			</span>';
 			str+=	'		</div>';
 			str+=	'	</div>';
+			str+=	'</div>';
 			str+=	'</div>';
 		$("#addRemTimeDiv").append(str);
 		$('.clockpicker').clockpicker();
@@ -153,7 +155,6 @@ $(document).ready(function(){
 });
 
 function removeTimeDiv(counter){
-	idCounter--;
 	$("#remTime_"+counter+"").remove();
 }
 
