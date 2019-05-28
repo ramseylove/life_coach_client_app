@@ -9,9 +9,9 @@
  </div>
  <a style="display:none;" href="javascript:void(0);" class="checkLoginSessionCustomer" data-href="<?php echo $this->config->item("checkLoginSessionCustomer");?>">checkLoginSessionCustomer</a>
 	
-	<?php $this->load->view('backend/modals/common_modal') ?>
-	<?php $this->load->view('backend/modals/error') ?>
-	<?php $this->load->view('backend/modals/confirmation') ?>
+	<?php $this->load->view('customer/modals/common_modal') ?>
+	<?php $this->load->view('customer/modals/error') ?>
+	<?php $this->load->view('customer/modals/confirmation') ?>
  
     <!-- Mainly scripts -->
     <script src="<?php echo $this->config->item("inspinia_js_url");?>/ventricle.js"></script>

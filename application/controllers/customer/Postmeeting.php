@@ -55,9 +55,16 @@ class Postmeeting extends CE_Controller {
 			$viewArr["postData"] = $this->session->userdata("postData");
 			$this->session->unset_userdata("postData");
 		}
-	
-		$viewArr["viewPage"] = "add_post_meeting";
-		$this->load->view('customer/layout',$viewArr);
+		
+		if(isset($_GET["pagination"]))
+		{
+			$this->load->view('customer/add_post_meeting',$viewArr);
+		}
+		else
+		{
+			$viewArr["viewPage"] = "add_post_meeting";
+			$this->load->view('customer/layout',$viewArr);
+		}
 	}
 	
 	public function editPostMeeting($postMeetingId)

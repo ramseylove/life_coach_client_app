@@ -12,7 +12,7 @@
 }
 </style>
 <div class="ibox-content">
-	<div id="messages" tabindex='1'></div>
+	<div id="actionMessages" tabindex='1'></div>
 		<form method="POST" action="<?php echo $this->config->item("insertAction")."/".((count($actionData)>0)?$actionData->id:0);?>" id="actionFrm" name="actionFrm" class="form-horizontal">
 		<div class="row">
 			<div class="col-md-4">
@@ -69,6 +69,14 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-4" id="hideShowRemButton" style="display:none;">
+				<div class="form-group">
+					<p>&nbsp;</p>
+					<div class="col-sm-10">
+						<button class="btn btn-warning">Add Reminder</button>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="row">		  
 			<div class="col-md-12">	
@@ -87,7 +95,6 @@ $(document).ready(function(){
 	$('.chosen-select').chosen({width: "100%"});
 	
 	$("#saveAction").click(function(){
-		document.actionFrm.action="<?php echo $this->config->item("insertAction")."/".((count($actionData)>0)?$actionData->id:0);?>";
 		$("#actionFrm").ventricleSubmitForm('saveResp');
 		$(this).prop('disabled', true);
 	});
@@ -106,17 +113,19 @@ $(document).ready(function(){
 		if($(this).val()==1)
 		{
 			$("#hideShowDate").show();
+			$("#hideShowRemButton").hide();
 		}
 		else
 		{
 			$("#hideShowDate").hide();
+			$("#hideShowRemButton").show();
 		}
 	});
 });
 
 function saveResp(response){
 	$(".form-control").css('border','').css('border-width','');
-	$("#messages").html("");
+	$("#actionMessages").html("");
 	if( (typeof response === "object") && (response !== null) )
 	{
 		if(!response.success)
@@ -129,7 +138,7 @@ function saveResp(response){
 				}
 			});
 			
-			$("#messages").append(msgStr).focus();
+			$("#actionMessages").append(msgStr).focus();
 			$("#saveAction").prop('disabled', false);
 		}
 		else

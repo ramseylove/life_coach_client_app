@@ -122,11 +122,13 @@ class Action extends CE_Controller {
 				$message[] = form_error('remTime');
 			}
 		}
-		elseif(!$this->input->post('goals') || !is_array($this->input->post('goals')) || (is_array($this->input->post('goals')) && count($this->input->post('goals'))==0))
+		if(!$this->input->post('goals') || !is_array($this->input->post('goals')) || (is_array($this->input->post('goals')) && count($this->input->post('goals'))==0))
 		{
+			$pass = false;
 			$message[] = '<div class="alert alert-warning"><p style="color:red;">Invalid Goals. Please select correct goals.</p></div>';
 		}
-		else
+		
+		if($pass)
 		{
 			if($actionId==0)
 			{
