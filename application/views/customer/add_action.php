@@ -59,7 +59,7 @@
 				</div>
 			</div>
 			<div class="col-md-4">
-				<div class="form-group" id="data_1">
+				<div class="form-group">
 					<p><strong>Select Time</strong><span style="color:red;">&nbsp;*</span></p>
 					<div class="input-group clockpicker" data-autoclose="true">
 						<input type="text" readonly class="form-control" name="remTime" id="remTime" value="<?php echo date("H:i");?>">
@@ -73,11 +73,12 @@
 				<div class="form-group">
 					<p>&nbsp;</p>
 					<div class="col-sm-10">
-						<button class="btn btn-warning">Add Reminder</button>
+						<a class="btn btn-warning" id="addRemTime">Add Reminder</a>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div id="addRemTimeDiv"></div>
 		<div class="row">		  
 			<div class="col-md-12">	
 				<div class="form-group">
@@ -91,6 +92,32 @@
 	</form>
 </div>
 <script type="text/javascript">
+var idCounter = 0;
+$("#addRemTime").click(function(){
+	if(idCounter < 5)
+	{
+		idCounter++;
+		var str = '<div class="col-md-4" id="remTime_'+idCounter+'">';
+			str+=	'	<div class="form-group" id="data_1">';
+			str+=	'		<div class="input-group clockpicker" data-autoclose="true">';
+			str+=	'			<input type="text" readonly class="form-control" name="remTime" id="remTime" value="<?php echo date("H:i");?>">';
+			str+=	'			<span class="input-group-addon">';
+			str+=	'				<span class="fa fa-clock-o"></span>';
+			str+=	'				<span class="fa fa-window-close" onclick="removeTimeDiv('+idCounter+')"></span>';
+			str+=	'			</span>';
+			str+=	'		</div>';
+			str+=	'	</div>';
+			str+=	'</div>';
+		$("#addRemTimeDiv").append(str);
+		$('.clockpicker').clockpicker();
+	}
+	else
+	{
+		alert('Maximum 5 time-reminders are allowed!');
+		return false;
+	}
+});
+
 $(document).ready(function(){
 	$('.chosen-select').chosen({width: "100%"});
 	
@@ -122,6 +149,11 @@ $(document).ready(function(){
 		}
 	});
 });
+
+function removeTimeDiv(counter){
+	idCounter--;
+	$("#remTime_"+counter+"").remove();
+}
 
 function saveResp(response){
 	$(".form-control").css('border','').css('border-width','');
