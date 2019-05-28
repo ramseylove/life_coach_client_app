@@ -67,6 +67,7 @@
 							<span class="fa fa-clock-o"></span>
 						</span>
 					</div>
+					<input type="hidden" id="remTimeCounter" name="remTimeCounter" value="0"/>
 				</div>
 			</div>
 			<div class="col-md-4" id="hideShowRemButton" style="display:none;">
@@ -100,7 +101,7 @@ $("#addRemTime").click(function(){
 		var str = '<div class="col-md-4" id="remTime_'+idCounter+'">';
 			str+=	'	<div class="form-group">';
 			str+=	'		<div class="input-group clockpicker" data-autoclose="true">';
-			str+=	'			<input type="text" readonly class="form-control" name="remTime" id="remTime" value="<?php echo date("H:i");?>">';
+			str+=	'			<input type="text" readonly class="form-control" name="remTime_'+idCounter+'" id="remTime_'+idCounter+'" value="<?php echo date("H:i");?>">';
 			str+=	'			<span class="input-group-addon">';
 			str+=	'				<span class="fa fa-clock-o"></span>';
 			str+=	'				<span class="fa fa-window-close" onclick="removeTimeDiv('+idCounter+')"></span>';
@@ -122,6 +123,7 @@ $(document).ready(function(){
 	$('.chosen-select').chosen({width: "100%"});
 	
 	$("#saveAction").click(function(){
+		$('#remTimeCounter').val(idCounter);
 		$("#actionFrm").ventricleSubmitForm('saveResp');
 		$(this).prop('disabled', true);
 	});
