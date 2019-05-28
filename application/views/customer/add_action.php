@@ -98,7 +98,7 @@ $("#addRemTime").click(function(){
 	{
 		idCounter++;
 		var str = '<div class="col-md-4" id="remTime_'+idCounter+'">';
-			str+=	'	<div class="form-group" id="data_1">';
+			str+=	'	<div class="form-group">';
 			str+=	'		<div class="input-group clockpicker" data-autoclose="true">';
 			str+=	'			<input type="text" readonly class="form-control" name="remTime" id="remTime" value="<?php echo date("H:i");?>">';
 			str+=	'			<span class="input-group-addon">';
