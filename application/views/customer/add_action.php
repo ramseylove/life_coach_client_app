@@ -29,7 +29,7 @@
 						<p><strong>Type Of Action</strong></p>
 						<select class="form-control" name="type" id="type">
 							<?php foreach($actionTypeData as $actionType){ ?>
-								<option value="<?php echo $actionType->id;?>"<?php echo((count($postData)>0 && isset($postData["type"]) && trim($postData["type"])==$actionType->id)?"selected":((count($actionData)>0 && $actionData->id==$actionType->id)?"selected":""));?>><?php echo $actionType->title;?></option>
+								<option value="<?php echo $actionType->id;?>"<?php echo((count($postData)>0 && isset($postData["type"]) && trim($postData["type"])==$actionType->id)?"selected":((count($actionData)>0 && $actionData->action_type_id==$actionType->id)?"selected":""));?>><?php echo $actionType->title;?></option>
 							<?php } ?>
 						</select>
 					</div>
@@ -40,8 +40,18 @@
 					<div class="col-sm-12">
 						<p><strong>Select Goals</strong></p>
 						<select data-placeholder="Choose Goal.." class="chosen-select" multiple tabindex="4" name="goals[]" id="goals">
+							<?php
+								$goalsIdArr = array();
+								if(count($actionData)>0)
+								{
+									foreach($actionData->goals as $goalData)
+									{
+										$goalsIdArr[] = $goalData->goal_id;
+									}
+								}
+							?>
 							<?php foreach($goals as $goal){ ?>
-								<option value="<?php echo $goal->id; ?>"><?php echo $goal->title.' - ('.(($goal->is_secondary==0)?'P':'S').')'; ?></option>
+								<option value="<?php echo $goal->id; ?>"<?php echo ((count($goalsIdArr)>0 && in_array($goal->id, $goalsIdArr))?'selected':'');?>><?php echo $goal->title.' - ('.(($goal->is_secondary==0)?'P':'S').')'; ?></option>
 							<?php } ?>
 						</select>
 					</div>
@@ -49,12 +59,12 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4" id="hideShowDate">
+			<div class="col-md-4" id="hideShowDate" <?php echo (($actionData->action_type_id==2)?'style="display:none;"':''); ?>>
 				<div class="form-group" id="data_1">
 					<p><strong>Select Date</strong><span style="color:red;">&nbsp;*</span></p>
 					<div class="input-group date">
 						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-						<input type="text" readonly name="remDate" id="remDate" class="form-control" value="<?php echo date("m/d/Y"); ?>">
+						<input type="text" readonly name="remDate" id="remDate" class="form-control" value="<?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?date('m/d/Y', strtotime($actionData->reminders[0]->date)):date("m/d/Y")); ?>">
 					</div>
 				</div>
 			</div>
