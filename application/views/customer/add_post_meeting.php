@@ -54,17 +54,22 @@
 								<div class="col-sm-10">
 									<p>
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-8">
 												<p><h3>This Weeks Actions</h3></p>
-												<?php foreach($actionsWithoutPostMeetings as $action){ ?>
+												<?php $actionIdArr = array(); foreach($actionsWithoutPostMeetings as $action){ $actionIdArr[] = $action->id;?>
 												<div class="row">
-													<div class="col-md-6">
-														<p><strong><?php echo $action->action_title; ?></strong></p>
+													<div class="col-md-12">
+														<p>
+														<strong><?php echo $action->action_title; ?></strong>
+														<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
+														<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+														</p>
 													</div>
 												</div>
 												<?php } ?>
+												<input type="hidden" name="hiddenActionIds" id="hiddenActionIds" value="<?php echo implode('|', $actionIdArr); ?>"/>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-4">
 												<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add New Action" data-sub-text="Here you can add a new action.">Add Action</a>
 											</div>
 										</div>
