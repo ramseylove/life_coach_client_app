@@ -55,7 +55,14 @@
 									<p>
 										<div class="row">
 											<div class="col-md-6">
-												<strong>This Weeks Actions</strong>
+												<p><h3>This Weeks Actions</h3></p>
+												<?php foreach($actionsWithoutPostMeetings as $action){ ?>
+												<div class="row">
+													<div class="col-md-6">
+														<p><strong><?php echo $action->action_title; ?></strong></p>
+													</div>
+												</div>
+												<?php } ?>
 											</div>
 											<div class="col-md-6">
 												<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add New Action" data-sub-text="Here you can add a new action.">Add Action</a>

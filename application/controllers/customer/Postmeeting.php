@@ -49,6 +49,7 @@ class Postmeeting extends CE_Controller {
 		$viewArr = array();
 		$viewArr["postMeetingData"] = array();
 		$viewArr["postData"] = array();
+		$viewArr["actionsWithoutPostMeetings"] = $this->postmeeting_model->getActionsWithoutPostMeetings();
 	
 		if($this->session->userdata("postData"))
 		{
