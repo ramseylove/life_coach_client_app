@@ -77,7 +77,7 @@
 							<span class="fa fa-clock-o"></span>
 						</span>
 					</div>
-					<input type="hidden" id="remTimeCounter" name="remTimeCounter" value="0"/>
+					<input type="hidden" id="remTimeCounter" name="remTimeCounter" value="<?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?(count($actionData->reminders)-1):0);?>"/>
 				</div>
 			</div>
 			<div class="col-md-4" id="hideShowRemButton" <?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?'':'style="display:none;"');?>>
