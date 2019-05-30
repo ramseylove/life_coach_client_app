@@ -59,12 +59,12 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4" id="hideShowDate" <?php echo (($actionData->action_type_id==2)?'style="display:none;"':''); ?>>
+			<div class="col-md-4" id="hideShowDate" <?php echo ((count($actionData)>0 && $actionData->action_type_id==2)?'style="display:none;"':''); ?>>
 				<div class="form-group" id="data_1">
 					<p><strong>Select Date</strong><span style="color:red;">&nbsp;*</span></p>
 					<div class="input-group date">
 						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-						<input type="text" readonly name="remDate" id="remDate" class="form-control" value="<?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?date('m/d/Y', strtotime($actionData->reminders[0]->date)):date("m/d/Y")); ?>">
+						<input type="text" readonly name="remDate" id="remDate" class="form-control" value="<?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==1)?date('m/d/Y', strtotime($actionData->reminders[0]->date)):date("m/d/Y")); ?>">
 					</div>
 				</div>
 			</div>
@@ -72,7 +72,7 @@
 				<div class="form-group">
 					<p><strong>Select Time</strong><span style="color:red;">&nbsp;*</span></p>
 					<div class="input-group clockpicker" data-autoclose="true">
-						<input type="text" readonly class="form-control" name="remTime" id="remTime" value="<?php echo date("H:i");?>">
+						<input type="text" readonly class="form-control" name="remTime" id="remTime" value="<?php echo ((count($actionData)>0 && count($actionData->reminders)>0)?date('H:i', strtotime($actionData->reminders[0]->time)):date("H:i"));?>">
 						<span class="input-group-addon">
 							<span class="fa fa-clock-o"></span>
 						</span>
@@ -80,7 +80,7 @@
 					<input type="hidden" id="remTimeCounter" name="remTimeCounter" value="0"/>
 				</div>
 			</div>
-			<div class="col-md-4" id="hideShowRemButton" style="display:none;">
+			<div class="col-md-4" id="hideShowRemButton" <?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?'':'style="display:none;"');?>>
 				<div class="form-group">
 					<p>&nbsp;</p>
 					<div class="col-sm-10">
@@ -89,7 +89,27 @@
 				</div>
 			</div>
 		</div>
-		<div id="addRemTimeDiv"></div>
+		<div id="addRemTimeDiv">
+			<?php if(count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2){ ?>
+				<?php $remTimeCounter = 0; foreach($actionData->reminders as $reminder){ $remTimeCounter++; ?>
+					<?php if($remTimeCounter > 1){ ?>
+					<div class="row">
+					<div class="col-md-4" id="remTime_<?php echo $remTimeCounter;?>">	
+						<div class="form-group">		
+							<div class="input-group clockpicker" data-autoclose="true">			
+								<input type="text" readonly="" class="form-control" name="remTime_<?php echo $remTimeCounter;?>" id="remTime_<?php echo $remTimeCounter;?>" value="<?php echo date('H:i', strtotime($reminder->time));?>">			
+								<span class="input-group-addon">				
+									<span class="fa fa-clock-o"></span>				
+									<span class="fa fa-window-close" onclick="removeTimeDiv(<?php echo $remTimeCounter;?>)"></span>			
+								</span>		
+							</div>	
+						</div>
+					</div>
+					</div>
+					<?php } ?>
+				<?php } ?>
+			<?php } ?>
+		</div>
 		<div class="row">		  
 			<div class="col-md-12">	
 				<div class="form-group">
@@ -103,7 +123,7 @@
 	</form>
 </div>
 <script type="text/javascript">
-var idCounter = 0;
+var idCounter = <?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?(count($actionData->reminders)-1):0);?>;
 $("#addRemTime").click(function(){
 	if(idCounter < 4)
 	{
