@@ -140,8 +140,7 @@ class Postmeeting extends CE_Controller {
 			}
 		}
 		
-		echo json_encode(array("success"=>$pass,"message"=>$message,"postMeetingId"=>$postMeetingId));
-		exit;
+		redirect($this->config->item("postMeetingCtrl"), 'refresh');
 	}
 	
 	public function deletePostMeeting($postMeetingId)
@@ -167,7 +166,6 @@ class Postmeeting extends CE_Controller {
 			$message[] = "<div class='alert alert-warning'><p style='color:red;'>Post Meeting data not found.</p></div>";
 		}
 		
-		echo json_encode(array("success"=>$pass,"message"=>$message,"postMeetingId"=>$postMeetingId));
-		exit;
+		redirect($this->config->item("postMeetingCtrl"), 'refresh');
 	}
 }
