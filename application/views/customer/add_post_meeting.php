@@ -99,8 +99,8 @@ $(document).ready(function(){
 	
 	$(".delete").click(function(event){
 		var _this = $(this);
-		$("#confirmation .modal-title").html('Delete Goal');
-		$("#confirmation div.modal-body").html('<h4>Do you want to delete this goal?</h4>');
+		$("#confirmation .modal-title").html('Delete Action');
+		$("#confirmation div.modal-body").html('<h4>Do you want to delete this action?</h4>');
 		$("#confirmation button.btn-primary").attr('data-href', _this.attr('data-href'));
 		$("#confirmation").modal({show:true});
 	});
