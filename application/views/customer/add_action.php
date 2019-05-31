@@ -77,10 +77,10 @@
 							<span class="fa fa-clock-o"></span>
 						</span>
 					</div>
-					<input type="hidden" id="remTimeCounter" name="remTimeCounter" value="<?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?count($actionData->reminders):0);?>"/>
+					<input type="hidden" id="remTimeCounter" name="remTimeCounter" value="<?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?(count($actionData->reminders)-1):0);?>"/>
 				</div>
 			</div>
-			<div class="col-md-4" id="hideShowRemButton" <?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?'':'style="display:none;"');?>>
+			<div class="col-md-4" id="hideShowRemButton" <?php echo ((count($actionData)>0 && $actionData->action_type_id==2)?'':'style="display:none;"');?>>
 				<div class="form-group">
 					<p>&nbsp;</p>
 					<div class="col-sm-10">
@@ -91,8 +91,8 @@
 		</div>
 		<div id="addRemTimeDiv">
 			<?php if(count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2){ ?>
-				<?php $remTimeCounter = 0; foreach($actionData->reminders as $reminder){ $remTimeCounter++; ?>
-					<?php if($remTimeCounter > 1){ ?>
+				<?php $remTimeCounter = 0; foreach($actionData->reminders as $reminder){ ?>
+					<?php if($remTimeCounter > 0){ ?>
 					<div class="row">
 					<div class="col-md-4" id="remTime_<?php echo $remTimeCounter;?>">	
 						<div class="form-group">		
@@ -107,7 +107,7 @@
 					</div>
 					</div>
 					<?php } ?>
-				<?php } ?>
+				<?php $remTimeCounter++; } ?>
 			<?php } ?>
 		</div>
 		<div class="row">		  
@@ -124,18 +124,20 @@
 </div>
 <script type="text/javascript">
 var idCounter = <?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?(count($actionData->reminders)-1):0);?>;
+var subIdCounterVal = <?php echo ((count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2)?(count($actionData->reminders)-1):0);?>;
 $("#addRemTime").click(function(){
 	if(idCounter < 4)
 	{
 		idCounter++;
-		var str =	'<div class="row">';
-			str+= '<div class="col-md-4" id="remTime_'+idCounter+'">';
+		subIdCounterVal++;
+		var str =	'<div class="row extraTimers">';
+			str+= '<div class="col-md-4" id="remTime_'+subIdCounterVal+'">';
 			str+=	'	<div class="form-group">';
 			str+=	'		<div class="input-group clockpicker" data-autoclose="true">';
-			str+=	'			<input type="text" readonly class="form-control" name="remTime_'+idCounter+'" id="remTime_'+idCounter+'" value="<?php echo date("H:i");?>">';
+			str+=	'			<input type="text" readonly class="form-control" name="remTime_'+subIdCounterVal+'" id="remTime_'+subIdCounterVal+'" value="<?php echo date("H:i");?>">';
 			str+=	'			<span class="input-group-addon">';
 			str+=	'				<span class="fa fa-clock-o"></span>';
-			str+=	'				<span class="fa fa-window-close" onclick="removeTimeDiv('+idCounter+')"></span>';
+			str+=	'				<span class="fa fa-window-close" onclick="removeTimeDiv('+subIdCounterVal+')"></span>';
 			str+=	'			</span>';
 			str+=	'		</div>';
 			str+=	'	</div>';
@@ -155,7 +157,7 @@ $(document).ready(function(){
 	$('.chosen-select').chosen({width: "100%"});
 	
 	$("#saveAction").click(function(){
-		$('#remTimeCounter').val(idCounter);
+		$('#remTimeCounter').val(subIdCounterVal);
 		$("#actionFrm").ventricleSubmitForm('saveResp');
 		$(this).prop('disabled', true);
 	});
@@ -185,6 +187,7 @@ $(document).ready(function(){
 });
 
 function removeTimeDiv(counter){
+	idCounter--;
 	$("#remTime_"+counter+"").remove();
 }
 
