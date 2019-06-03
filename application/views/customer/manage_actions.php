@@ -1,55 +1,56 @@
+<link href="<?php echo $this->config->item("inspinia_css_url");?>/plugins/iCheck/custom.css" rel="stylesheet">
+<script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/iCheck/icheck.min.js"></script>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="ibox float-e-margins">
 			<div class="ibox-title">
-				<h5>Goals</h5>
+				<h5>Actions</h5>
 			</div>
 			<div class="ibox-content">
 				<div class="row">
 					<div class="col-sm-3">
-						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addGoal");?>" modal-title="Add New Goal" data-sub-text="Here you can add a new goal.">Add New Goal</a>
+						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add Action" data-sub-text="Here you can add a new action.">Add Action</a>
 					</div>
 				</div>
-				<?php if(count($goals)>0) { ?>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-						<tr>
-							<th>Sr No</th>
-							<th>Created Date</th>
-							<th>Title</th>
-							<th>Type</th>
-							<th>Status</th>
-							<th>Action</th>
-						</tr>
-						</thead>
-						<tbody>
-							<?php $i=0; foreach($goals as $goal){ ?>
-							<tr id="goalRow_<?php echo $goal->id;?>">
-							<td><?php echo ($i+1);?></td>
-							<td><?php echo date("d/m/Y",strtotime($goal->created_at));?></td>
-							<td><?php echo wordwrap($goal->title,20,"<br />");?></td>
-							<td><?php echo(($goal->is_secondary==0)?"Primary":"Secondary");?></td>
-							<td><?php echo(($goal->status==0)?"Active":"Disabled");?></td>
-							<td>
-								<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editGoal");?>/<?php echo $goal->id;?>" modal-title="Edit Goal - <?php echo $goal->title; ?>" data-sub-text="Here You Can Edit Goal"><i class="fa fa-lg fa-edit text-navy"></i></a>
-								<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteGoal");?>/<?php echo $goal->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
-							</td>
-						  </tr>
-						  <?php $i++;} ?>
-						</tbody>
-					</table>
-				</div>
+				<?php if(count($actions)>0) { ?>
 				<div class="row">
-					<div class="col-sm-3 pull-right">
-						<div class="btn-group">
-							<?php echo $this->pagination->create_links(); ?>
+					<div class="col-md-4">
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+								<tr>
+									<th>Sr No</th>
+									<th>Title</th>
+									<th>Action</th>
+								</tr>
+								</thead>
+								<tbody>
+									<?php $i=0; foreach($actions as $action){ ?>
+									<tr id="actionRow_<?php echo $action->id;?>">
+									<td><?php echo ($i+1);?></td>
+									<td>
+										<div class="i-checks">
+											<label>
+												<input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
+												<i></i>
+												<?php echo wordwrap($action->action_title,20,"<br />");?>
+											</label>
+										</div>
+									</td>
+									<td>
+										<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
+										<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+									</td>
+								  </tr>
+								  <?php $i++;} ?>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
 				<?php }else{ ?>
 				<center>
-					<b style="color:#808080;">No Goals Found.</b>
+					<b style="color:#808080;">No Actions Found.</b>
 				</center>
 				<?php } ?>
 			</div>
@@ -87,6 +88,11 @@ $(document).ready(function () {
 			$(this).prop('disabled', true);
 			$(this).ventricleDirectAjax("GET",'','deleteResponse');
 		});
+		
+	$('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
 });
 
 function enDisResponse(response)
