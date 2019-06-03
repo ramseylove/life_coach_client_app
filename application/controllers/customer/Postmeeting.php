@@ -193,7 +193,7 @@ class Postmeeting extends CE_Controller {
 			$message[] = "<div class='alert alert-warning'><p style='color:red;'>Post Meeting data not found.</p></div>";
 		}
 		
-		$this->session->set_flashdata('message', $message);
-		redirect($this->config->item("postMeetingCtrl"), 'refresh'); 
+		echo json_encode(array("success"=>$pass,"message"=>$message,"postMeetingId"=>$postMeetingId));
+		exit;
 	}
 }
