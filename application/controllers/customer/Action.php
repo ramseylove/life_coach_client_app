@@ -51,6 +51,10 @@ class Action extends CE_Controller {
 		$viewArr["postData"] = array();
 		$viewArr["actionTypeData"] = $this->action_model->getActionTypeData();
 		$viewArr["goals"] = $this->action_model->getGoals();
+		if($_GET && isset($_GET['postMeetingId']))
+		{
+			$viewArr["postMeetingId"] =	trim($_GET['postMeetingId']);
+		}
 		
 		if($this->session->userdata("postData"))
 		{

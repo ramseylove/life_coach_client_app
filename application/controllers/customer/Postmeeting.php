@@ -29,7 +29,7 @@ class Postmeeting extends CE_Controller {
 		$this->pagination->initialize($config);
 		
 		$viewArr = array();
-		$postMeetings = $this->postmeeting_model->getPostMeetings();
+		$postMeetings = $this->postmeeting_model->getPostMeetings($page);
 		
 		$viewArr["postMeetings"] = $postMeetings;
 		
@@ -83,8 +83,15 @@ class Postmeeting extends CE_Controller {
 			}
 			
 			$viewArr["postMeetingData"] = $postMeetingData;
-			$viewArr["viewPage"] = "add_post_meeting";
-			$this->load->view('customer/layout',$viewArr);
+			if(isset($_GET["pagination"]))
+			{
+				$this->load->view('customer/add_post_meeting',$viewArr);
+			}
+			else
+			{
+				$viewArr["viewPage"] = "add_post_meeting";
+				$this->load->view('customer/layout',$viewArr);
+			}
 		}
 		else
 		{
@@ -139,8 +146,28 @@ class Postmeeting extends CE_Controller {
 				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Post Meeting with entered topic already exists.</p></div>";
 			}
 		}
-		
-		redirect($this->config->item("postMeetingCtrl"), 'refresh');
+	
+		$this->session->set_flashdata('message', $message);
+		if($pass)
+		{
+			if($postMeetingId>0)
+			{
+				$this->session->set_flashdata('post_meeting_id', $postMeetingId);
+			}
+			redirect($this->config->item("postMeetingCtrl"), 'refresh');
+		}
+		else
+		{
+			$this->session->set_userdata("postData",$_POST);
+			if($postMeetingId>0)
+			{
+				redirect($this->config->item("postMeetingCtrl")."/".$postMeetingId, 'refresh');
+			}
+			else
+			{
+				redirect($this->config->item("postMeetingCtrl"), 'refresh');
+			}
+		}
 	}
 	
 	public function deletePostMeeting($postMeetingId)
@@ -166,6 +193,7 @@ class Postmeeting extends CE_Controller {
 			$message[] = "<div class='alert alert-warning'><p style='color:red;'>Post Meeting data not found.</p></div>";
 		}
 		
-		redirect($this->config->item("postMeetingCtrl"), 'refresh');
+		$this->session->set_flashdata('message', $message);
+		redirect($this->config->item("postMeetingCtrl"), 'refresh'); 
 	}
 }

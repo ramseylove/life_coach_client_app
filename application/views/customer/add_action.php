@@ -114,6 +114,9 @@
 			<div class="col-md-12">	
 				<div class="form-group">
 					<div class="col-sm-10">
+						<?php if(isset($postMeetingId)) { ?>
+							<input type="hidden" name="postMeetingId" id="postMeetingId" value="<?php echo trim($postMeetingId); ?>"/>
+						<?php } ?>
 						<input type="button" class="btn btn-primary" id="saveAction" value="Save"/>
 						<button class="btn" data-dismiss="modal">Cancel</button>
 					</div>

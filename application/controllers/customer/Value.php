@@ -7,10 +7,29 @@ class Value extends CE_Controller {
 		$this->load->model('customer/value_model');
     } 
 	
-	public function index()
+	public function index($page=0)
 	{
+		$this->load->library('pagination');
+
+		$config['base_url'] = $this->config->item("valueIdentifierCtrl")."/index";
+		$config['total_rows'] = $this->value_model->getValuesCount();
+		$config['per_page'] = ROWS_PER_PAGE;
+		
+		$config['prev_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-left">';
+		$config['prev_tag_close'] = '</i></button>';
+		
+		$config['next_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-right">';
+		$config['next_tag_close'] = '</i></button>';
+		
+		$config['cur_tag_open'] = '<button type="button" class="btn btn-primary">';
+		$config['cur_tag_close'] = '</button>';	
+		
+		$config['num_tag_open'] = '<button type="button" class="btn btn-white">';
+		$config['num_tag_close'] = '</button>';
+		$this->pagination->initialize($config);
+		
 		$viewArr = array();
-		$values = $this->value_model->getValues();
+		$values = $this->value_model->getValues($page);
 		
 		$viewArr["values"] = $values;
 		

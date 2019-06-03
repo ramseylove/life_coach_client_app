@@ -56,7 +56,7 @@
 										<div class="row">
 											<div class="col-md-8">
 												<p><h3>This Weeks Actions</h3></p>
-												<?php $actionIdArr = array(); foreach($actionsWithoutPostMeetings as $action){ $actionIdArr[] = $action->id;?>
+												<?php $actionIdArr = array(); foreach(((isset($actionsWithoutPostMeetings))?$actionsWithoutPostMeetings:$postMeetingData->actions) as $action){ $actionIdArr[] = $action->id;?>
 												<div class="row">
 													<div class="col-md-12">
 														<p>
@@ -70,7 +70,7 @@
 												<input type="hidden" name="hiddenActionIds" id="hiddenActionIds" value="<?php echo implode('|', $actionIdArr); ?>"/>
 											</div>
 											<div class="col-md-4">
-												<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add New Action" data-sub-text="Here you can add a new action.">Add Action</a>
+												<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction").((count($postMeetingData)>0)?'?postMeetingId='.$postMeetingData->id:'');?>" modal-title="Add New Action" data-sub-text="Here you can add a new action.">Add Action</a>
 											</div>
 										</div>
 									</p>
