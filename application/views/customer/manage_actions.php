@@ -9,13 +9,14 @@
 			<div class="ibox-content">
 				<div class="row">
 					<div class="col-sm-3">
-						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add Action" data-sub-text="Here you can add a new action.">Add Action</a>
+						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add Action" data-sub-text="Here you can add a new action.">Add Action</a><hr>
 					</div>
 				</div>
-				<?php if(count($actions)>0) { ?>
 				<div class="row">
-					<div class="col-md-4">
+				<?php if(count($actions['daily'])>0) { ?>
+					<div class="col-md-6">
 						<div class="table-responsive">
+							<h3>Daily-Routines</h3>
 							<table class="table table-striped">
 								<thead>
 								<tr>
@@ -25,7 +26,7 @@
 								</tr>
 								</thead>
 								<tbody>
-									<?php $i=0; foreach($actions as $action){ ?>
+									<?php $i=0; foreach($actions['daily'] as $action){ ?>
 									<tr id="actionRow_<?php echo $action->id;?>">
 									<td><?php echo ($i+1);?></td>
 									<td>
@@ -47,12 +48,56 @@
 							</table>
 						</div>
 					</div>
+					<?php }else{ ?>
+						<div class="col-md-6">
+							<center>
+								<b style="color:#808080;">No Daily-Routines Found.</b>
+							</center>
+						</div>
+					<?php } ?>
+					<?php if(count($actions['one_time'])>0) { ?>
+					<div class="col-md-6">
+						<div class="table-responsive">
+							<h3>Actions</h3>
+							<table class="table table-striped">
+								<thead>
+								<tr>
+									<th>Sr No</th>
+									<th>Title</th>
+									<th>Action</th>
+								</tr>
+								</thead>
+								<tbody>
+									<?php $i=0; foreach($actions['one_time'] as $action){ ?>
+									<tr id="actionRow_<?php echo $action->id;?>">
+									<td><?php echo ($i+1);?></td>
+									<td>
+										<div class="i-checks">
+											<label>
+												<input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
+												<i></i>
+												<?php echo wordwrap($action->action_title,20,"<br />");?>
+											</label>
+										</div>
+									</td>
+									<td>
+										<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
+										<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+									</td>
+								  </tr>
+								  <?php $i++;} ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<?php }else{ ?>
+						<div class="col-md-6">
+							<center>
+								<b style="color:#808080;">No Daily-Routines Found.</b>
+							</center>
+						</div>
+					<?php } ?>
 				</div>
-				<?php }else{ ?>
-				<center>
-					<b style="color:#808080;">No Actions Found.</b>
-				</center>
-				<?php } ?>
 			</div>
 		</div>
 	</div>
