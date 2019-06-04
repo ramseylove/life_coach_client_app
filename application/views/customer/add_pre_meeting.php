@@ -11,7 +11,7 @@
 			</div>
 			<div class="ibox-content">
 				<div id="messages" tabindex='1'></div>
-					<form method="POST" id="pmFrm" name="pmFrm" class="form-horizontal">
+					<form method="POST" id="premFrm" name="premFrm" class="form-horizontal">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
@@ -75,22 +75,9 @@ var generalHappinessLevelsaveResult = function (data) {
 $(document).ready(function(){
 	$('.modalInvoke').ventricleModalViewLoad("commonModal");
 	
-	$(".delete").click(function(event){
-		var _this = $(this);
-		$("#confirmation .modal-title").html('Delete Action');
-		$("#confirmation div.modal-body").html('<h4>Do you want to delete this action?</h4>');
-		$("#confirmation button.btn-primary").attr('data-href', _this.attr('data-href'));
-		$("#confirmation").modal({show:true});
-	});
-	
-	$("#confirmation button.btn-primary").unbind().click(function(){
-			$(this).prop('disabled', true);
-			$(this).ventricleDirectAjax("GET",'','deleteResponse');
-	});
-	
 	$("#save").click(function(){
-		document.pmFrm.action = "<?php echo $this->config->item("insertPostMeeting")."/".((count($preMeetingData)>0)?$preMeetingData->id:0);?>";
-		document.pmFrm.submit();
+		document.premFrm.action = "<?php echo $this->config->item("insertPreMeeting")."/".((count($preMeetingData)>0)?$preMeetingData->id:0);?>";
+		document.premFrm.submit();
 	});
 	
 	$(".generalHappinessLevel").ionRangeSlider({
@@ -105,28 +92,4 @@ $(document).ready(function(){
 			onChange: generalHappinessLevelsaveResult
     });
 });
-
-function deleteResponse(response)
-{
-	if( (typeof response === "object") && (response !== null) )
-	{
-		setTimeout(function() {
-			toastr.options = {
-				closeButton: true,
-				progressBar: true,
-				showMethod: 'slideDown',
-				timeOut: 3000
-			};
-			
-			$.each(response.message, function( index, value ) {
-			  toastr.success('',$(value).text());
-			});
-		   
-			$('#confModalClose').trigger('click');
-			$("#confirmation button.btn-primary").prop('disabled', false);
-			$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>");
-			
-		}, 500);
-	}
-}
 </script>

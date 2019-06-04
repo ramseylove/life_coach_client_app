@@ -56,8 +56,8 @@
 $(document).ready(function(){
 	$(".delete").click(function(event){
 		var _this = $(this);
-		$("#confirmation .modal-title").html('Delete Post Meeting');
-		$("#confirmation div.modal-body").html('<h4>Do you want to delete this post-meeting?</h4>');
+		$("#confirmation .modal-title").html('Delete Pre Meeting');
+		$("#confirmation div.modal-body").html('<h4>Do you want to delete this pre-meeting?</h4>');
 		$("#confirmation button.btn-primary").attr('data-href', _this.attr('data-href'));
 		$("#confirmation").modal({show:true});
 	});
