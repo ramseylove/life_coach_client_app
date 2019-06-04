@@ -1,20 +1,24 @@
 <script src="<?php echo $this->config->item("ckEditorUrl");?>/ckeditor.js" type="text/javascript"></script>
 <script src="<?php echo $this->config->item("inspinia_js_url");?>/jquery.form.min.js"></script>
+<script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
+<link href="<?php echo $this->config->item("inspinia_css_url");?>/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+<link href="<?php echo $this->config->item("inspinia_css_url");?>/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
 <div class="row">
 	<div class="col-lg-12">
 		<div class="ibox float-e-margins">
 			<div class="ibox-title">
-				<h5>Post Meetings</h5>
+				<h5>Pre Meetings</h5>
 			</div>
 			<div class="ibox-content">
 				<div id="messages" tabindex='1'></div>
 					<form method="POST" id="pmFrm" name="pmFrm" class="form-horizontal">
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div class="form-group">
 								<div class="col-sm-10">
-									<p><strong>General Topic Of Meeting</strong><span style="color:red;">&nbsp;*</span></p>
-									<textarea class="form-control" name="general_topic" id="general_topic" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["general_topic"]))?trim($postData["general_topic"]):((count($postMeetingData)>0)?$postMeetingData->general_topic:""));?></textarea>
+									<p><strong>General Happiness Level This Week</strong><span style="color:red;">&nbsp;*</span></p>
+									<div class="generalHappinessLevel"></div>
+									<input type="hidden" id="generalHappinessLevelValue" name="general_happiness_level" value="<?php echo((count($postData)>0 && isset($postData["general_happiness_level"]))?trim($postData["general_happiness_level"]):((count($preMeetingData)>0)?$preMeetingData->general_happiness_level:0));?>"/>
 								</div>
 							</div>
 						</div>
@@ -23,8 +27,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<div class="col-sm-10">
-									<p><strong>What Value Did You Get From This Week's Session?</strong><span style="color:red;">&nbsp;*</span></p>
-									<textarea class="form-control" name="session_value" id="session_value" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["session_value"]))?trim($postData["session_value"]):((count($postMeetingData)>0)?$postMeetingData->session_value:""));?></textarea>
+									<p><strong>Last Week's Actions:</p>
 								</div>
 							</div>
 						</div>
@@ -33,8 +36,8 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<div class="col-sm-10">
-									<p><strong>Other Notes</strong><span style="color:red;">&nbsp;*</span></p>
-									<textarea class="form-control" name="notes" id="notes" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["notes"]))?trim($postData["notes"]):((count($postMeetingData)>0)?$postMeetingData->notes:""));?></textarea>
+									<p><strong>Acknowledgment</strong><span style="color:red;">&nbsp;*</span></p>
+									<textarea class="form-control" name="acknowledgment" id="acknowledgment" cols="50" rows="3" placeholder="Enter Acknowledgment Of These Actions."><?php echo((count($postData)>0 && isset($postData["acknowledgment"]))?trim($postData["acknowledgment"]):((count($preMeetingData)>0)?$preMeetingData->acknowledgment:""));?></textarea>
 								</div>
 							</div>
 						</div>
@@ -43,37 +46,8 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<div class="col-sm-10">
-									<p><strong>Previous Week's Unaccomplished Actions</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<div class="col-sm-10">
-									<p>
-										<div class="row">
-											<div class="col-md-8">
-												<p><h3>This Weeks Actions</h3></p>
-												<?php $actionIdArr = array(); foreach(((isset($actionsWithoutPostMeetings))?$actionsWithoutPostMeetings:$postMeetingData->actions) as $action){ $actionIdArr[] = $action->id;?>
-												<div class="row">
-													<div class="col-md-12">
-														<p>
-														<strong><?php echo $action->action_title; ?></strong>
-														<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
-														<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
-														</p>
-													</div>
-												</div>
-												<?php } ?>
-												<input type="hidden" name="hiddenActionIds" id="hiddenActionIds" value="<?php echo implode('|', $actionIdArr); ?>"/>
-											</div>
-											<div class="col-md-4">
-												<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction").((count($postMeetingData)>0)?'?postMeetingId='.$postMeetingData->id:'');?>" modal-title="Add New Action" data-sub-text="Here you can add a new action.">Add Action</a>
-											</div>
-										</div>
-									</p>
+									<p><strong>Obstacles</strong><span style="color:red;">&nbsp;*</span></p>
+									<textarea class="form-control" name="obstacles" id="obstacles" cols="50" rows="3" placeholder="What Came In Your Way Of Completing Some Actions?"><?php echo((count($postData)>0 && isset($postData["obstacles"]))?trim($postData["obstacles"]):((count($preMeetingData)>0)?$preMeetingData->obstacles:""));?></textarea>
 								</div>
 							</div>
 						</div>
@@ -94,6 +68,10 @@
 	</div>
 </div>
 <script type="text/javascript">
+var generalHappinessLevelsaveResult = function (data) {
+   $('#generalHappinessLevelValue').val(data.fromNumber);
+};
+
 $(document).ready(function(){
 	$('.modalInvoke').ventricleModalViewLoad("commonModal");
 	
@@ -111,9 +89,21 @@ $(document).ready(function(){
 	});
 	
 	$("#save").click(function(){
-		document.pmFrm.action = "<?php echo $this->config->item("insertPostMeeting")."/".((count($postMeetingData)>0)?$postMeetingData->id:0);?>";
+		document.pmFrm.action = "<?php echo $this->config->item("insertPostMeeting")."/".((count($preMeetingData)>0)?$preMeetingData->id:0);?>";
 		document.pmFrm.submit();
 	});
+	
+	$(".generalHappinessLevel").ionRangeSlider({
+            min: 0,
+            max: 10,
+			from: '<?php echo ((count($preMeetingData)>0)?$preMeetingData->general_happiness_level:0);?>',
+            type: 'single',
+            step: 1,
+            postfix: " point",
+            prettify: false,
+            hasGrid: false,
+			onChange: generalHappinessLevelsaveResult
+    });
 });
 
 function deleteResponse(response)

@@ -50,6 +50,7 @@
 					</div>
 					<?php }else{ ?>
 						<div class="col-md-6">
+							<h3>Daily-Routines</h3>
 							<center>
 								<b style="color:#808080;">No Daily-Routines Found.</b>
 							</center>
@@ -92,6 +93,7 @@
 					</div>
 					<?php }else{ ?>
 						<div class="col-md-6">
+							<h3>Actions</h3>
 							<center>
 								<b style="color:#808080;">No Daily-Routines Found.</b>
 							</center>

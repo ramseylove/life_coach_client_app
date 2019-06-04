@@ -49,7 +49,6 @@ class Premeeting extends CE_Controller {
 		$viewArr = array();
 		$viewArr["preMeetingData"] = array();
 		$viewArr["postData"] = array();
-		$viewArr["actionsWithoutPostMeetings"] = $this->premeeting_model->getActionsWithoutPostMeetings();
 	
 		if($this->session->userdata("postData"))
 		{

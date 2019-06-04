@@ -7,7 +7,7 @@
 			<div class="ibox-content">
 				<div class="row">
 					<div class="col-sm-3">
-						<a class="btn btn-primary btn-rounded" href="<?php echo $this->config->item("addPostMeeting");?>" title="Add New Pre-Meeting">Add New Pre-Meeting</a>
+						<a class="btn btn-primary btn-rounded" href="<?php echo $this->config->item("addPreMeeting");?>" title="Add New Pre-Meeting">Add New Pre-Meeting</a>
 					</div>
 				</div>
 				<?php if(count($preMeetings)>0) { ?>
