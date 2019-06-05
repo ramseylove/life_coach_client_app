@@ -67,10 +67,10 @@ class Premeeting extends CE_Controller {
 		}
 	}
 	
-	public function editPostMeeting($postMeetingId)
+	public function editPreMeeting($preMeetingId)
 	{	
-		$postMeetingData = $this->premeeting_model->getPostMeetingData($postMeetingId);
-		if($postMeetingData)
+		$preMeetingData = $this->premeeting_model->getPreMeetingData($preMeetingId);
+		if($preMeetingData)
 		{
 			$viewArr = array();
 			$viewArr["postData"] = array();
@@ -81,7 +81,7 @@ class Premeeting extends CE_Controller {
 				$this->session->unset_userdata("postData");
 			}
 			
-			$viewArr["postMeetingData"] = $postMeetingData;
+			$viewArr["preMeetingData"] = $preMeetingData;
 			if(isset($_GET["pagination"]))
 			{
 				$this->load->view('customer/add_pre_meeting',$viewArr);
@@ -94,105 +94,100 @@ class Premeeting extends CE_Controller {
 		}
 		else
 		{
-			redirect($this->config->item("postMeetingCtrl"), 'refresh');
+			redirect($this->config->item("preMeetingCtrl"), 'refresh');
 		}
 	}
 	
-	public function insertPostMeeting($postMeetingId=0)
+	public function insertPreMeeting($preMeetingId=0)
 	{
 		$message = array();
 		$pass = true;
 		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
-		$this->form_validation->set_rules('general_topic', 'General Topic', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('session_value', 'Session Value', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('notes', 'Notes', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('acknowledgment', 'Acknowledgment', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('obstacles', 'Obstacles', 'trim|required|xss_clean');
 	
 		if ($this->form_validation->run() == FALSE)
 		{
 			$pass = false;
-			if(form_error('general_topic'))
+			if(form_error('acknowledgment'))
 			{
-				$message[] = form_error('general_topic');
+				$message[] = form_error('acknowledgment');
 			}
-			if(form_error('session_value'))
+			if(form_error('obstacles'))
 			{
-				$message[] = form_error('session_value');
-			}
-			if(form_error('notes'))
-			{
-				$message[] = form_error('notes');
+				$message[] = form_error('obstacles');
 			}
 		}
 		else
 		{
-			if($postMeetingId==0)
+			if($preMeetingId==0)
 			{
-				$res = $this->premeeting_model->insertPostMeeting();
+				$res = $this->premeeting_model->insertPreMeeting();
 			}
 			else
 			{
-				$res = $this->premeeting_model->updatePostMeeting($postMeetingId);
+				$res = $this->premeeting_model->updatePreMeeting($preMeetingId);
 			}
 			
 			if($res && trim($res)!="exist")
 			{
-				$message[] = "<div class='alert alert-success'><p style='color:green;'>Post Meeting saved successfully.</p></div>";
+				$message[] = "<div class='alert alert-success'><p style='color:green;'>Pre Meeting saved successfully.</p></div>";
 			}
 			elseif($res && trim($res)=="exist")
 			{
 				$pass = false;
-				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Post Meeting with entered topic already exists.</p></div>";
+				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Pre Meeting with entered topic already exists.</p></div>";
 			}
 		}
 	
 		$this->session->set_flashdata('message', $message);
 		if($pass)
 		{
-			if($postMeetingId>0)
+			if($preMeetingId>0)
 			{
-				$this->session->set_flashdata('post_meeting_id', $postMeetingId);
+				$this->session->set_flashdata('pre_meeting_id', $preMeetingId);
 			}
-			redirect($this->config->item("postMeetingCtrl"), 'refresh');
+			redirect($this->config->item("preMeetingCtrl"), 'refresh');
 		}
 		else
 		{
 			$this->session->set_userdata("postData",$_POST);
-			if($postMeetingId>0)
+			if($preMeetingId>0)
 			{
-				redirect($this->config->item("postMeetingCtrl")."/".$postMeetingId, 'refresh');
+				redirect($this->config->item("preMeetingCtrl")."/".$preMeetingId, 'refresh');
 			}
 			else
 			{
-				redirect($this->config->item("postMeetingCtrl"), 'refresh');
+				redirect($this->config->item("preMeetingCtrl"), 'refresh');
 			}
 		}
 	}
 	
-	public function deletePostMeeting($postMeetingId)
+	public function deletePreMeeting($preMeetingId)
 	{
 		$pass = false;
 		$message = array();
-		$postMeetingData = $this->premeeting_model->getPostMeetingData($postMeetingId);
-		if($postMeetingData)
+		$preMeetingData = $this->premeeting_model->getPreMeetingData($preMeetingId);
+		if($preMeetingData)
 		{
-			$res = $this->premeeting_model->deletePostMeeting($postMeetingId);
+			$res = $this->premeeting_model->deletePreMeeting($preMeetingId);
 			if($res)
 			{
 				$pass = true;
-				$message[] = "<div class='alert alert-success'><p style='color:green;'>Post Meeting deleted successfully.</p></div>";	
+				$message[] = "<div class='alert alert-success'><p style='color:green;'>Pre Meeting deleted successfully.</p></div>";	
 			}
 			else
 			{
-				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Failed to delete post meeting.</p></div>";
+				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Failed to delete pre meeting.</p></div>";
 			}
 		}
 		else
 		{
-			$message[] = "<div class='alert alert-warning'><p style='color:red;'>Post Meeting data not found.</p></div>";
+			$message[] = "<div class='alert alert-warning'><p style='color:red;'>Pre Meeting data not found.</p></div>";
 		}
 		
-		echo json_encode(array("success"=>$pass,"message"=>$message,"postMeetingId"=>$postMeetingId));
+		echo json_encode(array("success"=>$pass,"message"=>$message,"preMeetingId"=>$preMeetingId));
 		exit;
 	}
 }
