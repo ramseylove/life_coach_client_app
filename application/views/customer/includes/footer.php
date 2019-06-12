@@ -56,6 +56,7 @@
 
     <script>
         $(document).ready(function() {
+			<?php if(isset($_GET['first'])){ ?>
             setTimeout(function() {
                 toastr.options = {
                     closeButton: true,
@@ -66,7 +67,7 @@
                 toastr.success('<?php echo BRAND; ?>', 'Welcome <?php echo trim($this->session->userdata('fname'));?>!');
 
             }, 1300);
-			
+			<?php } ?>
 			checkLogin();
         });
 		
