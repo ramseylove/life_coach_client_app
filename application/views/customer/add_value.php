@@ -42,8 +42,38 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="col-sm-10">
-						<p><strong>Description</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="description" id="description" cols="50" rows="5"><?php echo((count($postData)>0 && isset($postData["description"]))?trim($postData["description"]):((count($valueData)>0)?$valueData->description:""));?></textarea>
+						<p><strong>What does this domain mean to you?</strong><span style="color:red;">&nbsp;*</span></p>
+						<textarea class="form-control" name="description_0" id="description_0" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description"]))?trim($postData["description"]):((count($valueData)>0)?$valueData->description:""));?></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-10">
+						<p><strong>What kind of person would you like to be in this domain?</strong><span style="color:red;">&nbsp;*</span></p>
+						<textarea class="form-control" name="description_1" id="description_1" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description"]))?trim($postData["description"]):((count($valueData)>0)?$valueData->description:""));?></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-10">
+						<p><strong>How are you doing in this domain now?</strong><span style="color:red;">&nbsp;*</span></p>
+						<textarea class="form-control" name="description_2" id="description_2" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description"]))?trim($postData["description"]):((count($valueData)>0)?$valueData->description:""));?></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-10">
+						<p><strong>What are some specific short- and long-term goals for this domain?</strong><span style="color:red;">&nbsp;*</span></p>
+						<textarea class="form-control" name="description_3" id="description_3" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description_3"]))?trim($postData["description_3"]):((count($valueData)>0)?$valueData->description:""));?></textarea>
 					</div>
 				</div>
 			</div>
@@ -70,7 +100,7 @@ var expectedHappinessLevelsaveResult = function (data) {
 
 $(document).ready(function(){
 	//script to activate CK editor.
-	CKEDITOR.replace('description');
+	//CKEDITOR.replace('description');
 	
 	$("#save").click(function(){
 		CKEDITOR.instances.description.updateElement();
