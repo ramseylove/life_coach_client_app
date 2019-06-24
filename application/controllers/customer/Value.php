@@ -75,6 +75,12 @@ class Value extends CE_Controller {
 				$this->session->unset_userdata("postData");
 			}
 			
+			$detailsArr = array();
+			foreach($valueData->details as $detRow)
+			{
+				$detailsArr[$detRow->identifier] = $detRow;
+			}
+			$valueData->details = $detailsArr;
 			$viewArr["valueData"] = $valueData;
 			$html = $this->load->view('customer/add_value',$viewArr,TRUE);
 		}
@@ -93,7 +99,10 @@ class Value extends CE_Controller {
 		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
 		$this->form_validation->set_rules('title', 'Value Identifier Title', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('description', 'Value Identifier Description', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('description_0', 'What does this domain mean to you?', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('description_1', 'What kind of person would you like to be in this domain?', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('description_2', 'How are you doing in this domain now?', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('description_3', 'What are some specific short and long-term goals for this domain?', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('current_happiness_level', 'Value Identifier Current Happiness Level', 'trim|required|xss_clean|numeric');
 		$this->form_validation->set_rules('expected_happiness_level', 'Value Identifier Expected Happiness Level', 'trim|required|xss_clean|numeric');
 	
@@ -104,9 +113,21 @@ class Value extends CE_Controller {
 			{
 				$message[] = form_error('title');
 			}
-			if(form_error('description'))
+			if(form_error('description_0'))
 			{
-				$message[] = form_error('description');
+				$message[] = form_error('description_0');
+			}
+			if(form_error('description_1'))
+			{
+				$message[] = form_error('description_1');
+			}
+			if(form_error('description_2'))
+			{
+				$message[] = form_error('description_2');
+			}
+			if(form_error('description_3'))
+			{
+				$message[] = form_error('description_3');
 			}
 			if(form_error('current_happiness_level'))
 			{
