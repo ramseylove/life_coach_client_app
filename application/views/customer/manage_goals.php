@@ -15,7 +15,6 @@
 					<table class="table table-striped">
 						<thead>
 						<tr>
-							<th>Sr No</th>
 							<th>Created Date</th>
 							<th>Title</th>
 							<th>Type</th>
@@ -26,7 +25,6 @@
 						<tbody>
 							<?php $i=0; foreach($goals as $goal){ ?>
 							<tr id="goalRow_<?php echo $goal->id;?>">
-							<td><?php echo ($i+1);?></td>
 							<td><?php echo date("d/m/Y",strtotime($goal->created_at));?></td>
 							<td><?php echo wordwrap($goal->title,20,"<br />");?></td>
 							<td><?php echo(($goal->is_secondary==0)?"Primary":"Secondary");?></td>

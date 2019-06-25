@@ -19,7 +19,7 @@
 							<table class="table table-striped">
 								<thead>
 								<tr>
-									<th>Sr No</th>
+									<th></th>
 									<th>Title</th>
 									<th>Action</th>
 								</tr>
@@ -27,12 +27,10 @@
 								<tbody>
 									<?php $i=0; foreach($values as $value){ ?>
 									<tr id="viRow_<?php echo $value->id;?>">
-									<td><?php echo ($i+1);?></td>
+									<td><input type="checkbox" id="viSel_<?php echo $value->id;?>" name="viSel[]" value="<?php echo $value->id;?>"></td>
 									<td>
 										<div class="i-checks">
 											<label>
-												<input type="checkbox" id="viSel_<?php echo $value->id;?>" name="viSel[]" value="<?php echo $value->id;?>">
-												<i></i>
 												<?php echo wordwrap($value->title,20,"<br />");?>
 											</label>
 										</div>

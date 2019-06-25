@@ -20,7 +20,7 @@
 							<table class="table table-striped">
 								<thead>
 								<tr>
-									<th>Sr No</th>
+									<th></th>
 									<th>Title</th>
 									<th>Action</th>
 								</tr>
@@ -28,13 +28,13 @@
 								<tbody>
 									<?php $i=0; foreach($actions['daily'] as $action){ ?>
 									<tr id="actionRow_<?php echo $action->id;?>">
-									<td><?php echo ($i+1);?></td>
+									<td><input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>"></td>
 									<td>
 										<div class="i-checks">
 											<label>
-												<input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
-												<i></i>
+												<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("completeAction");?>/<?php echo $action->id;?>" modal-title="Complete Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Complete Action">
 												<?php echo wordwrap($action->action_title,20,"<br />");?>
+												</a>
 											</label>
 										</div>
 									</td>

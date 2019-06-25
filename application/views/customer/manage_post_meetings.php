@@ -15,7 +15,6 @@
 					<table class="table table-striped">
 						<thead>
 						<tr>
-							<th>Sr No</th>
 							<th>Created Date</th>
 							<th>General Topic</th>
 							<th>Action</th>
@@ -24,7 +23,6 @@
 						<tbody>
 							<?php $i=0; foreach($postMeetings as $postMeeting){ ?>
 							<tr id="pmRow_<?php echo $postMeeting->id;?>">
-							<td><?php echo ($i+1);?></td>
 							<td><?php echo date("d/m/Y",strtotime($postMeeting->created_at));?></td>
 							<td title="<?php echo $postMeeting->general_topic; ?>"><?php echo ((strlen($postMeeting->general_topic)>20)?substr($postMeeting->general_topic, 0, 20).'...':$postMeeting->general_topic);?></td>
 							<td>

@@ -67,6 +67,31 @@ class Action extends CE_Controller {
 		exit;
 	}
 	
+	public function completeAction($actionId)
+	{	
+		$actionData = $this->action_model->getActionData($actionId);
+		if($actionData)
+		{
+			$viewArr = array();
+			$viewArr["actionData"] = $actionData;
+			$viewArr["postData"] = array();
+			
+			if($this->session->userdata("postData"))
+			{
+				$viewArr["postData"] = $this->session->userdata("postData");
+				$this->session->unset_userdata("postData");
+			}
+		
+			$html = $this->load->view('customer/complete_action',$viewArr,TRUE);
+		}
+		else
+		{
+			$html = "<h4>No Action Data Found.</h4>";
+		}
+		echo $html;
+		exit;
+	}
+	
 	public function editAction($actionId)
 	{	
 		$actionData = $this->action_model->getActionData($actionId);
