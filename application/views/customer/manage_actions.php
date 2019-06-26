@@ -2,93 +2,120 @@
 <script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/iCheck/icheck.min.js"></script>
 <div class="row">
 	<div class="col-lg-12">
-		<div class="ibox float-e-margins">
-			<div class="ibox-title">
-				<h5>Actions</h5>
-			</div>
-			<div class="ibox-content">
+			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="row">
+					<div class="col-lg-10">
+						<h2>Actions</h2>
+					</div>
+                </div>
+                <div class="row">
 					<div class="col-sm-3">
 						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add Action" data-sub-text="Here you can add a new action.">Add Action</a><hr>
 					</div>
 				</div>
+            </div>
+			<div class="wrapper wrapper-content animated fadeInRight">	
 				<div class="row">
 				<?php if(count($actions['daily'])>0) { ?>
 					<div class="col-md-6">
-						<div class="table-responsive">
-							<h3>Daily-Routines</h3>
-							<table class="table table-striped">
-								<thead>
-								<tr>
-									<th></th>
-									<th>Title</th>
-									<th>Action</th>
-								</tr>
-								</thead>
-								<tbody>
-									<?php $i=0; foreach($actions['daily'] as $action){ ?>
-									<tr id="actionRow_<?php echo $action->id;?>">
-									<td><input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>"></td>
-									<td>
-										<div class="i-checks">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>Daily-Routines</h5>
+							</div>
+							<div class="ibox-content">
+								<table class="table table-hover">
+									<thead>
+									<tr>
+										<th></th>
+										<th>Title</th>
+										<th>Action</th>
+									</tr>
+									</thead>
+									<tbody>
+										<?php $i=0; foreach($actions['daily'] as $action){ ?>
+										<tr id="actionRow_<?php echo $action->id;?>">
+										<td>
+											<div class="i-checks">
+												<label>
+													<input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
+												</label>
+											</div>
+										</td>
+										<td>
 											<label>
-												<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("completeAction");?>/<?php echo $action->id;?>" modal-title="Complete Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Complete Action">
-												<?php echo wordwrap($action->action_title,20,"<br />");?>
-												</a>
-											</label>
-										</div>
-									</td>
-									<td>
-										<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
-										<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
-									</td>
-								  </tr>
-								  <?php $i++;} ?>
-								</tbody>
-							</table>
+												<?php if($action->is_finished == 0){ ?>
+													<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("completeAction");?>/<?php echo $action->id;?>" modal-title="Complete Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Complete Action">
+													<?php echo wordwrap($action->action_title,20,"<br />");?>
+													</a>
+												<?php }else{ ?>
+													<?php echo wordwrap($action->action_title,20,"<br />");?>
+												<?php } ?>
+											</label>	
+										</td>
+										<td>
+											<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
+											<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+										</td>
+									  </tr>
+									  <?php $i++;} ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 					<?php }else{ ?>
 						<div class="col-md-6">
-							<h3>Daily-Routines</h3>
-							<center>
-								<b style="color:#808080;">No Daily-Routines Found.</b>
-							</center>
+							<div class="ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>Daily-Routines</h5>
+								</div>
+								<div class="ibox-content">
+									<center>
+										<b style="color:#808080;">No Daily-Routines Found.</b>
+									</center>
+								</div>
+							</div>
 						</div>
 					<?php } ?>
 					<?php if(count($actions['one_time'])>0) { ?>
 					<div class="col-md-6">
-						<div class="table-responsive">
-							<h3>Actions</h3>
-							<table class="table table-striped">
-								<thead>
-								<tr>
-									<th>Sr No</th>
-									<th>Title</th>
-									<th>Action</th>
-								</tr>
-								</thead>
-								<tbody>
-									<?php $i=0; foreach($actions['one_time'] as $action){ ?>
-									<tr id="actionRow_<?php echo $action->id;?>">
-									<td><?php echo ($i+1);?></td>
-									<td>
-										<div class="i-checks">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>Actions</h5>
+							</div>
+							<div class="ibox-content">
+								<table class="table table-hover">
+									<thead>
+									<tr>
+										<th></th>
+										<th>Title</th>
+										<th>Action</th>
+									</tr>
+									</thead>
+									<tbody>
+										<?php $i=0; foreach($actions['one_time'] as $action){ ?>
+										<tr id="actionRow_<?php echo $action->id;?>">
+										<td>
+											<div class="i-checks">
+												<label>
+													<input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
+												</label>
+											</div>
+										</td>
+										<td>
 											<label>
-												<input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
-												<i></i>
 												<?php echo wordwrap($action->action_title,20,"<br />");?>
 											</label>
-										</div>
-									</td>
-									<td>
-										<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
-										<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
-									</td>
-								  </tr>
-								  <?php $i++;} ?>
-								</tbody>
-							</table>
+										</td>
+										<td>
+											<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
+											<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+										</td>
+									  </tr>
+									  <?php $i++;} ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 					<?php }else{ ?>
@@ -101,7 +128,6 @@
 					<?php } ?>
 				</div>
 			</div>
-		</div>
 	</div>
 </div>
 <script type="text/javascript">

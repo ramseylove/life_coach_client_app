@@ -6,7 +6,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Answer - 1</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="description_0" id="description_0" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description_0"]))?trim($postData["description_0"]):'');?></textarea>
+						<textarea class="form-control" name="action_complete_0" id="action_complete_0" cols="50" rows="2"><?php echo((count($postData)>0 && isset($postData["action_complete_0"]))?trim($postData["action_complete_0"]):'');?></textarea>
 					</div>
 				</div>
 			</div>
@@ -16,7 +16,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Answer - 2</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="description_0" id="description_0" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description_0"]))?trim($postData["description_0"]):'');?></textarea>
+						<textarea class="form-control" name="action_complete_1" id="action_complete_1" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["action_complete_1"]))?trim($postData["action_complete_1"]):'');?></textarea>
 					</div>
 				</div>
 			</div>
@@ -26,7 +26,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Answer - 3</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="description_0" id="description_0" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description_0"]))?trim($postData["description_0"]):'');?></textarea>
+						<textarea class="form-control" name="action_complete_2" id="action_complete_2" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["action_complete_2"]))?trim($postData["action_complete_2"]):'');?></textarea>
 					</div>
 				</div>
 			</div>
@@ -45,42 +45,11 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('.chosen-select').chosen({width: "100%"});
-	
 	$("#saveAction").click(function(){
-		$('#remTimeCounter').val(subIdCounterVal);
-		$("#actionFrm").ventricleSubmitForm('saveResp');
+		$("#actionCompleteFrm").ventricleSubmitForm('saveResp');
 		$(this).prop('disabled', true);
 	});
-	
-	$('#data_1 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
-			
-	$('.clockpicker').clockpicker();
-	
-	$("#type").change(function(){
-		if($(this).val()==1)
-		{
-			$("#hideShowDate").show();
-			$("#hideShowRemButton").hide();
-		}
-		else
-		{
-			$("#hideShowDate").hide();
-			$("#hideShowRemButton").show();
-		}
-	});
 });
-
-function removeTimeDiv(counter){
-	idCounter--;
-	$("#remTime_"+counter+"").remove();
-}
 
 function saveResp(response){
 	$(".form-control").css('border','').css('border-width','');

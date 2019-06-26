@@ -119,6 +119,51 @@ class Action extends CE_Controller {
 		exit;
 	}
 	
+	public function insertCompleteAction($actionId=0)
+	{
+		$message = array();
+		$pass = true;
+		
+		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
+		$this->form_validation->set_rules('action_complete_0', 'Answer-1', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('action_complete_1', 'Answer-2', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('action_complete_2', 'Answer-3', 'trim|required|xss_clean');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$pass = false;
+			if(form_error('action_complete_0'))
+			{
+				$message[] = form_error('action_complete_0');
+			}
+			if(form_error('action_complete_1'))
+			{
+				$message[] = form_error('action_complete_1');
+			}
+			if(form_error('action_complete_2'))
+			{
+				$message[] = form_error('action_complete_2');
+			}
+		}
+		if($pass)
+		{
+			$res = $this->action_model->insertCompleteAction($actionId);
+			if($res)
+			{
+				$this->action_model->updateActionAsComplete($actionId);
+				$message[] = "<div class='alert alert-success'><p style='color:green;'>Action Completed successfully.</p></div>";
+			}
+			else
+			{
+				$pass = false;
+				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Failed to complete this action. Please try again.</p></div>";
+			}
+		}
+		
+		echo json_encode(array("success"=>$pass,"message"=>$message,"actionId"=>$actionId));
+		exit;
+	}	
+	
 	public function insertAction($actionId=0)
 	{
 		$message = array();
