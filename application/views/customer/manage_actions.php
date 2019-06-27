@@ -37,7 +37,7 @@
 										<td>
 											<div class="i-checks">
 												<label>
-													<input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
+													<input type="checkbox" <?php echo(($action->is_finished == 1)?'checked':''); ?> id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
 												</label>
 											</div>
 										</td>
@@ -51,6 +51,25 @@
 													<?php echo wordwrap($action->action_title,20,"<br />");?>
 												<?php } ?>
 											</label>	
+											<?php if(count($action->reminders)>0){ 
+												$remDRStr = '(';
+												$dri = 0;
+												foreach($action->reminders as $remDr)
+												{
+													$dri++;
+													$remDRStr.= ((trim($remDr->date)!='')?date('d/m/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):'');
+													if($dri < count($action->reminders))
+													{
+														$remDRStr.= ',';
+													}
+													if($dri==count($action->reminders))
+													{
+														$remDRStr.= ')';
+													}
+												}
+											?>
+												<p><small><?php echo $remDRStr; ?></small></p>
+											<?php } ?>
 										</td>
 										<td>
 											<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
@@ -98,14 +117,39 @@
 										<td>
 											<div class="i-checks">
 												<label>
-													<input type="checkbox" id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
+													<input type="checkbox" <?php echo(($action->is_finished == 1)?'checked':''); ?> id="actionSel_<?php echo $action->id;?>" name="actionSel[]" value="<?php echo $action->id;?>">
 												</label>
 											</div>
 										</td>
 										<td>
 											<label>
-												<?php echo wordwrap($action->action_title,20,"<br />");?>
+												<?php if($action->is_finished == 0){ ?>
+													<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("completeAction");?>/<?php echo $action->id;?>" modal-title="Complete Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Complete Action">
+													<?php echo wordwrap($action->action_title,20,"<br />");?>
+													</a>
+												<?php }else{ ?>
+													<?php echo wordwrap($action->action_title,20,"<br />");?>
+												<?php } ?>
 											</label>
+											<?php if(count($action->reminders)>0){ 
+												$remOTStr = '(';
+												$oti = 0;
+												foreach($action->reminders as $remOt)
+												{
+													$oti++;
+													$remOTStr.= ((trim($remOt->date)!='')?date('d/m/Y', strtotime($remOt->date)).' ':'').((trim($remOt->time)!='')?date('h:i a', strtotime($remOt->time)):'');
+													if($oti < count($action->reminders))
+													{
+														$remOTStr.= ',';
+													}
+													if($oti==count($action->reminders))
+													{
+														$remOTStr.= ')';
+													}
+												}
+											?>
+												<p><small><?php echo $remOTStr; ?></small></p>
+											<?php } ?>
 										</td>
 										<td>
 											<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
@@ -120,10 +164,16 @@
 					</div>
 					<?php }else{ ?>
 						<div class="col-md-6">
-							<h3>Actions</h3>
-							<center>
-								<b style="color:#808080;">No Daily-Routines Found.</b>
-							</center>
+							<div class="ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>Actions</h5>
+								</div>
+								<div class="ibox-content">		
+									<center>
+										<b style="color:#808080;">No Actions Found.</b>
+									</center>
+								</div>
+							</div>
 						</div>
 					<?php } ?>
 				</div>
