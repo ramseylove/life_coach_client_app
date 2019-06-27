@@ -16,7 +16,7 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="table-responsive">
-							<table class="table table-striped">
+							<table class="table table-hover">
 								<thead>
 								<tr>
 									<th></th>
@@ -27,7 +27,10 @@
 								<tbody>
 									<?php $i=0; foreach($values as $value){ ?>
 									<tr id="viRow_<?php echo $value->id;?>">
-									<td><input type="checkbox" id="viSel_<?php echo $value->id;?>" name="viSel[]" value="<?php echo $value->id;?>"></td>
+									<td>
+										<div class="i-checks">
+											<input type="checkbox" id="viSel_<?php echo $value->id;?>" name="viSel[]" value="<?php echo $value->id;?>"></td>
+										</div>
 									<td>
 										<div class="i-checks">
 											<label>
