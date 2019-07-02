@@ -55,33 +55,14 @@
 					<div class="col-sm-10">
 						<p><strong>Profile Photo</strong></p>
 						<input class="form-control" type="file" name="photo" id="photo"/>
-						<?php if(count($postData)>0) { ?>
+						<?php if(count($userData)>0) { ?>
 							<hr>
 							<div id="userThumb">
-								<img title="current image for user profile" alt="existing Image-<?php echo $postData->photo;?>" src="<?php echo $this->config->item("uploads_url");?>/users/<?php echo $postData->photo;?>" class="img-thumbnail" style="max-width:25%;">
+								<img title="current image for user profile" alt="existing Image-<?php echo $userData->photo;?>" src="<?php echo $this->config->item("uploads_url");?>/users/<?php echo $userData->photo;?>" class="img-thumbnail" style="max-width:25%;">
 							</div>
 						<?php }else{ ?>
 							<div id="userThumb">
 							</div>
-						<?php } ?>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="form-group">
-					<div class="col-sm-10">
-						<p><strong>Survey Pages</strong><span style="color:red;">&nbsp;*</span></p>
-						<?php if(count($surveyPages)>0){ ?>
-							<?php foreach($surveyPages as $singlePage){ ?>
-								<label class="checkbox-inline">
-									<input type="checkbox" value="<?php echo $singlePage->id;?>"<?php echo (($userData)?((in_array($singlePage->id, $userData->survey_pages))?'checked':''):'');?> name="surveyPages[]" id="surveyPages_<?php echo $singlePage->id;?>"/>
-									<strong><?php echo $singlePage->form_title;?></strong>
-								</label>
-							<?php } ?>
-						<?php }else{ ?>
-							<b>No Survey Pages Found.</b>
 						<?php } ?>
 					</div>
 				</div>

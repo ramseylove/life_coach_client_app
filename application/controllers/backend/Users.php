@@ -49,8 +49,6 @@ class Users extends BE_Controller {
 		$viewArr["userData"] = array();
 		$viewArr["postData"] = array();
 		
-		$viewArr["surveyPages"] = $this->user_model->getSurveyPages();
-		
 		if($this->session->userdata("postData"))
 		{
 			$viewArr["postData"] = $this->session->userdata("postData");
@@ -68,8 +66,7 @@ class Users extends BE_Controller {
 		{
 			$viewArr = array();
 			$viewArr["postData"] = array();
-			$viewArr["surveyPages"] = $this->user_model->getSurveyPages();
-
+			
 			if($this->session->userdata("postData"))
 			{
 				$viewArr["postData"] = $this->session->userdata("postData");
@@ -194,18 +191,6 @@ class Users extends BE_Controller {
 			if($res && !in_array(trim($res), array('email_exist', 'phone_exist')))
 			{
 				$message[] = "<p style='color:green;'>User saved successfully.</p>";
-				if($this->input->post('surveyPages') && is_array($this->input->post('surveyPages')))
-				{
-					$saveRes = $this->user_model->saveSurveyPagesForUser((($userId==0)?$res:$userId));
-					if($saveRes)
-					{
-						$message[] = "<p style='color:green;'>Survey Pages saved successfully.</p>";
-					}
-					else
-					{
-						$message[] = "<p style='color:red;'>Failed to save survey pages.</p>";
-					}
-				}
 				
 				if($this->input->post("userTempImageName") && trim($this->input->post("userTempImageName"))!="")
 				{
@@ -281,15 +266,6 @@ class Users extends BE_Controller {
 		$userData = $this->user_model->getUserData($userId);
 		if($userData)
 		{
-			if(@unlink($this->config->item("userImagePath")."/".$userData->photo))
-			{
-				$message[] = "<p style='color:green;'>User thumb image deleted successfully.</p>";
-			}
-			else
-			{
-				$message[] = "<p style='color:red;'>Failed to delete User thumb image.</p>";
-			}
-			
 			$res = $this->user_model->deleteUser($userId);
 			if($res)
 			{
@@ -309,5 +285,4 @@ class Users extends BE_Controller {
 		echo json_encode(array("success"=>$pass,"message"=>$message,"userId"=>$userId));
 		exit;
 	}
-	
 }
