@@ -8,15 +8,15 @@
 						<h2>Actions</h2>
 					</div>
                 </div>
-                <!--div class="row">
+                <div class="row">
 					<div class="col-sm-3">
 						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction");?>" modal-title="Add Action" data-sub-text="Here you can add a new action.">Add Action</a><hr>
 					</div>
-				</div-->
+				</div>
             </div>
 			<div class="wrapper wrapper-content animated fadeInRight">	
 				<div class="row">
-				<?php if(!empty($actions['daily']) && count($actions['daily'])>0) { ?>
+				<?php if(count($actions['daily'])>0) { ?>
 					<div class="col-md-6">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
@@ -96,7 +96,7 @@
 							</div>
 						</div>
 					<?php } ?>
-					<?php if(!empty($actions['one_time']) && count($actions['one_time'])>0) { ?>
+					<?php if(count($actions['one_time'])>0) { ?>
 					<div class="col-md-6">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">

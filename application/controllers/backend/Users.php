@@ -258,7 +258,21 @@ class Users extends BE_Controller {
 		echo json_encode(array("success"=>$pass,"message"=>$message,"userId"=>$userId));
 		exit;
 	}
-	
+	public function changeUserPermission()	{
+		$pass = false;
+		$userId = $_POST['id'];
+		$permission = $_POST['permission'];
+		$message = array();
+		$res = $this->user_model->changeUserPermission($userId,$permission);
+		if($res) {
+			$pass = true;
+			$message[] = "<p style='color:green;'>User permission changed successfully.</p>";
+		}else {
+			$message[] = "<p style='color:red;'>Failed to change user permission.</p>";
+		}
+		echo json_encode(array("success"=>$pass,"message"=>$message,"userId"=>$userId));
+		exit;
+	}
 	public function deleteUser($userId)
 	{
 		$pass = false;
@@ -280,6 +294,82 @@ class Users extends BE_Controller {
 		else
 		{
 			$message[] = "<p style='color:red;'>User data not found.</p>";
+		}
+		
+		echo json_encode(array("success"=>$pass,"message"=>$message,"userId"=>$userId));
+		exit;
+	}
+	
+	public function addActionAdmin($user_id)
+	{	
+		$viewArr = array();
+		$viewArr["actionData"] = array();
+		$viewArr["postData"] = array();
+		$viewArr["postData"]["user_id"] = $user_id;
+		$viewArr["actionTypeData"] = $this->user_model->getActionTypeData();
+		$viewArr["goals"] = $this->user_model->getGoals($user_id);
+		$html = $html = $this->load->view('backend/add_action',$viewArr,TRUE);
+		echo $html;
+		exit;
+	}
+	public function insertActionAdmin($userId=0)
+	{
+		$message = array();
+		$pass = true;
+		
+		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
+		$this->form_validation->set_rules('title', 'Action Title', 'trim|required|xss_clean');
+		if($this->input->post('type') && trim($this->input->post('type'))==1)
+		{
+			$this->form_validation->set_rules('remDate', 'Goal Description', 'trim|required|xss_clean');
+		}
+		$this->form_validation->set_rules('remTime', 'Goal Description', 'trim|required|xss_clean');
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			$pass = false;
+			if(form_error('title'))
+			{
+				$message[] = form_error('title');
+			}
+			if($this->input->post('type') && trim($this->input->post('type'))==1)
+			{
+				if(form_error('remDate'))
+				{
+					$message[] = form_error('remDate');
+				}
+			}
+			if(form_error('remTime'))
+			{
+				$message[] = form_error('remTime');
+			}
+		}
+		if(!$this->input->post('goals') || !is_array($this->input->post('goals')) || (is_array($this->input->post('goals')) && count($this->input->post('goals'))==0))
+		{
+			$pass = false;
+			$message[] = '<div class="alert alert-warning"><p style="color:red;">Invalid Goals. Please select correct goals.</p></div>';
+		}
+		
+		if($pass)
+		{
+			/* if($actionId==0)
+			{ */
+				$res = $this->user_model->insertAction($userId);
+			/* }
+			else
+			{
+				$res = $this->user_model->updateAction($actionId);
+			} */
+			
+			if($res && trim($res)!="exist")
+			{
+				$message[] = "<div class='alert alert-success'><p style='color:green;'>Action saved successfully.</p></div>";
+			}
+			elseif($res && trim($res)=="exist")
+			{
+				$pass = false;
+				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Action with entered title already exists.</p></div>";
+			}
 		}
 		
 		echo json_encode(array("success"=>$pass,"message"=>$message,"userId"=>$userId));

@@ -49,7 +49,7 @@ class Premeeting extends CE_Controller {
 		$viewArr = array();
 		$viewArr["preMeetingData"] = array();
 		$viewArr["postData"] = array();
-	
+			$viewArr["lastPreMeeting"] = $this->premeeting_model->getLastPreMeeting();
 		if($this->session->userdata("postData"))
 		{
 			$viewArr["postData"] = $this->session->userdata("postData");

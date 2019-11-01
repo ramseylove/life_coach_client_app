@@ -43,6 +43,19 @@
 									<img alt="enable" title="enable" src="<?php echo $this->config->item("bk_image_url");?>/active.png"/>
 								</a> 
 								<?php } ?>
+								<?php if($user->editpermission==0) { ?>
+									<!--a style="text-decoration:none;" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,1)">
+										<i class="fa fa-lg fa-unlock text-navy"></i>
+									</a-->
+								<?php }else{ ?>
+									<!--a style="text-decoration:none;" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,0)">
+										<i class="fa fa-lg fa-lock text-navy"></i>
+									</a-->
+								<?php } ?>
+								<a target="_blank" style="text-decoration:none;" href="<?php echo base_url(); ?>customer/login/loginCheckAdmin/<?php echo $user->id; ?>">
+									<i class="fa fa-lg fa-eye text-navy"></i>
+								</a>
+								<a class="modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addActionAdmin");?>/<?php echo $user->id;?>" modal-title="Add Action" data-sub-text="Here you can add a new action."><i class="fa fa-lg fa-tasks text-navy"></i></a><hr>
 								<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editUser");?>/<?php echo $user->id;?>" modal-title="Edit User - <?php echo $user->first_name." ".$user->last_name; ?>" data-sub-text="Here You Can Edit User"><i class="fa fa-lg fa-edit text-navy"></i></a>
 								<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteUser");?>/<?php echo $user->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
 							</td>
@@ -143,5 +156,30 @@ function deleteResponse(response)
 			
 		}, 500);
 	}
+}
+function changepermission(id,permission) {
+	var myKeyVals = { 'id': id,'permission': permission };
+	$.ajax({
+		type: 'POST',
+		url: "<?php echo base_url(); ?>backend/users/changeUserPermission",
+		data: myKeyVals,
+		dataType: "json",
+		success: function(response) {
+			if( (typeof response === "object") && (response !== null) ) {
+				setTimeout(function() {
+					toastr.options = {
+						closeButton: true,
+						progressBar: true,
+						showMethod: 'slideDown',
+						timeOut: 3000
+					};
+					$.each(response.message, function( index, value ) {
+						toastr.success('',$(value).text());
+					});
+					$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>");
+				}, 500);
+			}
+		}
+	});
 }
 </script>

@@ -8548,6 +8548,13 @@ body.md-skin {
   .welcome-message {
     display: none;
   }
+  .ibox.float-e-margins {
+    margin: 22px 0;
+
+  }
+.ibox-content {
+    margin-bottom: 64px;
+}
 }
 @media print {
   nav.navbar-static-side {
@@ -8560,3 +8567,76 @@ body.md-skin {
     margin: 0;
   }
 }
+.values-class .icheckbox_square-green {
+	margin-right: 8px;
+}
+.values-class .i-checks label {
+	font-weight: normal;
+}
+.values-class .i-checks {
+	margin: 6px 0px 7px;
+	font-size: 20px;
+}
+.errr{
+	display:none;
+	color:red;
+}
+.checkers {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-weight: normal;
+}
+a.delete .fa {
+    font-size: 14px;
+}
+.checkers input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+	height: 22px;
+    width: 22px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.checkers:hover input ~ .checkmark {
+  background-color: #fff;
+  border-color: #1ab394;
+}
+.checkers input:checked ~ .checkmark {
+  background-color: #1ab394;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkers input:checked ~ .checkmark:after {
+  display: block;
+}
+.checkers .checkmark:after {
+  left: 7px;
+    top: 4px;
+    width: 7px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+a.dleteval{text-decoration:underline;}

@@ -29,7 +29,7 @@ class Action extends CE_Controller {
 		$this->pagination->initialize($config);
 		
 		$viewArr = array();
-		$actions = $this->action_model->getActions($page);
+		$actions = $this->action_model->getDashboardActions($page);
 		
 		$viewArr["actions"] = $actions;
 		
@@ -40,6 +40,43 @@ class Action extends CE_Controller {
 		else
 		{
 			$viewArr["viewPage"] = "manage_actions";
+			$this->load->view('customer/layout',$viewArr);
+		}
+	}
+	
+	public function allActions($page=0)
+	{	
+		$this->load->library('pagination');
+
+		$config['base_url'] = $this->config->item("goalCtrl")."/index";
+		$config['total_rows'] = $this->action_model->getActionsCount();
+		$config['per_page'] = ROWS_PER_PAGE;
+		
+		$config['prev_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-left">';
+		$config['prev_tag_close'] = '</i></button>';
+		
+		$config['next_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-right">';
+		$config['next_tag_close'] = '</i></button>';
+		
+		$config['cur_tag_open'] = '<button type="button" class="btn btn-primary">';
+		$config['cur_tag_close'] = '</button>';	
+		
+		$config['num_tag_open'] = '<button type="button" class="btn btn-white">';
+		$config['num_tag_close'] = '</button>';
+		$this->pagination->initialize($config);
+		
+		$viewArr = array();
+		$actions = $this->action_model->getActions($page);
+		
+		$viewArr["actions"] = $actions;
+		
+		if(isset($_GET["pagination"]))
+		{
+			$this->load->view('customer/manage_allactions',$viewArr);
+		}
+		else
+		{
+			$viewArr["viewPage"] = "manage_allactions";
 			$this->load->view('customer/layout',$viewArr);
 		}
 	}

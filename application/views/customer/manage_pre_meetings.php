@@ -14,7 +14,7 @@
 				<div class="table-responsive">
 					<table class="table table-hover">
 						<thead>
-						<tr>
+						<tr>							<th>Week Meeting</th>
 							<th>Created Date</th>
 							<th>Acknowledgment</th>
 							<th>Action</th>
@@ -22,7 +22,7 @@
 						</thead>
 						<tbody>
 							<?php $i=0; foreach($preMeetings as $preMeeting){ ?>
-							<tr id="pmRow_<?php echo $preMeeting->id;?>">
+							<tr id="pmRow_<?php echo $preMeeting->id;?>">							<td><?php echo $preMeeting->weekno; ?></td>
 							<td><?php echo date("d/m/Y",strtotime($preMeeting->created_at));?></td>
 							<td title="<?php echo $preMeeting->acknowledgment; ?>"><?php echo ((strlen($preMeeting->acknowledgment)>20)?substr($preMeeting->acknowledgment, 0, 20).'...':$preMeeting->acknowledgment);?></td>
 							<td>

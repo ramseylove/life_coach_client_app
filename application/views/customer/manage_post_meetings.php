@@ -15,15 +15,19 @@
 					<table class="table table-hover">
 						<thead>
 						<tr>
+							<th>Week Meeting</th>
 							<th>Created Date</th>
 							<th>General Topic</th>
 							<th>Action</th>
 						</tr>
 						</thead>
 						<tbody>
-							<?php $i=0; foreach($postMeetings as $postMeeting){ ?>
-							<tr id="pmRow_<?php echo $postMeeting->id;?>">
+							<?php $i=1; foreach($postMeetings as $postMeeting){ ?>
+							<tr id="pmRow_<?php echo $postMeeting->id; ?>">
+							
+							<td><?php echo $postMeeting->weekno; ?></td>
 							<td><?php echo date("d/m/Y",strtotime($postMeeting->created_at));?></td>
+							
 							<td title="<?php echo $postMeeting->general_topic; ?>"><?php echo ((strlen($postMeeting->general_topic)>20)?substr($postMeeting->general_topic, 0, 20).'...':$postMeeting->general_topic);?></td>
 							<td>
 								<a href="<?php echo $this->config->item("editPostMeeting");?>/<?php echo $postMeeting->id;?>" title="Edit Post Meeting - <?php echo $postMeeting->general_topic; ?>"><i class="fa fa-lg fa-edit text-navy"></i></a>

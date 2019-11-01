@@ -10,6 +10,46 @@
 				<div id="messages" tabindex='1'></div>
 					<form method="POST" id="pmFrm" name="pmFrm" class="form-horizontal">
 					<div class="row">
+					<div class="col-md-6">
+					<div class="form-group">
+					<div class="col-sm-10">
+					<!--p><strong>Meeting Week</strong></p-->
+					<?php
+						if(!empty($lastPostMeeting)) {
+							$datet = $lastPostMeeting->week_end;
+							$dates = strtotime("+1 day", strtotime($datet));
+							$date = date('Y-m-d h:i:s', $dates);
+							$week_start = date('Y-m-d', $dates);
+							$date1 = strtotime($date);
+							$date2 = strtotime("+6 day", $date1);
+							$week_enddate = date('Y-m-d h:i:s', $date2);
+							$week_end = date('Y-m-d', $date2);
+							$wwek = explode(' ',$lastPostMeeting->weekno);
+							if(!empty($wwek)) {
+								$wwekplus = $wwek[1] + 1;
+								$weekno = 'Week '.$wwekplus;
+							}else {
+								$weekno = 'Week 1';
+							}
+						}else {
+							$date = date('Y-m-d h:i:s');
+							$week_start = date('Y-m-d');
+							$date1 = strtotime($date);
+							$date2 = strtotime("+6 day", $date1);
+							$week_enddate = date('Y-m-d h:i:s', $date2);
+							$week_end = date('Y-m-d', $date2);
+							$weekno = 'Week 1';
+						}
+						?>
+						<!--From: <?php echo $week_start; ?> To: <?php echo $week_end; ?>-->
+						<input type="hidden" name="week_start" value="<?php echo $date; ?>">
+						<input type="hidden" name="week_end" value="<?php echo $week_enddate; ?>">
+						<input type="hidden" name="weekno" value="<?php echo $weekno; ?>">
+						</div>
+						</div>
+						</div>
+						</div>					
+					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<div class="col-sm-10">
