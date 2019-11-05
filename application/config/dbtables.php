@@ -11,5 +11,6 @@ $config['ala_post_meeting_action_mapping'] = "ala_post_meeting_action_mapping";
 $config['ala_pre_meeting'] = "ala_pre_meeting";
 $config['ala_user'] = "ala_user";
 $config['ala_value_identifiers'] = "ala_value_identifiers";
-$config['ala_value_identifier_details'] = "ala_value_identifier_details";$config['ala_default_values'] = "ala_default_values";
+$config['ala_value_identifier_details'] = "ala_value_identifier_details";
+$config['ala_default_values'] = "ala_default_values";
 ?>

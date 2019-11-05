@@ -16,6 +16,24 @@ class Postmeeting_model extends CI_Model
 		return $postMeetingsQuery->result();
 	}
 	
+	function getAllPostMeetings()
+	{
+		$this->db->order_by('id','desc');
+		$this->db->limit('12');
+		$postMeetingsQuery = $this->db->get_where($this->config->item('ala_post_meeting','dbtables'), array("user_id"=>trim($this->session->userdata("user_id"))));
+		return $postMeetingsQuery->result();
+	}
+	
+	function getPostMeetingActions($ids)
+	{
+	    $this->db->select('aa.*, apmam.id as mapping_id');
+		$this->db->join($this->config->item('ala_post_meeting_action_mapping','dbtables').' apmam','apmam.action_id=aa.id','left');
+		$this->db->where('aa.user_id', trim($this->session->userdata("user_id")));
+		$this->db->where('apmam.post_meeting_id', $ids);
+		$actionsWithoutPostMeetingsQuery = $this->db->get($this->config->item('ala_actions','dbtables').' aa');
+		return $actionsWithoutPostMeetingsQuery->result();
+	}
+	
 	function getPostMeetingsCount()
 	{
 		$this->db->where('user_id', trim($this->session->userdata("user_id")));

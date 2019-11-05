@@ -8640,3 +8640,5 @@ a.delete .fa {
   transform: rotate(45deg);
 }
 a.dleteval{text-decoration:underline;}
+.clickable{cursor:pointer !important;}
+.m-row{background:#e2e2e2 !important;}

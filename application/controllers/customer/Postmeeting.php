@@ -8,7 +8,7 @@ class Postmeeting extends CE_Controller {
 	public function index($page=0)
 	{	
 		$this->load->library('pagination');
-		$config['base_url'] = $this->config->item("goalCtrl")."/index";
+		$config['base_url'] = $this->config->item("postMeetingCtrl")."/index";
 		$config['total_rows'] = $this->postmeeting_model->getPostMeetingsCount();
 		$config['per_page'] = ROWS_PER_PAGE;
 		$config['prev_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-left">';
@@ -173,5 +173,14 @@ class Postmeeting extends CE_Controller {
 		}
 		echo json_encode(array("success"=>$pass,"message"=>$message,"postMeetingId"=>$postMeetingId));
 		exit;
+	}
+	public function goal_view() {
+		$viewArr = array();
+		$viewArr["postMeetings"] = $this->postmeeting_model->getAllPostMeetings();
+		foreach($viewArr["postMeetings"] as $key => $postmeet) {
+			$viewArr["postMeetings"][$key]->actions = $this->postmeeting_model->getPostMeetingActions($postmeet->id);
+		} 
+		$viewArr["viewPage"] = "manage_goal_view";
+		$this->load->view('customer/layout',$viewArr);
 	}
 }

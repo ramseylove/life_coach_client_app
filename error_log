@@ -1,2 +1,12 @@
 [01-Nov-2019 18:26:10 Asia/Calcutta] PHP Fatal error:  Call to a member function getLastPreMeeting() on null in /home/royals00749/public_html/ala/application/controllers/customer/Premeeting.php on line 52
 [01-Nov-2019 18:27:17 Asia/Calcutta] PHP Fatal error:  Call to undefined method Premeeting_model::getLastPreMeeting() in /home/royals00749/public_html/ala/application/controllers/customer/Premeeting.php on line 52
+[04-Nov-2019 10:05:34 Asia/Calcutta] PHP Fatal error:  Call to a member function getValuesCount() on null in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 12
+[04-Nov-2019 10:12:09 Asia/Calcutta] PHP Fatal error:  Call to a member function getValuesCount() on null in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 12
+[04-Nov-2019 10:19:17 Asia/Calcutta] PHP Fatal error:  Call to a member function getValuesCount() on null in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 12
+[04-Nov-2019 12:24:03 Asia/Calcutta] PHP Fatal error:  Call to undefined method Valuelist_model::getValueIdentifier() in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 31
+[04-Nov-2019 12:24:59 Asia/Calcutta] PHP Fatal error:  Cannot use object of type stdClass as array in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 31
+[04-Nov-2019 12:25:59 Asia/Calcutta] PHP Fatal error:  Cannot use object of type stdClass as array in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 31
+[04-Nov-2019 12:26:02 Asia/Calcutta] PHP Fatal error:  Cannot use object of type stdClass as array in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 31
+[04-Nov-2019 12:26:36 Asia/Calcutta] PHP Fatal error:  Cannot use object of type stdClass as array in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 33
+[04-Nov-2019 13:09:59 Asia/Calcutta] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/royals00749/public_html/ala/application/views/customer/manage_value_list.php on line 143
+[04-Nov-2019 16:49:23 Asia/Calcutta] PHP Fatal error:  Call to undefined method Postmeeting_model::getPostMeetingActions() in /home/royals00749/public_html/ala/application/controllers/customer/Postmeeting.php on line 181

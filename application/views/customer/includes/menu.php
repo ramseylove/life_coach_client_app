@@ -32,6 +32,9 @@
 			<li <?php echo (($viewPage == 'manage_goals')?'class="active"':''); ?>>
 				<a href="<?php echo $this->config->item("goalCtrl");?>" id="goalCtrl" class="cMenu"><i class="fa fa-th-large"></i> <span class="nav-label">Goal Setting</span></a>
 			</li>
+			<li <?php echo (($viewPage == 'manage_value_list')?'class="active"':''); ?>>
+				<a href="<?php echo $this->config->item("valueListCtrl");?>" id="valueListCtrl" class="cMenu"><i class="fa fa-th-large"></i> <span class="nav-label">Values</span></a>
+			</li>
 			<li <?php echo (($viewPage == 'manage_value_identifiers')?'class="active"':''); ?>>
 				<a href="<?php echo $this->config->item("valueIdentifierCtrl");?>" id="valueIdentifierCtrl" class="cMenu"><i class="fa fa-th-large"></i> <span class="nav-label">Value Identifier</span></a>
 			</li>
@@ -44,6 +47,10 @@
 			<li <?php echo (($viewPage == 'manage_allactions')?'class="active"':''); ?>>
 				<a href="<?php echo $this->config->item("actionCtrl");?>/allActions" id="actionCtrl" class="cMenu"><i class="fa fa-th-large"></i>
 				<span class="nav-label">Actions</span></a>
+			</li>
+			<li <?php echo (($viewPage == 'manage_allactions')?'class="active"':''); ?>>
+				<a href="<?php echo $this->config->item("postMeetingCtrl");?>/goal_view" id="actionCtrl" class="cMenu"><i class="fa fa-th-large"></i>
+				<span class="nav-label">Goal View</span></a>
 			</li>
 		</ul>
 	</div>
