@@ -7,7 +7,7 @@ class Postmeeting extends CE_Controller {
     } 
 	public function index($page=0)
 	{	
-		$this->load->library('pagination');
+		$this->load->library('pagination'); 
 		$config['base_url'] = $this->config->item("postMeetingCtrl")."/index";
 		$config['total_rows'] = $this->postmeeting_model->getPostMeetingsCount();
 		$config['per_page'] = ROWS_PER_PAGE;
@@ -22,6 +22,9 @@ class Postmeeting extends CE_Controller {
 		$this->pagination->initialize($config);
 		$viewArr = array();
 		$postMeetings = $this->postmeeting_model->getPostMeetings($page);
+		$viewArr["lastPreMeeting"] = $this->postmeeting_model->getLastPreMeeting();
+		$viewArr["lastPostMeeting"] = $this->postmeeting_model->getLastPostMeeting();
+		$viewArr["weekTags"] = $this->postmeeting_model->getWeekTags();
 		$viewArr["postMeetings"] = $postMeetings;
 		if(isset($_GET["pagination"]))
 		{
@@ -38,8 +41,21 @@ class Postmeeting extends CE_Controller {
 		$viewArr = array();
 		$viewArr["postMeetingData"] = array();
 		$viewArr["postData"] = array();
-		$viewArr["actionsWithoutPostMeetings"] = $this->postmeeting_model->getActionsWithoutPostMeetings();
 		$viewArr["lastPostMeeting"] = $this->postmeeting_model->getLastPostMeeting();
+		/* $viewArr["lastPreMeeting"] = $this->postmeeting_model->getLastPreMeeting(); */
+		if(!empty($viewArr["lastPostMeeting"])) {
+			$viewArr["lastPreMeetingActions"] = $this->postmeeting_model->getLastPreMeetingActions($viewArr["lastPostMeeting"]->weekno);
+		}else {
+			$viewArr["lastPreMeetingActions"] = '';
+		}
+		$viewArr["actionsWithoutPostMeetings"] = $this->postmeeting_model->getActionsWithoutPostMeetings();
+		$preadd = array();
+		foreach($viewArr["actionsWithoutPostMeetings"] as $key => $preadded) {
+			if($preadded->parent_action != '') {
+				$preadd[$key] = $preadded->parent_action;
+			}
+		}
+		$viewArr["preaddedAction"] = $preadd;
 		if($this->session->userdata("postData"))
 		{
 			$viewArr["postData"] = $this->session->userdata("postData");
@@ -174,13 +190,43 @@ class Postmeeting extends CE_Controller {
 		echo json_encode(array("success"=>$pass,"message"=>$message,"postMeetingId"=>$postMeetingId));
 		exit;
 	}
+	public function getSingleAction () {
+		$actions = $this->postmeeting_model->getPostMeetingActionQuestions($_POST['id']);
+		foreach($actions as $key => $action) {
+			if($action->updated_date != '') {
+				$actions[$key]->updated_date = date('d/m/Y h:ia', strtotime($action->updated_date));
+			}else {
+				$actions[$key]->updated_date = '';
+			}
+			if($action->created_date != '') {
+				$actions[$key]->created_date = date('d/m/Y h:ia', strtotime($action->created_date));
+			}else {
+				$actions[$key]->created_date = '';
+			}
+		}
+		echo json_encode($actions); die;
+	}
 	public function goal_view() {
 		$viewArr = array();
-		$viewArr["postMeetings"] = $this->postmeeting_model->getAllPostMeetings();
+		$viewArr["postMeetings"] = $this->postmeeting_model->getAllPostMeetingsByasc();
+		$viewArr["weekTags"] = $this->postmeeting_model->getWeekTags();
 		foreach($viewArr["postMeetings"] as $key => $postmeet) {
 			$viewArr["postMeetings"][$key]->actions = $this->postmeeting_model->getPostMeetingActions($postmeet->id);
 		} 
 		$viewArr["viewPage"] = "manage_goal_view";
+		$this->load->view('customer/layout',$viewArr);
+	}
+	public function action_view() {
+		$viewArr = array();
+		$viewArr["postMeetings"] = $this->postmeeting_model->getAllPostMeetings();
+		$viewArr["weekTags"] = $this->postmeeting_model->getWeekTags();
+		foreach($viewArr["postMeetings"] as $key => $postmeet) {
+			$viewArr["postMeetings"][$key]->actions = $this->postmeeting_model->getPostMeetingActions($postmeet->id);
+			foreach($viewArr["postMeetings"][$key]->actions as $key1 => $postmeet1) {
+				$viewArr["postMeetings"][$key]->actions[$key1]->question = $this->postmeeting_model->getPostMeetingActionQuestions($postmeet1->id);
+			}
+		} 
+		$viewArr["viewPage"] = "manage_action_questions";
 		$this->load->view('customer/layout',$viewArr);
 	}
 }

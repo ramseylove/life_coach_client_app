@@ -13,14 +13,10 @@
 </style>
 <div class="ibox-content">
 	<div id="actionMessages" tabindex='1'></div>
-		<form method="POST" action="<?php echo $this->config->item("insertAction")."/".((count($actionData)>0)?$actionData->id:0);?>" id="actionFrm" name="actionFrm" class="form-horizontal">
+		<form method="POST" action="<?php echo $this->config->item("insertActionToNextWeek")."/".((count($actionData)>0)?$actionData->id:0);?>" id="actionFrm" name="actionFrm" class="form-horizontal">
 		<?php
 			if(!empty($actionData)) {
-				$week = $actionData->weekno;
-			}else if(!empty($lastPostMeeting)) {
-				$week = $lastPostMeeting->weekno + 1;
-			}else {
-				$week = 1;
+				$week = $actionData->weekno +1;
 			}
 		?>
 		<input type="hidden" name="weekno" value="<?php echo $week; ?>">
@@ -29,7 +25,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Title</strong><span style="color:red;">&nbsp;*</span></p>
-						<input type="text" name="title" id="title" class="form-control" value="<?php echo((count($postData)>0 && isset($postData["title"]))?trim($postData["title"]):((count($actionData)>0)?$actionData->action_title:""));?>"/>
+						<input type="text" name="title" id="title" class="form-control" value="<?php echo $actionData->action_title; ?>"/>
 					</div>
 				</div>
 			</div>
@@ -39,7 +35,7 @@
 						<p><strong>Type Of Action</strong></p>
 						<select class="form-control" name="type" id="type">
 							<?php foreach($actionTypeData as $actionType){ ?>
-								<option value="<?php echo $actionType->id;?>"<?php echo((count($postData)>0 && isset($postData["type"]) && trim($postData["type"])==$actionType->id)?"selected":((count($actionData)>0 && $actionData->action_type_id==$actionType->id)?"selected":""));?>><?php echo $actionType->title;?></option>
+								<option value="<?php echo $actionType->id;?>" <?php if($actionData->action_type_id==$actionType->id) { echo "selected"; } ?> ><?php echo $actionType->title;?></option>
 							<?php } ?>
 						</select>
 					</div>

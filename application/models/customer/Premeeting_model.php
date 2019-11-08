@@ -16,11 +16,49 @@ class Premeeting_model extends CI_Model
 		return $preMeetingsQuery->result();
 	}
 	
+	function getWeekTags() {
+	    $this->db->order_by('id','asc');
+		$preMeetingsQuery = $this->db->get_where($this->config->item('ala_tags','dbtables'));
+		return $preMeetingsQuery->result();
+	}
+	
 	function getPreMeetingsCount()
 	{
 		$this->db->where('user_id', trim($this->session->userdata("user_id")));
 		return $this->db->count_all_results($this->config->item('ala_pre_meeting','dbtables'));
-	}	
+	}
+	
+	function getActionsWithoutPostMeetings()
+	{
+		$this->db->select('aa.*, apmam.id as mapping_id');
+		$this->db->join($this->config->item('ala_post_meeting_action_mapping','dbtables').' apmam','apmam.action_id=aa.id','left');
+		$this->db->where('aa.user_id', trim($this->session->userdata("user_id")));
+		$this->db->where('apmam.id IS NULL');
+		$actionsWithoutPostMeetingsQuery = $this->db->get($this->config->item('ala_actions','dbtables').' aa');
+		return $actionsWithoutPostMeetingsQuery->result();
+	}
+	
+	function getLastPreMeetingActions($week)
+	{
+		$this->db->select('aa.*, apmam.id as mapping_id');
+		$this->db->join($this->config->item('ala_post_meeting_action_mapping','dbtables').' apmam','apmam.action_id=aa.id','left');
+		$this->db->where('aa.user_id', trim($this->session->userdata("user_id")));
+	    $this->db->where('aa.weekno', $week);
+		$actionsWithoutPostMeetingsQuery = $this->db->get($this->config->item('ala_actions','dbtables').' aa');
+		return $actionsWithoutPostMeetingsQuery->result();
+	}
+	
+	function getLastPostMeeting()
+	{
+		$this->db->select('*');
+		$this->db->from('ala_post_meeting');
+		$this->db->where('user_id', trim($this->session->userdata("user_id")));
+		$this->db->order_by('id', 'DESC');
+		$this->db->order_by('weekno', 'DESC');
+		$this->db->limit('1');
+		$query = $this->db->get();
+		return $ret = $query->row();
+	}
 	
 	function getLastPreMeeting()
 	{
@@ -28,6 +66,7 @@ class Premeeting_model extends CI_Model
 		$this->db->from('ala_pre_meeting');
 		$this->db->where('user_id', trim($this->session->userdata("user_id")));
 		$this->db->order_by('id', 'DESC');
+		$this->db->order_by('weekno', 'DESC');
 		$this->db->limit('1');
 		$query = $this->db->get();
 		return $ret = $query->row();
@@ -80,6 +119,7 @@ class Premeeting_model extends CI_Model
 							'general_happiness_level' => trim($this->input->post("general_happiness_level")),
 							'acknowledgment' => trim($this->input->post("acknowledgment")),
 							'obstacles' => trim($this->input->post("obstacles")),
+							'weekno' => trim($this->input->post("weekno")),
 							'updated_at' => date("Y-m-d H:i:s"),
 						);
 			$this->db->where('id',$preMeetingId);

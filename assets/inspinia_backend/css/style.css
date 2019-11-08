@@ -8642,3 +8642,124 @@ a.delete .fa {
 a.dleteval{text-decoration:underline;}
 .clickable{cursor:pointer !important;}
 .m-row{background:#e2e2e2 !important;}
+.card-header span {
+    padding: 9px 0 6px;
+    display: block;
+	cursor: pointer;
+}
+.workout-row{
+	margn-top: 50px;
+}
+.weeks-inner.grey-bg {
+    background: #eee;
+    padding: 11px 0;
+}
+.weeks-row hr {
+    margin: 0 !important;
+	border-top: 1px solid #999;
+}
+.weeks-inner {
+    background: #fff;
+    padding: 11px 0;
+}
+.card-header {
+    background: #eee;
+}
+.affirmation .fa {
+    font-size: 20px;
+    margin-right: 5px;
+    position: relative;
+    top: 3px;
+}
+.action.quations span {
+    margin-bottom: 7px;
+    display: block;
+	font-weight: normal !important;
+}
+.quations label {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+}
+.date span {
+    font-weight: bold;
+}
+.date {
+    text-align: center;
+}
+.action span {
+    font-weight: bold;
+}
+.pointe{
+	cursor: pointer;
+}
+a.disabled {
+  pointer-events: none;
+}
+td.disabled {
+cursor: not-allowed !important;
+}
+.disableded {
+cursor: not-allowed !important;
+}
+.table-row {
+    width: 400px;
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    right: 55px;
+}
+
+@media (max-width:767px){ 
+.table-row {
+    width: 100%;
+    position: relative;
+    z-index: 999;
+    bottom: 0;
+    right: 0;
+}
+}
+.col-md-12.class10 {
+    position: relative;
+    z-index: 1;
+}
+.col-md-12.class9 {
+    position: relative;
+    z-index: 2;
+}
+.col-md-12.class8 {
+    position: relative;
+    z-index: 3;
+}
+.col-md-12.class7 {
+    position: relative;
+    z-index: 4;
+}
+.col-md-12.class6 {
+    position: relative;
+    z-index: 5;
+}
+.col-md-12.class5 {
+    position: relative;
+    z-index: 6;
+}
+.col-md-12.class4 {
+    position: relative;
+    z-index: 7;
+}
+.col-md-12.class3 {
+    position: relative;
+    z-index: 8;
+}
+.col-md-12.class2 {
+    position: relative;
+    z-index: 9;
+}
+.col-md-12.class1 {
+    position: relative;
+    z-index: 10;
+}
+.col-md-12.class0 {
+    position: relative;
+    z-index: 11;
+}

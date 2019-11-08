@@ -30,8 +30,11 @@ class Premeeting extends CE_Controller {
 		
 		$viewArr = array();
 		$preMeetings = $this->premeeting_model->getPreMeetings($page);
-		
+		$viewArr["lastPreMeeting"] = $this->premeeting_model->getLastPreMeeting();
+		$viewArr["lastPostMeeting"] = $this->premeeting_model->getLastPostMeeting();
 		$viewArr["preMeetings"] = $preMeetings;
+		
+		$viewArr["weekTags"] = $this->premeeting_model->getWeekTags();
 		
 		if(isset($_GET["pagination"]))
 		{
@@ -42,14 +45,29 @@ class Premeeting extends CE_Controller {
 			$viewArr["viewPage"] = "manage_pre_meetings";
 			$this->load->view('customer/layout',$viewArr);
 		}
-	}
+	} 
 	
 	public function addPreMeeting()
 	{	
 		$viewArr = array();
 		$viewArr["preMeetingData"] = array();
 		$viewArr["postData"] = array();
-			$viewArr["lastPreMeeting"] = $this->premeeting_model->getLastPreMeeting();
+		$viewArr["lastPreMeeting"] = $this->premeeting_model->getLastPreMeeting();
+		if(!empty($viewArr["lastPreMeeting"])) {
+			$viewArr["lastPreMeetingActions"] = $this->premeeting_model->getLastPreMeetingActions($viewArr["lastPreMeeting"]->weekno);
+		}else {
+			$viewArr["lastPreMeetingActions"] = '';
+		}
+		$viewArr["actionsWithoutPostMeetings"] = $this->premeeting_model->getActionsWithoutPostMeetings();
+		$preadd = array();
+		foreach($viewArr["actionsWithoutPostMeetings"] as $key => $preadded) {
+			if($preadded->parent_action != '') {
+				$preadd[$key] = $preadded->parent_action;
+			}
+		}
+		$viewArr["preaddedAction"] = $preadd;
+		
+		$viewArr["weekTags"] = $this->premeeting_model->getWeekTags();
 		if($this->session->userdata("postData"))
 		{
 			$viewArr["postData"] = $this->session->userdata("postData");
@@ -74,7 +92,7 @@ class Premeeting extends CE_Controller {
 		{
 			$viewArr = array();
 			$viewArr["postData"] = array();
-		
+			$viewArr["weekTags"] = $this->premeeting_model->getWeekTags();
 			if($this->session->userdata("postData"))
 			{
 				$viewArr["postData"] = $this->session->userdata("postData");
@@ -106,6 +124,7 @@ class Premeeting extends CE_Controller {
 		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
 		$this->form_validation->set_rules('acknowledgment', 'Acknowledgment', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('obstacles', 'Obstacles', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('weekno', 'weekno', 'trim|required|xss_clean');
 	
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -117,6 +136,10 @@ class Premeeting extends CE_Controller {
 			if(form_error('obstacles'))
 			{
 				$message[] = form_error('obstacles');
+			}
+			if(form_error('weekno'))
+			{
+				$message[] = form_error('weekno');
 			}
 		}
 		else

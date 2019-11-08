@@ -44,15 +44,15 @@
 								</a> 
 								<?php } ?>
 								<?php if($user->editpermission==0) { ?>
-									<!--a style="text-decoration:none;" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,1)">
+									<a style="text-decoration:none;" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,1)">
 										<i class="fa fa-lg fa-unlock text-navy"></i>
-									</a-->
+									</a>
 								<?php }else{ ?>
-									<!--a style="text-decoration:none;" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,0)">
+									<a style="text-decoration:none;" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,0)">
 										<i class="fa fa-lg fa-lock text-navy"></i>
-									</a-->
+									</a>
 								<?php } ?>
-								<a target="_blank" style="text-decoration:none;" href="<?php echo base_url(); ?>customer/login/loginCheckAdmin/<?php echo $user->id; ?>">
+								<a style="text-decoration:none;" href="<?php echo base_url(); ?>customer/login/loginCheckAdmin/<?php echo $user->id; ?>">
 									<i class="fa fa-lg fa-eye text-navy"></i>
 								</a>
 								<a class="modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addActionAdmin");?>/<?php echo $user->id;?>" modal-title="Add Action" data-sub-text="Here you can add a new action."><i class="fa fa-lg fa-tasks text-navy"></i></a><hr>

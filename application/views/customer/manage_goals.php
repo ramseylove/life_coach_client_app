@@ -3,11 +3,17 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-title">
 				<h5>Goals</h5>
-			</div>
+			</div>			
 			<div class="ibox-content">
 				<div class="row">
 					<div class="col-sm-3">
+					<?php $adminAllow = $_SESSION['editpermission']; if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
 						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addGoal");?>" modal-title="Add New Goal" data-sub-text="Here you can add a new goal.">Add New Goal</a>
+					<?php }else { ?>
+						<span class="disableded">
+							<a class="btn btn-primary btn-rounded disabled disableded" href="javascript:void(0);">Add New Goal</a>
+						</span>
+					<?php } ?>
 					</div>
 				</div>
 				<?php if(count($goals)>0) { ?>
@@ -29,10 +35,17 @@
 							<td><?php echo wordwrap($goal->title,20,"<br />");?></td>
 							<td><?php echo(($goal->is_secondary==0)?"Primary":"Secondary");?></td>
 							<td><?php echo(($goal->status==0)?"Active":"Disabled");?></td>
+							<?php if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
 							<td>
 								<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editGoal");?>/<?php echo $goal->id;?>" modal-title="Edit Goal - <?php echo $goal->title; ?>" data-sub-text="Here You Can Edit Goal"><i class="fa fa-lg fa-edit text-navy"></i></a>
 								<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteGoal");?>/<?php echo $goal->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
 							</td>
+							<?php }else { ?>
+							<td class="disabled">
+								<a href="javascript:void(0);" class="modalInvoke disabled" data-href="<?php echo $this->config->item("editGoal");?>/<?php echo $goal->id;?>" modal-title="Edit Goal - <?php echo $goal->title; ?>" data-sub-text="Here You Can Edit Goal"><i class="fa fa-lg fa-edit text-navy"></i></a>
+								<a href="javascript:void(0);" class="delete disabled" data-href="<?php echo $this->config->item("deleteGoal");?>/<?php echo $goal->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+							</td>
+							<?php } ?>
 						  </tr>
 						  <?php $i++;} ?>
 						</tbody>

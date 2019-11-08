@@ -30,26 +30,30 @@
 				<span class="nav-label">Dashboard</span></a>
 			</li>
 			<li <?php echo (($viewPage == 'manage_goals')?'class="active"':''); ?>>
-				<a href="<?php echo $this->config->item("goalCtrl");?>" id="goalCtrl" class="cMenu"><i class="fa fa-th-large"></i> <span class="nav-label">Goal Setting</span></a>
+				<a href="<?php echo $this->config->item("goalCtrl");?>" id="goalCtrl" class="cMenu"><i class="fa fa-bullseye"></i> <span class="nav-label">Goal Setting</span></a>
 			</li>
 			<li <?php echo (($viewPage == 'manage_value_list')?'class="active"':''); ?>>
-				<a href="<?php echo $this->config->item("valueListCtrl");?>" id="valueListCtrl" class="cMenu"><i class="fa fa-th-large"></i> <span class="nav-label">Values</span></a>
+				<a href="<?php echo $this->config->item("valueListCtrl");?>" id="valueListCtrl" class="cMenu"><i class="fa fa-address-book"></i> <span class="nav-label">Values</span></a>
 			</li>
 			<li <?php echo (($viewPage == 'manage_value_identifiers')?'class="active"':''); ?>>
-				<a href="<?php echo $this->config->item("valueIdentifierCtrl");?>" id="valueIdentifierCtrl" class="cMenu"><i class="fa fa-th-large"></i> <span class="nav-label">Value Identifier</span></a>
+				<a href="<?php echo $this->config->item("valueIdentifierCtrl");?>" id="valueIdentifierCtrl" class="cMenu"><i class="fa fa-address-card"></i> <span class="nav-label">Value Identifier</span></a>
 			</li>
 			<li <?php echo (($viewPage == 'manage_pre_meetings')?'class="active"':''); ?>>
-				<a href="<?php echo $this->config->item("preMeetingCtrl");?>" id="preMeetingCtrl" class="cMenu"><i class="fa fa-th-large"></i> <span class="nav-label">Pre-Meeting</span></a>
+				<a href="<?php echo $this->config->item("preMeetingCtrl");?>" id="preMeetingCtrl" class="cMenu"><i class="fa fa-handshake-o"></i> <span class="nav-label">Pre-Meeting</span></a>
 			</li>
 			<li <?php echo (($viewPage == 'manage_post_meetings' || $viewPage == 'add_post_meeting')?'class="active"':''); ?>>
-				<a href="<?php echo $this->config->item("postMeetingCtrl");?>" id="postMeetingCtrl" class="cMenu"><i class="fa fa-th-large"></i> <span class="nav-label">Post-Meeting</span></a>
+				<a href="<?php echo $this->config->item("postMeetingCtrl");?>" id="postMeetingCtrl" class="cMenu"><i class="fa fa-meetup"></i> <span class="nav-label">Post-Meeting</span></a>
 			</li>
-			<li <?php echo (($viewPage == 'manage_allactions')?'class="active"':''); ?>>
-				<a href="<?php echo $this->config->item("actionCtrl");?>/allActions" id="actionCtrl" class="cMenu"><i class="fa fa-th-large"></i>
+			<!--li <?php /* echo (($viewPage == 'manage_allactions')?'class="active"':''); */ ?>>
+				<a href="<?php /* echo $this->config->item("actionCtrl"); */ ?>/allActions" id="actionCtrl" class="cMenu"><i class="fa fa-th-large"></i>
 				<span class="nav-label">Actions</span></a>
+			</li-->
+			<li <?php echo (($viewPage == 'manage_action_questions')?'class="active"':''); ?>>
+				<a href="<?php echo $this->config->item("postMeetingCtrl");?>/action_view" id="actionCtrl" class="cMenu"><i class="fa fa-tasks"></i>
+				<span class="nav-label">View Actions</span></a>
 			</li>
-			<li <?php echo (($viewPage == 'manage_allactions')?'class="active"':''); ?>>
-				<a href="<?php echo $this->config->item("postMeetingCtrl");?>/goal_view" id="actionCtrl" class="cMenu"><i class="fa fa-th-large"></i>
+			<li <?php echo (($viewPage == 'manage_goal_view')?'class="active"':''); ?>>
+				<a href="<?php echo $this->config->item("postMeetingCtrl");?>/goal_view" id="actionCtrl" class="cMenu"><i class="fa fa-eye"></i>
 				<span class="nav-label">Goal View</span></a>
 			</li>
 		</ul>

@@ -1,12 +1,18 @@
-[01-Nov-2019 18:26:10 Asia/Calcutta] PHP Fatal error:  Call to a member function getLastPreMeeting() on null in /home/royals00749/public_html/ala/application/controllers/customer/Premeeting.php on line 52
-[01-Nov-2019 18:27:17 Asia/Calcutta] PHP Fatal error:  Call to undefined method Premeeting_model::getLastPreMeeting() in /home/royals00749/public_html/ala/application/controllers/customer/Premeeting.php on line 52
-[04-Nov-2019 10:05:34 Asia/Calcutta] PHP Fatal error:  Call to a member function getValuesCount() on null in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 12
-[04-Nov-2019 10:12:09 Asia/Calcutta] PHP Fatal error:  Call to a member function getValuesCount() on null in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 12
-[04-Nov-2019 10:19:17 Asia/Calcutta] PHP Fatal error:  Call to a member function getValuesCount() on null in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 12
-[04-Nov-2019 12:24:03 Asia/Calcutta] PHP Fatal error:  Call to undefined method Valuelist_model::getValueIdentifier() in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 31
-[04-Nov-2019 12:24:59 Asia/Calcutta] PHP Fatal error:  Cannot use object of type stdClass as array in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 31
-[04-Nov-2019 12:25:59 Asia/Calcutta] PHP Fatal error:  Cannot use object of type stdClass as array in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 31
-[04-Nov-2019 12:26:02 Asia/Calcutta] PHP Fatal error:  Cannot use object of type stdClass as array in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 31
-[04-Nov-2019 12:26:36 Asia/Calcutta] PHP Fatal error:  Cannot use object of type stdClass as array in /home/royals00749/public_html/ala/application/controllers/customer/Valuelist.php on line 33
-[04-Nov-2019 13:09:59 Asia/Calcutta] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/royals00749/public_html/ala/application/views/customer/manage_value_list.php on line 143
-[04-Nov-2019 16:49:23 Asia/Calcutta] PHP Fatal error:  Call to undefined method Postmeeting_model::getPostMeetingActions() in /home/royals00749/public_html/ala/application/controllers/customer/Postmeeting.php on line 181
+[07-Nov-2019 10:01:48 Asia/Calcutta] PHP Parse error:  syntax error, unexpected '}' in /home/royals00749/public_html/ala/application/views/customer/add_pre_meeting.php on line 64
+[07-Nov-2019 10:20:58 Asia/Calcutta] PHP Parse error:  syntax error, unexpected '$lastPreMeeting' (T_VARIABLE) in /home/royals00749/public_html/ala/application/views/customer/add_pre_meeting.php on line 21
+[07-Nov-2019 10:21:24 Asia/Calcutta] PHP Parse error:  syntax error, unexpected '$lastPreMeeting' (T_VARIABLE) in /home/royals00749/public_html/ala/application/views/customer/add_pre_meeting.php on line 21
+[07-Nov-2019 10:29:59 Asia/Calcutta] PHP Parse error:  syntax error, unexpected end of file in /home/royals00749/public_html/ala/application/views/customer/add_pre_meeting.php on line 120
+[07-Nov-2019 12:21:46 Asia/Calcutta] PHP Parse error:  syntax error, unexpected '}' in /home/royals00749/public_html/ala/application/views/customer/manage_pre_meetings.php on line 20
+[07-Nov-2019 16:38:46 Asia/Calcutta] PHP Fatal error:  Cannot redeclare Action::insertAction() in /home/royals00749/public_html/ala/application/controllers/customer/Action.php on line 311
+[07-Nov-2019 16:50:13 Asia/Calcutta] PHP Fatal error:  Call to undefined method Action_model::insertActionToNextWeek() in /home/royals00749/public_html/ala/application/controllers/customer/Action.php on line 242
+[08-Nov-2019 12:40:42 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 12:41:11 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 12:41:15 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 12:41:48 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 12:42:06 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 12:44:50 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 12:44:53 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 12:45:53 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 12:46:13 Asia/Calcutta] PHP Parse error:  syntax error, unexpected ';' in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 15
+[08-Nov-2019 13:16:05 Asia/Calcutta] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/royals00749/public_html/ala/application/views/customer/manage_goal_view.php on line 27
+[08-Nov-2019 17:28:47 Asia/Calcutta] PHP Parse error:  syntax error, unexpected 'strtotime' (T_STRING) in /home/royals00749/public_html/ala/application/controllers/customer/Postmeeting.php on line 196

@@ -24,6 +24,20 @@ class Postmeeting_model extends CI_Model
 		return $postMeetingsQuery->result();
 	}
 	
+	function getAllPostMeetingsByasc()
+	{
+		$this->db->order_by('id','asc');
+		$this->db->limit('12');
+		$postMeetingsQuery = $this->db->get_where($this->config->item('ala_post_meeting','dbtables'), array("user_id"=>trim($this->session->userdata("user_id"))));
+		return $postMeetingsQuery->result();
+	}
+	
+	function getWeekTags() {
+	    $this->db->order_by('id','asc');
+		$preMeetingsQuery = $this->db->get_where($this->config->item('ala_tags','dbtables'));
+		return $preMeetingsQuery->result();
+	}
+	
 	function getPostMeetingActions($ids)
 	{
 	    $this->db->select('aa.*, apmam.id as mapping_id');
@@ -32,6 +46,13 @@ class Postmeeting_model extends CI_Model
 		$this->db->where('apmam.post_meeting_id', $ids);
 		$actionsWithoutPostMeetingsQuery = $this->db->get($this->config->item('ala_actions','dbtables').' aa');
 		return $actionsWithoutPostMeetingsQuery->result();
+	}
+	
+	function getPostMeetingActionQuestions($ids)
+	{
+	   $this->db->order_by('id','desc');
+	    $postMeetingsQuery = $this->db->get_where($this->config->item('ala_action_question','dbtables'), array("actionId"=>$ids));
+		return $postMeetingsQuery->result();
 	}
 	
 	function getPostMeetingsCount()
@@ -46,6 +67,19 @@ class Postmeeting_model extends CI_Model
 		$this->db->from('ala_post_meeting');
 		$this->db->where('user_id', trim($this->session->userdata("user_id")));
 		$this->db->order_by('id', 'DESC');
+		$this->db->order_by('weekno', 'DESC');
+		$this->db->limit('1');
+		$query = $this->db->get();
+		return $ret = $query->row();
+	}
+	
+	function getLastPreMeeting() 
+	{
+		$this->db->select('*');
+		$this->db->from('ala_pre_meeting');
+		$this->db->where('user_id', trim($this->session->userdata("user_id")));
+		$this->db->order_by('id', 'DESC');
+		$this->db->order_by('weekno', 'DESC');
 		$this->db->limit('1');
 		$query = $this->db->get();
 		return $ret = $query->row();
@@ -57,6 +91,16 @@ class Postmeeting_model extends CI_Model
 		$this->db->join($this->config->item('ala_post_meeting_action_mapping','dbtables').' apmam','apmam.action_id=aa.id','left');
 		$this->db->where('aa.user_id', trim($this->session->userdata("user_id")));
 		$this->db->where('apmam.id IS NULL');
+		$actionsWithoutPostMeetingsQuery = $this->db->get($this->config->item('ala_actions','dbtables').' aa');
+		return $actionsWithoutPostMeetingsQuery->result();
+	}
+	
+	function getLastPreMeetingActions($week)
+	{
+		$this->db->select('aa.*, apmam.id as mapping_id');
+		$this->db->join($this->config->item('ala_post_meeting_action_mapping','dbtables').' apmam','apmam.action_id=aa.id','left');
+		$this->db->where('aa.user_id', trim($this->session->userdata("user_id")));
+	    $this->db->where('aa.weekno', $week);
 		$actionsWithoutPostMeetingsQuery = $this->db->get($this->config->item('ala_actions','dbtables').' aa');
 		return $actionsWithoutPostMeetingsQuery->result();
 	}

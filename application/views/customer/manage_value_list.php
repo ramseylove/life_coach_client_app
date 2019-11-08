@@ -29,11 +29,11 @@
 											<label>
 												<?php echo wordwrap($value->value_title,20,"<br />");?>
 											</label>
-											<span><i class="fa fa-lg fa-caret-right text-navy"></i></span>
+											<span><i class="fa fa-lg <?php if($i == 0) { echo 'fa-angle-down'; }else { echo 'fa-angle-up'; } ?> text-navy"></i></span>
 										</div>
 									</td>
 									</tr>
-									<tbody id="accordion<?php echo $value->id; ?>" class="m-row collapse">
+									<tbody id="accordion<?php echo $value->id; ?>" class="m-row collapse <?php if($i == 0) { echo 'collapse in'; } ?>">
 										<tr>
 											<th>Title</th>
 											<th>Current Happiness level</th>
@@ -87,7 +87,7 @@
 											<label>
 												<?php echo wordwrap($value->value_title,20,"<br />");?>
 											</label>
-											<span><i class="fa fa-lg fa-caret-right text-navy"></i></span>
+											<span><i class="fa fa-lg fa-angle-up text-navy"></i></span>
 										</div>
 									</td>
 									</tr>
@@ -232,12 +232,12 @@ function deleteResponse(response)
 	}
 }
 function changeicon(bid) {
-	if($('#'+bid).find('i').hasClass('fa-caret-right')) {
-	   $('#'+bid).find('i').removeClass('fa-caret-right');
-	   $('#'+bid).find('i').addClass('fa-caret-down');
+	if($('#'+bid).find('i').hasClass('fa-angle-up')) {
+	   $('#'+bid).find('i').removeClass('fa-angle-up');
+	   $('#'+bid).find('i').addClass('fa-angle-down');
 	}else {
-		$('#'+bid).find('i').removeClass('fa-caret-down');
-		$('#'+bid).find('i').addClass('fa-caret-right');
+		$('#'+bid).find('i').removeClass('fa-angle-down');
+		$('#'+bid).find('i').addClass('fa-angle-up');
 	}
 }
 </script>

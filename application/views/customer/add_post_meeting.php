@@ -13,8 +13,14 @@
 					<div class="col-md-6">
 					<div class="form-group">
 					<div class="col-sm-10">
-					<!--p><strong>Meeting Week</strong></p-->
 					<?php
+						if(!empty($postMeetingData)) {
+							$week = $postMeetingData->weekno;
+						}else if(!empty($lastPostMeeting)) {
+							$week = $lastPostMeeting->weekno + 1;
+						}else {
+							$week = 1;
+						}
 						if(!empty($lastPostMeeting)) {
 							$datet = $lastPostMeeting->week_end;
 							$dates = strtotime("+1 day", strtotime($datet));
@@ -24,13 +30,6 @@
 							$date2 = strtotime("+6 day", $date1);
 							$week_enddate = date('Y-m-d h:i:s', $date2);
 							$week_end = date('Y-m-d', $date2);
-							$wwek = explode(' ',$lastPostMeeting->weekno);
-							if(!empty($wwek)) {
-								$wwekplus = $wwek[1] + 1;
-								$weekno = 'Week '.$wwekplus;
-							}else {
-								$weekno = 'Week 1';
-							}
 						}else {
 							$date = date('Y-m-d h:i:s');
 							$week_start = date('Y-m-d');
@@ -38,13 +37,11 @@
 							$date2 = strtotime("+6 day", $date1);
 							$week_enddate = date('Y-m-d h:i:s', $date2);
 							$week_end = date('Y-m-d', $date2);
-							$weekno = 'Week 1';
 						}
 						?>
-						<!--From: <?php echo $week_start; ?> To: <?php echo $week_end; ?>-->
-						<input type="hidden" name="week_start" value="<?php echo $date; ?>">
-						<input type="hidden" name="week_end" value="<?php echo $week_enddate; ?>">
-						<input type="hidden" name="weekno" value="<?php echo $weekno; ?>">
+						<input type="hidden" name="week_start" value="<?php echo $date; ?>"/>
+						<input type="hidden" name="week_end" value="<?php echo $week_enddate; ?>"/>
+						<input type="hidden" name="weekno" value="<?php echo $week; ?>"/>
 						</div>
 						</div>
 						</div>
@@ -83,7 +80,47 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<div class="col-sm-10">
-									<p><strong>Previous Week's Unaccomplished Actions</p>
+									<h3>Last Week's Actions</h3>
+									<div class="col-sm-3">
+									<strong>Accomplished</strong>
+									<?php 
+									foreach($lastPreMeetingActions as $lastActions) { 
+									if($lastActions->is_finished == 1) {
+									?>
+										<div class="row">
+											<div class="col-md-12">
+												<p>
+													<?php if(!in_array($lastActions->id,$preaddedAction)) { ?>
+													<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("addActionToNextWeek");?>/<?php echo $lastActions->id;?>" modal-title="Move Action - <?php echo $lastActions->action_title; ?>" data-sub-text="Here You Can Move Action To Next Week">
+														<i class="fa fa-plus text-navy" aria-hidden="true"></i>
+													</a>
+													<?php } ?>
+													<strong><?php echo $lastActions->action_title; ?></strong>
+												</p>
+											</div>
+										</div>
+									<?php }} ?>
+									</div>
+									<div class="col-sm-3">
+									<strong>Incomplete</strong>
+									<?php 
+									foreach($lastPreMeetingActions as $lastActions) {
+									if($lastActions->is_finished == 0) { 
+									?>
+										<div class="row">
+											<div class="col-md-12">
+												<p>
+													<?php if(!in_array($lastActions->id,$preaddedAction)) { ?>
+													<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("addActionToNextWeek");?>/<?php echo $lastActions->id;?>" modal-title="Move Action - <?php echo $lastActions->action_title; ?>" data-sub-text="Here You Can Move Action To Next Week">
+														<i class="fa fa-plus text-navy" aria-hidden="true"></i>
+													</a>
+													<?php } ?>
+													<strong><?php echo $lastActions->action_title; ?></strong>
+												</p>
+											</div>
+										</div>
+									<?php }} ?>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -102,7 +139,9 @@
 														<p>
 														<strong><?php echo $action->action_title; ?></strong>
 														<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
-														<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+														<?php if($action->addedby == 0) { ?>
+															<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+														<?php } ?>
 														</p>
 													</div>
 												</div>

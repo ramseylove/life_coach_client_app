@@ -63,6 +63,7 @@ class Login extends MY_Controller {
 						'lname'  => $result->last_name,
 						'email'   => $result->email,
 						'phone'   => $result->phone,
+						'editpermission'   => $result->editpermission,
 						'adminLogin'   => 0,
 					 );						
 					 $this->session->set_userdata($sessArr);
@@ -91,6 +92,7 @@ class Login extends MY_Controller {
 				'lname'  => $result->last_name,
 				'email'   => $result->email,
 				'phone'   => $result->phone,
+				'editpermission'   => $result->editpermission,
 				'adminLogin'   => 1,
 			 );						
 			 $this->session->set_userdata($sessArr);
