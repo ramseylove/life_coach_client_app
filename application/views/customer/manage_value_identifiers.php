@@ -7,11 +7,12 @@
 				<h5>Value Identifiers</h5>
 			</div>
 			<div class="ibox-content">
-				<!--div class="row">
+				<div class="row">
 					<div class="col-sm-3">
-						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addValue");?>" modal-title="Add New Value Identifier" data-sub-text="Here you can add a new value identifier.">Add New VI</a>
+						<!--a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addValue");?>" modal-title="Add New Value Identifier" data-sub-text="Here you can add a new value identifier.">Add New VI</a-->
+						<a class="btn btn-primary btn-rounded marginclass" href="Javascript:void(0)" data-toggle="modal" data-target="#valuesModel">Click to add new</a>
 					</div>
-				</div-->
+				</div>
 				<?php /* if(count($values)>0) { */ ?>
 				<div class="row">
 					<div class="col-md-6">
@@ -43,9 +44,6 @@
 								</label>
 							</div>
 						<?php } ?>
-						</div>
-						<div>
-							<a href="Javascript:void(0)" data-toggle="modal" data-target="#valuesModel">Click to add new</a>
 						</div>
 					</div>
 					<!--div class="col-md-4">				

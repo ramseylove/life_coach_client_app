@@ -53,8 +53,9 @@ class Premeeting extends CE_Controller {
 		$viewArr["preMeetingData"] = array();
 		$viewArr["postData"] = array();
 		$viewArr["lastPreMeeting"] = $this->premeeting_model->getLastPreMeeting();
-		if(!empty($viewArr["lastPreMeeting"])) {
-			$viewArr["lastPreMeetingActions"] = $this->premeeting_model->getLastPreMeetingActions($viewArr["lastPreMeeting"]->weekno);
+		$viewArr["getLastPostMeeting"] = $this->premeeting_model->getLastPostMeeting();
+		if(!empty($viewArr["getLastPostMeeting"])) {
+			$viewArr["lastPreMeetingActions"] = $this->premeeting_model->getLastPreMeetingActions($viewArr["getLastPostMeeting"]->weekno);
 		}else {
 			$viewArr["lastPreMeetingActions"] = '';
 		}
@@ -88,6 +89,7 @@ class Premeeting extends CE_Controller {
 	public function editPreMeeting($preMeetingId)
 	{	
 		$preMeetingData = $this->premeeting_model->getPreMeetingData($preMeetingId);
+		
 		if($preMeetingData)
 		{
 			$viewArr = array();
@@ -123,8 +125,8 @@ class Premeeting extends CE_Controller {
 		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
 		$this->form_validation->set_rules('acknowledgment', 'Acknowledgment', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('obstacles', 'Obstacles', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('weekno', 'weekno', 'trim|required|xss_clean');
+		/* $this->form_validation->set_rules('obstacles', 'Obstacles', 'trim|required|xss_clean'); */
+		/* $this->form_validation->set_rules('weekno', 'weekno', 'trim|required|xss_clean'); */
 	
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -133,14 +135,14 @@ class Premeeting extends CE_Controller {
 			{
 				$message[] = form_error('acknowledgment');
 			}
-			if(form_error('obstacles'))
+			/* if(form_error('obstacles'))
 			{
 				$message[] = form_error('obstacles');
-			}
-			if(form_error('weekno'))
+			} */
+			/* if(form_error('weekno'))
 			{
 				$message[] = form_error('weekno');
-			}
+			} */
 		}
 		else
 		{

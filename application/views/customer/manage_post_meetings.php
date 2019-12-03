@@ -10,10 +10,13 @@
 					<?php 
 						$disable = 'disable';
 						if(!empty($lastPreMeeting) && !empty($lastPostMeeting)) {
-							if($lastPreMeeting->weekno > $lastPostMeeting->weekno) {
+							$premee = $lastPreMeeting->weekno - 1;
+							if($premee == $lastPostMeeting->weekno) {
 								$disable = 'enable';
 							}
 						}else if(!empty($lastPreMeeting) && empty($lastPostMeeting)) {
+							$disable = 'enable';
+						}else if(empty($lastPreMeeting) && empty($lastPostMeeting)) {
 							$disable = 'enable';
 						}
 						if($disable == 'enable') {
@@ -28,7 +31,7 @@
 				</div>
 				<?php if(count($postMeetings)>0) { ?>
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table table-striped table-hover">
 						<thead>
 						<tr>
 							<th>Week Meeting</th>
@@ -42,7 +45,7 @@
 							<tr id="pmRow_<?php echo $postMeeting->id; ?>">
 							
 							<td><?php foreach($weekTags as $weekTag) { if($weekTag->id == $postMeeting->weekno) { echo $weekTag->weektag; }} ?></td>
-							<td><?php echo date("d/m/Y",strtotime($postMeeting->created_at));?></td>
+							<td><?php echo date("m/d/Y",strtotime($postMeeting->created_at));?></td>
 							
 							<td title="<?php echo $postMeeting->general_topic; ?>"><?php echo ((strlen($postMeeting->general_topic)>20)?substr($postMeeting->general_topic, 0, 20).'...':$postMeeting->general_topic);?></td>
 							

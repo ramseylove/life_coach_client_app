@@ -36,28 +36,28 @@
 							<td>
 								<?php if($user->status==0) { ?>
 								<a style="text-decoration:none;" href="javascript:void(0);" class="enDis" data-href="<?php echo $this->config->item("changeUserStatus");?>/<?php echo $user->id;?>/1">
-									<img alt="disable" title="disable" src="<?php echo $this->config->item("bk_image_url");?>/deactive.png"/>
+									<img alt="disable" title="Disable" src="<?php echo $this->config->item("bk_image_url");?>/deactive.png"/>
 								</a> 
 								<?php }else{ ?>
 								<a style="text-decoration:none;" href="javascript:void(0);" class="enDis" data-href="<?php echo $this->config->item("changeUserStatus");?>/<?php echo $user->id;?>/0">
-									<img alt="enable" title="enable" src="<?php echo $this->config->item("bk_image_url");?>/active.png"/>
+									<img alt="enable" title="Enable" src="<?php echo $this->config->item("bk_image_url");?>/active.png"/>
 								</a> 
 								<?php } ?>
 								<?php if($user->editpermission==0) { ?>
-									<a style="text-decoration:none;" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,1)">
+									<a style="text-decoration:none;" title="Lock" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,1)">
 										<i class="fa fa-lg fa-unlock text-navy"></i>
 									</a>
 								<?php }else{ ?>
-									<a style="text-decoration:none;" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,0)">
+									<a style="text-decoration:none;" title="Unlock" href="javascript:void(0);" onclick="return changepermission(<?php echo $user->id;?>,0)">
 										<i class="fa fa-lg fa-lock text-navy"></i>
 									</a>
 								<?php } ?>
-								<a style="text-decoration:none;" href="<?php echo base_url(); ?>customer/login/loginCheckAdmin/<?php echo $user->id; ?>">
+								<a style="text-decoration:none;" title="View User" href="<?php echo base_url(); ?>customer/login/loginCheckAdmin/<?php echo $user->id; ?>">
 									<i class="fa fa-lg fa-eye text-navy"></i>
 								</a>
-								<a class="modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addActionAdmin");?>/<?php echo $user->id;?>" modal-title="Add Action" data-sub-text="Here you can add a new action."><i class="fa fa-lg fa-tasks text-navy"></i></a><hr>
-								<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editUser");?>/<?php echo $user->id;?>" modal-title="Edit User - <?php echo $user->first_name." ".$user->last_name; ?>" data-sub-text="Here You Can Edit User"><i class="fa fa-lg fa-edit text-navy"></i></a>
-								<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteUser");?>/<?php echo $user->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+								<a class="modalInvoke" title="Add Action" href="javascript:void(0);" data-href="<?php echo $this->config->item("addActionAdmin");?>/<?php echo $user->id;?>" modal-title="Add Action" data-sub-text="Here you can add a new action."><i class="fa fa-lg fa-tasks text-navy"></i></a>
+								<a href="javascript:void(0);" title="Edit User" class="modalInvoke" data-href="<?php echo $this->config->item("editUser");?>/<?php echo $user->id;?>" modal-title="Edit User - <?php echo $user->first_name." ".$user->last_name; ?>" data-sub-text="Here You Can Edit User"><i class="fa fa-lg fa-edit text-navy"></i></a>
+								<a href="javascript:void(0);" title="Delete User" class="delete" data-href="<?php echo $this->config->item("deleteUser");?>/<?php echo $user->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
 							</td>
 						  </tr>
 						  <?php $i++;} ?>

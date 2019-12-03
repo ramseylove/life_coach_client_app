@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-6" style="margin-left:180px;">
                 <div class="ibox-content">
-					<center><h3>Admin Login</h3></center>
+					<center>						<img alt="logo image" style="max-width:70%;" height="100" width="100" class="img-responsive" src="<?php echo base_url(); ?>uploads/settings/logo.png">						<h3>Admin Login</h3>					</center>
                     <form class="m-t" role="form" action="<?php echo $this->config->item("loginCheck");?>" name="loginFrm" id="loginFrm" method="POST">
                         <div class="form-group">
                             <input type="email" name="email" id="email" class="form-control" placeholder="Email" required="">

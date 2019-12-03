@@ -11,7 +11,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Title</strong><span style="color:red;">&nbsp;*</span></p>
-						<input type="text" name="title" id="title" class="form-control" value="<?php if(!empty($valueIdentifier)){ echo $valueIdentifier->title; } ?>"/>
+						<input type="text" name="title" id="title" class="form-control" value="<?php if(!empty($defIdentifier)){ echo $defIdentifier->value_title; } ?>" readonly="readonly"/>
 					</div>
 				</div>
 			</div>
@@ -168,7 +168,7 @@ function saveResp(response){
 				});
                
 				$('#commonModalClose').trigger('click');
-				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>");
+				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>&heads=1");
 				setTimeout(function(){
 					$('#viSel_'+response.valueId+'').iCheck('check');
 				}, 3000);
@@ -181,4 +181,5 @@ function saveResp(response){
 		$("#save").prop('disabled', false);
 	}
 }
+
 </script>

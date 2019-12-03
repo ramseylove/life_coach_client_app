@@ -54,8 +54,9 @@ class Value extends CE_Controller {
 			$this->session->unset_userdata("postData");
 		} */
 		$viewArr['valueIdentifier'] = $this->value_model->getValueIdentifier($id);
+		$viewArr['defIdentifier'] = $this->value_model->getDefIdentifier($id);
 		$viewArr['addedValueData'] = $this->value_model->getAddedValueData($id);
-		$viewArr['ids'] = $id;
+		$viewArr['ids'] = $id; 
 		$html = $this->load->view('customer/add_value',$viewArr,TRUE);
 		echo $html;
 		exit;

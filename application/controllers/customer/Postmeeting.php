@@ -106,7 +106,7 @@ class Postmeeting extends CE_Controller {
 		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
 		$this->form_validation->set_rules('general_topic', 'General Topic', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('session_value', 'Session Value', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('notes', 'Notes', 'trim|required|xss_clean');
+		/* $this->form_validation->set_rules('notes', 'Notes', 'trim|required|xss_clean'); */
 		if ($this->form_validation->run() == FALSE)
 		{
 			$pass = false;
@@ -118,10 +118,10 @@ class Postmeeting extends CE_Controller {
 			{
 				$message[] = form_error('session_value');
 			}
-			if(form_error('notes'))
+			/* if(form_error('notes'))
 			{
 				$message[] = form_error('notes');
-			}
+			} */
 		}
 		else
 		{
@@ -142,7 +142,7 @@ class Postmeeting extends CE_Controller {
 				$pass = false;
 				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Post Meeting with entered topic already exists.</p></div>";
 			}
-		}
+		} 
 		$this->session->set_flashdata('message', $message);
 		if($pass)
 		{
@@ -153,10 +153,10 @@ class Postmeeting extends CE_Controller {
 			redirect($this->config->item("postMeetingCtrl"), 'refresh');
 		}
 		else
-		{
+		{ 
 			$this->session->set_userdata("postData",$_POST);
 			if($postMeetingId>0)
-			{
+			{ 
 				redirect($this->config->item("postMeetingCtrl")."/".$postMeetingId, 'refresh');
 			}
 			else

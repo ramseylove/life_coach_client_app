@@ -195,6 +195,12 @@ class Value_model extends CI_Model
 	     return $checkDefaultValueR = $checkDefaultValue->row();
 	}
 	
+	function getDefIdentifier($id)
+	{
+	    $checkDefaultValue = $this->db->get_where($this->config->item('ala_default_values','dbtables'),array("id"=>$id));
+	     return $checkDefaultValueR = $checkDefaultValue->row();
+	}
+	
 	function deleteAddedValue($valueId)
 	{
 		$this->db->where('id', $valueId);

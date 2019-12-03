@@ -30,7 +30,7 @@
 				<span class="nav-label">Dashboard</span></a>
 			</li>
 			<li <?php echo (($viewPage == 'manage_goals')?'class="active"':''); ?>>
-				<a href="<?php echo $this->config->item("goalCtrl");?>" id="goalCtrl" class="cMenu"><i class="fa fa-bullseye"></i> <span class="nav-label">Goal Setting</span></a>
+				<a href="<?php echo $this->config->item("goalCtrl");?>" id="goalCtrl" class="cMenu"><i class="fa fa-bullseye"></i> <span class="nav-label">Goals</span></a>
 			</li>
 			<li <?php echo (($viewPage == 'manage_value_list')?'class="active"':''); ?>>
 				<a href="<?php echo $this->config->item("valueListCtrl");?>" id="valueListCtrl" class="cMenu"><i class="fa fa-address-book"></i> <span class="nav-label">Values</span></a>
@@ -50,7 +50,7 @@
 			</li-->
 			<li <?php echo (($viewPage == 'manage_action_questions')?'class="active"':''); ?>>
 				<a href="<?php echo $this->config->item("postMeetingCtrl");?>/action_view" id="actionCtrl" class="cMenu"><i class="fa fa-tasks"></i>
-				<span class="nav-label">View Actions</span></a>
+				<span class="nav-label">Actions</span></a>
 			</li>
 			<li <?php echo (($viewPage == 'manage_goal_view')?'class="active"':''); ?>>
 				<a href="<?php echo $this->config->item("postMeetingCtrl");?>/goal_view" id="actionCtrl" class="cMenu"><i class="fa fa-eye"></i>
@@ -59,3 +59,16 @@
 		</ul>
 	</div>
 </nav>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm - You will lose entered info?</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="return modelcomform(1)">Yes</button>
+        <button type="button" class="btn btn-primary" onclick="return modelcomform(0)">No</button>
+      </div>
+    </div>
+  </div>
+</div>

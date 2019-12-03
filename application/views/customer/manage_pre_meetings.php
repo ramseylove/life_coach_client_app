@@ -10,13 +10,14 @@
 					<?php 
 						$disable = 'disable';
 						if(!empty($lastPreMeeting) && !empty($lastPostMeeting)) {
+							/* $weeek = $lastPreMeeting->weekno + 1; */
 							if($lastPreMeeting->weekno == $lastPostMeeting->weekno) {
 								$disable = 'enable';
 							}
-						}else if(!empty($lastPreMeeting) && empty($lastPostMeeting)) {
-							$disable = 'disable';
-						}else if(empty($lastPreMeeting) && empty($lastPostMeeting)) {
+						}else if(empty($lastPreMeeting) && !empty($lastPostMeeting)) {
 							$disable = 'enable';
+						}else if(empty($lastPreMeeting) && empty($lastPostMeeting)) {
+							$disable = 'disable';
 						}
 						if($disable == 'enable') {
 					?>
@@ -30,7 +31,7 @@
 				</div>
 				<?php if(count($preMeetings)>0) { ?>
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table table-striped table-hover">
 						<thead>
 						<tr>
 							<th>Week Meeting</th>
@@ -43,11 +44,11 @@
 							<?php $i=0; foreach($preMeetings as $preMeeting){ ?>
 							<tr id="pmRow_<?php echo $preMeeting->id;?>">
 							<td><?php foreach($weekTags as $weekTag) { if($weekTag->id == $preMeeting->weekno) { echo $weekTag->weektag; }} ?></td>
-							<td><?php echo date("d/m/Y",strtotime($preMeeting->created_at));?></td>
+							<td><?php echo date("m/d/Y",strtotime($preMeeting->created_at));?></td>
 							<td title="<?php echo $preMeeting->acknowledgment; ?>"><?php echo ((strlen($preMeeting->acknowledgment)>20)?substr($preMeeting->acknowledgment, 0, 20).'...':$preMeeting->acknowledgment);?></td>
 							<?php
-								$adminAllow = $_SESSION['editpermission'];
-								if($adminAllow == 0) {
+								$adminAllow = $_SESSION['adminLogin'];
+								if($adminAllow == 1) {
 							?>
 							<td>
 								<a href="<?php echo $this->config->item("editPreMeeting");?>/<?php echo $preMeeting->id;?>" title="Edit Pre-Meeting - <?php echo $preMeeting->acknowledgment; ?>"><i class="fa fa-lg fa-edit text-navy"></i></a>

@@ -8663,7 +8663,7 @@ a.dleteval{text-decoration:underline;}
     padding: 11px 0;
 }
 .card-header {
-    background: #eee;
+   
 }
 .affirmation .fa {
     font-size: 20px;
@@ -8762,4 +8762,62 @@ cursor: not-allowed !important;
 .col-md-12.class0 {
     position: relative;
     z-index: 11;
+}
+.marginclass {
+    margin-bottom: 20px !important;
+}
+.weeks-innergrey:nth-child(2n) {
+    background: #eee;
+}
+.graycol:nth-child(2n + 1) {
+    background: #eee;
+}
+.graycol .panel-group {
+    margin-bottom: 0px !important;
+}
+#weeklyDiv .input-group {
+    display: flex;
+}
+#weeklyDiv .checks1 {
+    margin: 6px 6px;
+}
+#weeklyDiv .checkers {
+    padding-right: 0;
+}
+#weeklyDiv .input-group-addon {
+    padding: 9px 12px;
+    width: 36px;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #eee;
+}
+#mi-modal {
+    z-index: 9999 !important;
+    top: 138px;
+}
+.action-inner .week-inner {
+    display: inline-block;
+}
+    .action-inner .affirmation {
+    display: inline-block;
+}
+.action-inner .card-header span {
+    display: inline-block;
+}
+#otherdiv .input-group {
+    display: flex;
+}
+#otherdiv .checks1 {
+    margin: 6px 6px;
+}
+#otherdiv .checkers {
+    padding-right: 0;
+}
+#otherdiv .input-group-addon {
+    padding: 9px 12px;
+    width: 54px;
+}
+.clearfix {
+    display: inline-block;
+    width: 100%;
 }

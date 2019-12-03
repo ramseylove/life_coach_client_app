@@ -11,7 +11,7 @@
 			</div> 
 			<div class="ibox-content">
 				<div id="messages" tabindex='1'></div>
-					<form method="POST" id="premFrm" name="premFrm" class="form-horizontal">
+					<form method="POST" id="premFrm" name="premFrm" class="form-horizontal actionclss">
 					<div class="row">
 						<?php
 							if(!empty($preMeetingData)) {
@@ -19,7 +19,7 @@
 							}else if(!empty($lastPreMeeting)) {
 								$week = $lastPreMeeting->weekno + 1;
 							}else {
-								$week = 1;
+								$week = 2;
 							}
 						?>
 						<input type="hidden" name="weekno" value="<?php echo $week; ?>">
@@ -46,13 +46,17 @@
 							<div class="form-group">
 								<div class="col-sm-10">
 									<h3>Last Week's Actions</h3>
-									<div class="col-sm-3">
+									<div class="col-sm-5">
 									<strong>Accomplished</strong>
-									<?php 
-									foreach($lastPreMeetingActions as $lastActions) { 
-									if($lastActions->is_finished == 1) {
+									<?php
+									if(!empty($actionsWithoutPostMeetings)) {
+									foreach($actionsWithoutPostMeetings as $lastActions) {
+									if($lastActions->is_finished == 1 && $lastActions->nextweek == 0) {
+										/* if($lastActions->action_type_id == 2) {
+										if(!empty($lastActions->reminders)) {
+										foreach($lastActions->reminders as $remder) { */
 									?>
-										<div class="row">
+										<!--div class="row">
 											<div class="col-md-12">
 												<p>
 													<?php if(!in_array($lastActions->id,$preaddedAction)) { ?>
@@ -63,16 +67,89 @@
 													<strong><?php echo $lastActions->action_title; ?></strong>
 												</p>
 											</div>
+										</div-->
+										<?php /* }}}else { */ ?>
+										<div class="row">
+											<div class="col-md-12">
+												<p>
+													<?php if(!in_array($lastActions->id,$preaddedAction)) { ?>
+													<!--a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("addActionToNextWeek");?>/<?php echo $lastActions->id;?>" modal-title="Move Action - <?php echo $lastActions->action_title; ?>" data-sub-text="Here You Can Move Action To Next Week">
+														<i class="fa fa-plus text-navy" aria-hidden="true"></i>
+													</a-->
+													<?php } ?>
+													<strong><?php echo $lastActions->action_title; ?></strong>
+													<p><small>
+														<?php
+														$remDRStr = '';
+														if($lastActions->action_type_id == 2) {
+															if(!empty($lastActions->reminders)) {
+																$ii = 0;
+																foreach($lastActions->reminders as $remder) {
+																	if($ii == 0) {
+																		$remDRStr = ((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																	}else{
+																		$remDRStr .= ','.((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																	}
+																	$ii++;
+																}
+															}
+															echo '('.$remDRStr.')'; 
+														}else if($lastActions->action_type_id == 1) {
+															if(count($lastActions->reminders)>0){ 
+															$remOTStr = '(';
+															$oti = 0;
+															foreach($lastActions->reminders as $remOt)
+															{
+																$oti++;
+																$remOTStr.= ((trim($remOt->date)!='')?date('m/d/Y', strtotime($remOt->date)).' ':'').((trim($remOt->time)!='')?date('h:i a', strtotime($remOt->time)):'');
+																if($oti < count($lastActions->reminders))
+																{
+																	$remOTStr.= ',';
+																}
+																if($oti==count($lastActions->reminders))
+																{
+																	$remOTStr.= ')';
+																}
+															}
+															}
+															echo $remOTStr;
+														}else if($lastActions->action_type_id == 3) {
+															if(count($lastActions->reminders)>0){
+															$dri = 0;
+															foreach($lastActions->reminders as $remDr)
+															{
+																if($remDr->day_selected == 1) {
+																	if($dri == 0) {
+																		$remDRStr .= $remDr->dayname.': ';
+																		$remDRStr.= ((trim($remDr->date)!='')?date('m/d/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):'');
+																	}else {
+																		$remDRStr .= ','.$remDr->dayname.': ';
+																		$remDRStr.= ((trim($remDr->date)!='')?date('m/d/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):'');
+																	}
+																	$dri++;
+																}
+															}
+															}
+															echo '('.$remDRStr.')';
+														}
+														?>
+														</small></p>
+												</p>
+											</div>
 										</div>
-									<?php }} ?>
+										<?php /* } */}}} ?>
 									</div>
-									<div class="col-sm-3">
+									<div class="col-sm-5">
 									<strong>Incomplete</strong>
-									<?php 
-									foreach($lastPreMeetingActions as $lastActions) {
-									if($lastActions->is_finished == 0) { 
+									<?php
+									if(!empty($actionsWithoutPostMeetings)) {
+									foreach($actionsWithoutPostMeetings as $lastActions) {
+									if($lastActions->is_finished == 0 && $lastActions->nextweek == 0) {
+										/* if($lastActions->action_type_id == 2) {
+										if(!empty($lastActions->reminders)) {
+										foreach($lastActions->reminders as $remder) { */
 									?>
-										<div class="row">
+										<!--div class="row">
 											<div class="col-md-12">
 												<p>
 													<?php if(!in_array($lastActions->id,$preaddedAction)) { ?>
@@ -83,8 +160,77 @@
 													<strong><?php echo $lastActions->action_title; ?></strong>
 												</p>
 											</div>
+										</div-->
+										<?php /* }}}else { */ ?>
+										<div class="row">
+											<div class="col-md-12">
+												<p>
+													<?php if(!in_array($lastActions->id,$preaddedAction)) { ?>
+													<!--a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("addActionToNextWeek");?>/<?php echo $lastActions->id;?>" modal-title="Move Action - <?php echo $lastActions->action_title; ?>" data-sub-text="Here You Can Move Action To Next Week">
+														<i class="fa fa-plus text-navy" aria-hidden="true"></i>
+													</a-->
+													<?php } ?>
+													<strong><?php echo $lastActions->action_title; ?></strong>
+													<p><small>
+														<?php
+														$remDRStr = '';
+														if($lastActions->action_type_id == 2) {
+															if(!empty($lastActions->reminders)) {
+																$ii = 0;
+																foreach($lastActions->reminders as $remder) {
+																	if($ii == 0) {
+																		$remDRStr = ((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																	}else{
+																		$remDRStr .= ','.((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																	}
+																	$ii++;
+																}
+															}
+															echo '('.$remDRStr.')'; 
+														}else if($lastActions->action_type_id == 1) {
+															if(count($lastActions->reminders)>0){ 
+															$remOTStr = '(';
+															$oti = 0;
+															foreach($lastActions->reminders as $remOt)
+															{
+																$oti++;
+																$remOTStr.= ((trim($remOt->date)!='')?date('m/d/Y', strtotime($remOt->date)).' ':'').((trim($remOt->time)!='')?date('h:i a', strtotime($remOt->time)):'');
+																if($oti < count($lastActions->reminders))
+																{
+																	$remOTStr.= ',';
+																}
+																if($oti==count($lastActions->reminders))
+																{
+																	$remOTStr.= ')';
+																}
+															}
+															}
+															echo $remOTStr;
+														}else if($lastActions->action_type_id == 3) {
+															if(count($lastActions->reminders)>0){
+															$dri = 0;
+															foreach($lastActions->reminders as $remDr)
+															{
+																if($remDr->day_selected == 1) {
+																	if($dri == 0) {
+																		$remDRStr .= $remDr->dayname.': ';
+																		$remDRStr.= ((trim($remDr->date)!='')?date('m/d/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):'');
+																	}else {
+																		$remDRStr .= ','.$remDr->dayname.': ';
+																		$remDRStr.= ((trim($remDr->date)!='')?date('m/d/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):'');
+																	}
+																	$dri++;
+																}
+															}
+															}
+															echo '('.$remDRStr.')';
+														}
+														?>
+														</small></p>
+												</p>
+											</div>
 										</div>
-									<?php }} ?>
+										<?php /* } */}}} ?>
 									</div>
 								</div>
 							</div>
@@ -98,8 +244,18 @@
 										<div class="row">
 											<div class="col-md-8">
 												<p><h3>This Weeks Actions</h3></p>
-												<?php $actionIdArr = array(); foreach(((isset($actionsWithoutPostMeetings))?$actionsWithoutPostMeetings:$preMeetingData->actions) as $action){ $actionIdArr[] = $action->id;?>
-												<div class="row">
+												<?php 
+												$actionIdArr = array();
+												$nextactionIdArr = array();
+												if(!empty($actionsWithoutPostMeetings)) {
+												foreach(((isset($actionsWithoutPostMeetings))?$actionsWithoutPostMeetings:$preMeetingData->actions) as $action){ $actionIdArr[] = $action->id;
+												if($action->nextweek == 1) {
+													$nextactionIdArr[] = $action->id;
+													/* if($action->action_type_id == 2) {
+													if(!empty($action->reminders)) {
+													foreach($action->reminders as $remder) { */
+												?>
+												<!--div class="row">
 													<div class="col-md-12">
 														<p>
 														<strong><?php echo $action->action_title; ?></strong>
@@ -109,13 +265,84 @@
 														<?php } ?>
 														</p>
 													</div>
+												</div-->
+												<?php /* }}}else { */ ?>
+												<div class="row">
+													<div class="col-md-12">
+														<p>
+														<strong><?php echo $action->action_title; ?></strong>
+														<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>
+														<?php if($action->addedby == 0) { ?>
+															<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteAction");?>/<?php echo $action->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+														<?php } ?>
+														<p><small>
+														<?php
+														$remDRStr = '';
+														if($action->action_type_id == 2) {
+															if(!empty($action->reminders)) {
+																$ii = 0;
+																foreach($action->reminders as $remder) {
+																	if($ii == 0) {
+																		$remDRStr = ((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																	}else{
+																		$remDRStr .= ','.((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																	}
+																	$ii++;
+																}
+															}
+															echo '('.$remDRStr.')'; 
+														}else if($action->action_type_id == 1) {
+															if(count($action->reminders)>0){ 
+															$remOTStr = '(';
+															$oti = 0;
+															foreach($action->reminders as $remOt)
+															{
+																$oti++;
+																$remOTStr.= ((trim($remOt->date)!='')?date('m/d/Y', strtotime($remOt->date)).' ':'').((trim($remOt->time)!='')?date('h:i a', strtotime($remOt->time)):'');
+																if($oti < count($action->reminders))
+																{
+																	$remOTStr.= ',';
+																}
+																if($oti==count($action->reminders))
+																{
+																	$remOTStr.= ')';
+																}
+															}
+															}
+															echo $remOTStr;
+														}else if($action->action_type_id == 3) {
+															if(count($action->reminders)>0){
+															$dri = 0;
+															foreach($action->reminders as $remDr)
+															{
+																if($remDr->day_selected == 1) {
+																	if($dri == 0) {
+																		$remDRStr .= $remDr->dayname.': ';
+																		$remDRStr.= ((trim($remDr->date)!='')?date('m/d/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):'');
+																	}else {
+																		$remDRStr .= ','.$remDr->dayname.': ';
+																		$remDRStr.= ((trim($remDr->date)!='')?date('m/d/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):'');
+																	}
+																	$dri++;
+																}
+															}
+															}
+															echo '('.$remDRStr.')';
+														}
+														?>
+														</small></p>
+														</p>
+													</div>
 												</div>
-												<?php } ?>
+													<?php /* } */}else { 
+													$actionIdArr[] = $action->id;
+												}}} ?>
+												<input type="hidden" name="hiddenNextActionIds" id="hiddenNextActionIds" value="<?php echo implode('|', $nextactionIdArr); ?>"/>
 												<input type="hidden" name="hiddenActionIds" id="hiddenActionIds" value="<?php echo implode('|', $actionIdArr); ?>"/>
 											</div>
-											<div class="col-md-4">
+											<!--div class="col-md-4">
 												<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addAction").((count($preMeetingData)>0)?'?postMeetingId='.$preMeetingData->id:'');?>" modal-title="Add New Action" data-sub-text="Here you can add a new action.">Add Action</a>
-											</div>
+											</div-->
 										</div>
 									</p>
 								</div>
@@ -127,7 +354,8 @@
 							<div class="form-group">
 								<div class="col-sm-10">
 									<p><strong>Acknowledgment</strong><span style="color:red;">&nbsp;*</span></p>
-									<textarea class="form-control" name="acknowledgment" id="acknowledgment" cols="50" rows="3" placeholder="Enter Acknowledgment Of These Actions."><?php echo((count($postData)>0 && isset($postData["acknowledgment"]))?trim($postData["acknowledgment"]):((count($preMeetingData)>0)?$preMeetingData->acknowledgment:""));?></textarea>
+									<textarea class="form-control" name="acknowledgment" id="acknowledgment" cols="50" rows="3" placeholder=""><?php echo((count($postData)>0 && isset($postData["acknowledgment"]))?trim($postData["acknowledgment"]):((count($preMeetingData)>0)?$preMeetingData->acknowledgment:""));?></textarea>
+									
 								</div>
 							</div>
 						</div>
@@ -136,19 +364,48 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<div class="col-sm-10">
-									<p><strong>Obstacles</strong><span style="color:red;">&nbsp;*</span></p>
-									<textarea class="form-control" name="obstacles" id="obstacles" cols="50" rows="3" placeholder="What Came In Your Way Of Completing Some Actions?"><?php echo((count($postData)>0 && isset($postData["obstacles"]))?trim($postData["obstacles"]):((count($preMeetingData)>0)?$preMeetingData->obstacles:""));?></textarea>
+									<p><strong>Obstacles</strong></p>
+									<textarea class="form-control" name="obstacles" id="obstacles" cols="50" rows="3" placeholder=""><?php echo((count($postData)>0 && isset($postData["obstacles"]))?trim($postData["obstacles"]):((count($preMeetingData)>0)?$preMeetingData->obstacles:""));?></textarea>
 								</div>
 							</div>
 						</div>
 					</div> 
-					
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="col-sm-10">
+									<p><strong>What are the key areas to discuss during our upcoming session?</strong></p>
+									<textarea class="form-control" name="upcoming_session" id="upcoming_session" cols="50" rows="3" placeholder=""><?php echo((count($postData)>0 && isset($postData["upcoming_session"]))?trim($postData["upcoming_session"]):((count($preMeetingData)>0)?$preMeetingData->upcoming_session:""));?></textarea>
+								</div>
+							</div>
+						</div>
+					</div> 
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="col-sm-10">
+									<p><strong>What would be your most valued outcome as a result of this session?</strong></p>
+									<textarea class="form-control" name="valued_outcome" id="valued_outcome" cols="50" rows="3" placeholder=""><?php echo((count($postData)>0 && isset($postData["valued_outcome"]))?trim($postData["valued_outcome"]):((count($preMeetingData)>0)?$preMeetingData->valued_outcome:""));?></textarea>
+								</div>
+							</div>
+						</div>
+					</div> 
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="col-sm-10">
+									<p><strong>Additional Comment</strong></p>
+									<textarea class="form-control" name="additional_comment" id="additional_comment" cols="50" rows="3" placeholder=""><?php echo((count($postData)>0 && isset($postData["additional_comment"]))?trim($postData["additional_comment"]):((count($preMeetingData)>0)?$preMeetingData->additional_comment:""));?></textarea>
+								</div>
+							</div>
+						</div>
+					</div> 
 					<div class="row">		  
 						<div class="col-md-12">	
 							<div class="form-group">
 								<div class="col-sm-10">
 									<input type="button" class="btn btn-primary" id="save" value="Save"/>
-									<button class="btn" data-dismiss="modal">Cancel</button>
+									<a class="btn btn-default" href="<?php echo $this->config->item("preMeetingCtrl");?>" data-dismiss="modal">Cancel</a>
 								</div>
 							</div>		
 						</div>
@@ -180,8 +437,22 @@ $(document).ready(function(){
 	});
 	
 	$("#save").click(function(){
-		document.premFrm.action = "<?php echo $this->config->item("insertPreMeeting")."/".((count($preMeetingData)>0)?$preMeetingData->id:0);?>";
-		document.premFrm.submit();
+		$('.errr').hide();
+		var err = 0;
+		var msgStr = "";
+		var acknowledgment = $('#acknowledgment').val();
+		if(acknowledgment == '') {
+			msgStr+= '<div class="alert alert-warning"><p style="color:red;">The Acknowledgment field is required.</p></div>';
+			err = 1;
+		}
+		if(err == 1) {
+			$("#messages").html("");
+			$("#messages").append(msgStr).focus();
+			return false;
+		}else {
+			document.premFrm.action = "<?php echo $this->config->item("insertPreMeeting")."/".((count($preMeetingData)>0)?$preMeetingData->id:0);?>";
+			document.premFrm.submit();
+		}
 	});
 	
 	$(".generalHappinessLevel").ionRangeSlider({

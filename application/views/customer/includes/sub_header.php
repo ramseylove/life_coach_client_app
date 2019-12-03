@@ -5,6 +5,13 @@
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
         </div>
             <ul class="nav navbar-top-links navbar-right">
+			<?php if($_SESSION['adminLogin'] == 1) { ?>
+			<li>
+			<span class="m-r-sm text-muted">
+			<a href="<?php echo base_url(); ?>backend/users"><?php echo 'Go To Admin';?></a>
+			</span>
+			</li>
+			<?php } ?>				
                 <li>
                     <span class="m-r-sm text-muted"><?php echo BRAND;?></span>
                 </li>

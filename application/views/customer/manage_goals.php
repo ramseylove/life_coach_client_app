@@ -16,25 +16,25 @@
 					<?php } ?>
 					</div>
 				</div>
-				<?php if(count($goals)>0) { ?>
+				<?php if(!empty($goals) && count($goals)>0) { ?>
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table table-striped table-hover">
 						<thead>
 						<tr>
-							<th>Created Date</th>
-							<th>Title</th>
+							<th>Goal</th>
 							<th>Type</th>
-							<th>Status</th>
+							<!--th>Status</th-->
+							<th>Created Date</th>
 							<th>Action</th>
 						</tr>
 						</thead>
 						<tbody>
 							<?php $i=0; foreach($goals as $goal){ ?>
 							<tr id="goalRow_<?php echo $goal->id;?>">
-							<td><?php echo date("d/m/Y",strtotime($goal->created_at));?></td>
 							<td><?php echo wordwrap($goal->title,20,"<br />");?></td>
 							<td><?php echo(($goal->is_secondary==0)?"Primary":"Secondary");?></td>
-							<td><?php echo(($goal->status==0)?"Active":"Disabled");?></td>
+							<!--td><?php/*  echo(($goal->status==0)?"Active":"Disabled"); */?></td-->
+							<td><?php echo date("m/d/Y",strtotime($goal->created_at));?></td>
 							<?php if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
 							<td>
 								<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editGoal");?>/<?php echo $goal->id;?>" modal-title="Edit Goal - <?php echo $goal->title; ?>" data-sub-text="Here You Can Edit Goal"><i class="fa fa-lg fa-edit text-navy"></i></a>

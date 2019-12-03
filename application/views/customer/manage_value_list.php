@@ -17,12 +17,14 @@
 									<th colspan="7">Value Title</th>
 								</tr>
 								</thead>
-								<tbody>
+								
 									<?php
 										$i=0;
+										$q=0;
 										foreach($defaultValues as $value){
 										if(!empty($value->savedVals)) {
-									?>
+									?> 
+									<tbody class="<?php if ($q % 2 == 0) { echo 'evenclass'; } ?>">
 									<tr id="viRows_<?php echo $value->id; ?>" class="clickable" colspan="7" data-toggle="collapse" data-target="#accordion<?php echo $value->id; ?>" onclick="changeicon(this.id)">
 									<td colspan="7">
 										<div class="i-checks">
@@ -33,47 +35,46 @@
 										</div>
 									</td>
 									</tr>
-									<tbody id="accordion<?php echo $value->id; ?>" class="m-row collapse <?php if($i == 0) { echo 'collapse in'; } ?>">
+									<tbody id="accordion<?php echo $value->id; ?>" class="collapse <?php if($i == 0) { echo 'collapse in'; } ?>">
 										<tr>
-											<th>Title</th>
-											<th>Current Happiness level</th>
-											<th>Expected Happiness level</th>
-											<th>Description 1</th>
-											<th>Description 2</th>
-											<th>Description 3</th>
-											<th>Description 4</th>
+											<td><b>Current Happiness level:</b> <?php echo $value->savedVals->current_happiness_level; ?></td>
 										</tr>
-										<tr id="viRow_<?php echo $value->savedVals->id;?>">
-											<td>
-												<div class="i-checks">
-													<label>
-														<?php echo $value->savedVals->title; ?>
-													</label>
-												</div>
-											</td>
-											<td>
-												<?php echo $value->savedVals->current_happiness_level; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->expected_happiness_level; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->description_0; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->description_1; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->description_2; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->description_3; ?>
-											</td>
+										<tr>
+											<td><b>Expected Happiness Level:</b> <?php echo $value->savedVals->expected_happiness_level; ?></td>
+										</tr>
+										<tr>
+											<th>What does this domain mean to you?</th>
+										</tr>
+										<tr>
+											<td><?php echo $value->savedVals->description_0; ?></td>
+										</tr>
+										<tr>
+											<th>What kind of person would you like to be in this domain?</th>
+										</tr>
+										<tr>
+											<td><?php echo $value->savedVals->description_1; ?></td>
+										</tr>
+										<tr>
+											<th>How are you doing in this domain now?</th>
+										</tr>
+										<tr>
+											<td><?php echo $value->savedVals->description_2; ?></td>
+										</tr>
+										<tr>
+											<th>What are some specific short and long-term goals for this domain?</th>
+										</tr>
+										<tr>
+											<td><?php echo $value->savedVals->description_3; ?></td>
 										</tr>
 									</tbody>
 								  <?php
+								  $q++;
 									}
 								  $i++;
+								  
+								  ?>
+								  </tbody>
+								  <?php
 								  }
 								   ?>
 								   <?php
@@ -81,6 +82,7 @@
 									foreach($userAddedValues as $value){
 									if(!empty($value->savedVals)) {
 									?>
+									<tbody class="<?php if ($q % 2 == 0) { echo 'evenclass'; } ?>">
 									<tr id="viRows_<?php echo $value->id; ?>" class="clickable" colspan="7" class="m-row" colspan="7" data-toggle="collapse" data-target="#accordion<?php echo $value->id; ?>" onclick="changeicon(this.id)">
 									<td colspan="7">
 										<div class="i-checks">
@@ -93,48 +95,45 @@
 									</tr>
 									<tbody id="accordion<?php echo $value->id; ?>" class="m-row collapse">
 										<tr>
-											<th>Title</th>
-											<th>Current Happiness level</th>
-											<th>Expected Happiness level</th>
-											<th>Description 1</th>
-											<th>Description 2</th>
-											<th>Description 3</th>
-											<th>Description 4</th>
+											<td><b>Current Happiness level:</b> <?php echo $value->savedVals->current_happiness_level; ?></td>
 										</tr>
-										<tr id="viRow_<?php echo $value->savedVals->id;?>">
-											<td>
-												<div class="i-checks">
-													<label>
-														<?php echo $value->savedVals->title; ?>
-													</label>
-												</div>
-											</td>
-											<td>
-												<?php echo $value->savedVals->current_happiness_level; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->expected_happiness_level; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->description_0; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->description_1; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->description_2; ?>
-											</td>
-											<td>
-												<?php echo $value->savedVals->description_3; ?>
-											</td>
+										<tr>
+											<td><b>Expected Happiness Level:</b> <?php echo $value->savedVals->expected_happiness_level; ?></td>
+										</tr>
+										<tr>
+											<th>What does this domain mean to you?</th>
+										</tr>
+										<tr>
+											<td><?php echo $value->savedVals->description_0; ?></td>
+										</tr>
+										<tr>
+											<th>What kind of person would you like to be in this domain?</th>
+										</tr>
+										<tr>
+											<td><?php echo $value->savedVals->description_1; ?></td>
+										</tr>
+										<tr>
+											<th>How are you doing in this domain now?</th>
+										</tr>
+										<tr>
+											<td><?php echo $value->savedVals->description_2; ?></td>
+										</tr>
+										<tr>
+											<th>What are some specific short and long-term goals for this domain?</th>
+										</tr>
+										<tr>
+											<td><?php echo $value->savedVals->description_3; ?></td>
 										</tr>
 									</tbody>
 								  <?php
+								  $q++;
 									}
 								  $i++;
+								  ?>
+								  </tbody>
+								  <?php
 								  }
 								   ?>
-								</tbody>
 							</table>
 						</div>
 					</div>
@@ -241,3 +240,6 @@ function changeicon(bid) {
 	}
 }
 </script>
+<style>
+    .evenclass{background:#eee;}
+    </style>

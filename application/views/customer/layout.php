@@ -12,6 +12,7 @@ $this->load->helper('array');
 ?>
 
 <!-- Include Header -->
+<?php /* if(isset($heads) && $heads == 1) { */ ?><?php /* }else{ */ ?>
 <?php if($this->session->userdata("user_id")) { ?>
 <?php $this->load->view('customer/includes/header');?>
 <?php }else{ ?>
@@ -26,16 +27,16 @@ $this->load->helper('array');
 <!-- Load Menu only is user logged in successfully -->
 <?php if($this->session->userdata("user_id")) { ?>
 <?php $this->load->view('customer/includes/sub_header'); ?>
-<?php } ?>
+<?php } ?><?php /* } */ ?>
 
 <!-- Load Dynamic View Page -->
 <div class="centralView">
 	<?php $this->load->view('customer/'.$viewPage); ?>
 </div>
-
+<?php /* if(isset($heads) && $heads == 1) { */ ?><?php /* }else{ */ ?>
 <!-- Include  Footer -->
 <?php if($this->session->userdata("user_id")) { ?>
 <?php $this->load->view('customer/includes/footer');?>
 <?php }else{ ?>
 <?php $this->load->view('customer/includes/footer_login');?>
-<?php } ?>
+<?php } ?><?php /* } */ ?>

@@ -36,7 +36,7 @@
 										<br>
 										<?php
 										foreach($postMeetings[$gya]->actions as $action) {
-											echo '<a href="Javascript:void(0)" onclick="get_questions('.$action->id.')">#'.$action->id.''.$action->action_title.'</a><br>';
+											echo '<a href="Javascript:void(0)" title="'.$action->action_title.'" onclick="get_questions('.$action->id.')">#'.$action->id.'</a><br>';
 										}
 									}
 									?>
@@ -81,12 +81,18 @@ function get_questions(id) {
 		  success: function(resultData) {
 			  if(resultData.length > 0) {
 				  $.each(resultData, function (i, data) {
-					  html = html + '<tr><td>'+data.created_date+'</td><td><b>'+data.question+'</b><br>'+data.question+'</td></tr>';
+					  html = html + '<tr><td>'+data.created_date+'</td><td><b>'+data.question+'</b><br>';
+					  if(data.answer != null && data.answer != '') {
+						 html = html + data.answer+'</td></tr>';
+					  }else {
+						 html = html + '</td></tr>'; 
+					  }
 				  });
 				  $('.questionbody').empty();
 				  $('.questionbody').append(html);
 			  }else {
 				  html = html + '<tr><td></td><td>No Data</td></tr>';
+				  $('.questionbody').empty();
 				  $('.questionbody').append(html);
 			  }
 		  }

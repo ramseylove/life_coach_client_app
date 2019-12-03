@@ -51,11 +51,12 @@
     <script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/chartJs/Chart.min.js"></script>
 
     <!-- Toastr -->
-    <script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/toastr/toastr.min.js"></script>
+    <script src="<?php echo $this->config->item("inspinia_js_url");?>/plugins/toastr/toastr.min.js"></script>    <script src="<?php echo $this->config->item("inspinia_js_url");?>/scripts.js"></script>
 
 
     <script>
         $(document).ready(function() {
+			<?php if(isset($_GET['first'])){ ?>
             setTimeout(function() {
                 toastr.options = {
                     closeButton: true,
@@ -66,7 +67,7 @@
                 toastr.success('Survey Application', 'Welcome Admin!');
 
             }, 1300);
-			
+			<?php } ?>
 			checkLogin();
         });
 		
