@@ -35,17 +35,20 @@
 							<td><?php echo(($goal->is_secondary==0)?"Primary":"Secondary");?></td>
 							<!--td><?php/*  echo(($goal->status==0)?"Active":"Disabled"); */?></td-->
 							<td><?php echo date("m/d/Y",strtotime($goal->created_at));?></td>
-							<?php if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
 							<td>
+							<a href="<?php echo $this->config->item("viewchart");?>/<?php echo $goal->id;?>"><i class="fa fa-bar-chart text-navy"></i></a>
+							<?php if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
+							<span>
 								<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editGoal");?>/<?php echo $goal->id;?>" modal-title="Edit Goal - <?php echo $goal->title; ?>" data-sub-text="Here You Can Edit Goal"><i class="fa fa-lg fa-edit text-navy"></i></a>
 								<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteGoal");?>/<?php echo $goal->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
-							</td>
+							</span>
 							<?php }else { ?>
-							<td class="disabled">
+							<span class="disabled">
 								<a href="javascript:void(0);" class="modalInvoke disabled" data-href="<?php echo $this->config->item("editGoal");?>/<?php echo $goal->id;?>" modal-title="Edit Goal - <?php echo $goal->title; ?>" data-sub-text="Here You Can Edit Goal"><i class="fa fa-lg fa-edit text-navy"></i></a>
 								<a href="javascript:void(0);" class="delete disabled" data-href="<?php echo $this->config->item("deleteGoal");?>/<?php echo $goal->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
-							</td>
+							</span>
 							<?php } ?>
+							</td>
 						  </tr>
 						  <?php $i++;} ?>
 						</tbody>

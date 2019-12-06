@@ -65,9 +65,12 @@
 													<?php } ?>
 												</label>
 												<?php
-													$remDRStr = ((trim($remDr->date)!='')?date('m/d/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):'');
+													/* $remDRStr = ((trim($remDr->date)!='')?date('m/d/Y', strtotime($remDr->date)).' ':'').((trim($remDr->time)!='')?date('h:i a', strtotime($remDr->time)):''); */
+													$created = date('m/d/Y', strtotime($remDr->created_at));
+													$datess = date('h:i a', strtotime($remDr->time));
+													
 												?>
-												<p><small><?php echo $remDRStr; ?></small></p>
+												<p><small><?php echo '('.$created.' '.$datess.')'; 	/* echo $remDRStr; */ ?></small></p>
 											</td>
 											<td>
 												<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editAction");?>/<?php echo $action->id;?>/<?php echo $remDr->id; ?>" modal-title="Edit Action - <?php echo $action->action_title; ?>" data-sub-text="Here You Can Edit Action"><i class="fa fa-lg fa-edit text-navy"></i></a>

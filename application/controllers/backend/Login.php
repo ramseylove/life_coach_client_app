@@ -825,4 +825,10 @@ class Login extends MY_Controller {
 			}
 		} 
 	}
+	public function dailyactions() {
+		$actions = $this->login_model->getDashboardDailyRoutineActions();
+		foreach($actions as $action) {
+			$res = $this->login_model->insertAction($action);
+		}
+	}
 }

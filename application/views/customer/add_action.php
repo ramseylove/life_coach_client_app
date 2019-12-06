@@ -118,7 +118,7 @@
 			<div id="addRemTimeDiv" class="hideShowtimeappend">
 				<?php if(count($actionData)>0 && count($actionData->reminders)>0 && $actionData->action_type_id==2){ ?>
 					<?php $remTimeCounter = 0; foreach($actionData->reminders as $reminder){ ?>
-						<?php if($remTimeCounter > 0){ ?>
+						<?php if($remTimeCounter > 0){ if($reminder->cron_added == 0){ ?>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="col-md-4 remTime_<?php echo $remTimeCounter;?>">	
@@ -152,7 +152,7 @@
 									$('#format_'+cou).val(data.fullResult);
 							});
 						</script>
-						<?php } ?>
+						<?php }} ?>
 					<?php $remTimeCounter++; } ?>
 				<?php } ?>
 			</div>

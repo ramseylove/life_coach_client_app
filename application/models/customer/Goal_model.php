@@ -64,7 +64,17 @@ class Goal_model extends CI_Model
 		$goalData = $getGoalQuery->row();
 		return $goalData;
 	}
-
+	
+	function getGoalActions($goalId)
+	{
+		$this->db->select('ala_action_goal_mapping.*,ala_actions.*');
+		$this->db->from('ala_action_goal_mapping');
+		$this->db->join('ala_actions', 'ala_actions.id = ala_action_goal_mapping.action_id', 'left');
+		$this->db->where('ala_action_goal_mapping.goal_id', $goalId);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
 	function updateGoal($goalId)
 	{
 		$checkGoalQuery = $this->db->get_where($this->config->item('ala_goals','dbtables'),array("title"=>trim($this->input->post("title")), "user_id"=>trim($this->session->userdata("user_id"))));

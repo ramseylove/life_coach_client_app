@@ -91,16 +91,18 @@
 									<strong>Accomplished</strong>
 									<?php
 									if(!empty($actionsWithoutPostMeetings)) {
-									foreach($actionsWithoutPostMeetings as $lastActions) { 
-									if($lastActions->is_finished == 1 && $lastActions->nextweek == 0) {
-									/* if($lastActions->action_type_id == 2) { */
-										$reids = 0;
+									foreach($actionsWithoutPostMeetings as $lastActions) {
+									$reids = 0;
+									
+									if($lastActions->action_type_id == 2) {
+										
 										if(!empty($lastActions->reminders)) {
 										foreach($lastActions->reminders as $remder) {
 											$reids = $remder->id;
-										}}
+											if($remder->is_finished == 1) {
+										/* }} */
 									?>
-										<!--div class="row">
+										<div class="row">
 											<div class="col-md-12">
 												<p>
 													<?php if(!in_array($lastActions->id,$preaddedAction)) { ?>
@@ -109,10 +111,19 @@
 													</a>
 													<?php } ?>
 													<strong><?php echo $lastActions->action_title; ?></strong>
+													<p><small>
+														<?php
+															$created = date('m/d/Y', strtotime($remder->created_at));
+															$datess = date('h:i a', strtotime($remder->time));
+															echo '('.$created.' '.$datess.')'; 		
+														?>
+													</small></p>
 												</p>
 											</div>
-										</div-->
-									<?php /* }}}else { */ ?>
+										</div>
+										<?php }}}}else { 
+									if($lastActions->is_finished == 1 && $lastActions->nextweek == 0) {
+									?>
 										<div class="row">
 											<div class="col-md-12">
 												<p>
@@ -181,22 +192,22 @@
 												</p>
 											</div>
 										</div>
-									<?php /* } */}}} ?>
+									<?php }}}} ?>
 									</div>
 									<div class="col-sm-5">
 									<strong>Incomplete</strong>
 									<?php
 									if(!empty($actionsWithoutPostMeetings)) {
 									foreach($actionsWithoutPostMeetings as $lastActions) {
-									if($lastActions->is_finished == 0 && $lastActions->nextweek == 0) {
-									/* if($lastActions->action_type_id == 2) {*/
+									if($lastActions->action_type_id == 2) {
 										$reids = 0;
 										if(!empty($lastActions->reminders)) {
 										foreach($lastActions->reminders as $remder) {
 											$reids = $remder->id;
-										}}
+										if($remder->is_finished == 0 && $lastActions->nextweek == 0) {
+										/* }} */
 									?>
-										<!--div class="row">
+										<div class="row">
 											<div class="col-md-12">
 												<p>
 													<?php if(!in_array($lastActions->id,$preaddedAction)) { ?>
@@ -205,10 +216,19 @@
 													</a>
 													<?php } ?>
 													<strong><?php echo $lastActions->action_title; ?></strong>
+													<p><small>
+														<?php
+															$created = date('m/d/Y', strtotime($remder->created_at));
+															$datess = date('h:i a', strtotime($remder->time));
+															echo '('.$created.' '.$datess.')'; 		
+														?>
+													</small></p>
 												</p>
 											</div>
-										</div-->
-									<?php /* }}}else { */ ?>
+										</div>
+									<?php }}}}else {
+										if($lastActions->is_finished == 0 && $lastActions->nextweek == 0) {
+										?>
 										<div class="row">
 											<div class="col-md-12">
 												<p>
@@ -277,7 +297,7 @@
 												</p>
 											</div>
 										</div>
-									<?php /* } */}}} ?>
+									<?php }}}} ?>
 									</div>
 								</div>
 							</div>
@@ -333,12 +353,14 @@
 															if(!empty($action->reminders)) {
 																$ii = 0;
 																foreach($action->reminders as $remder) {
-																	if($ii == 0) {
-																		$remDRStr = ((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
-																	}else{
-																		$remDRStr .= ','.((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																	if($remder->cron_added == 0){
+																		if($ii == 0) {
+																			$remDRStr = ((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																		}else{
+																			$remDRStr .= ','.((trim($remder->date)!='')?date('m/d/Y', strtotime($remder->date)).' ':'').((trim($remder->time)!='')?date('h:i a', strtotime($remder->time)):'');
+																		}
+																		$ii++;
 																	}
-																	$ii++;
 																}
 															}
 															echo '('.$remDRStr.')'; 

@@ -37,7 +37,12 @@ class Goal extends CE_Controller {
 			$this->load->view('customer/layout',$viewArr);
 		}
 	}
-	
+	public function viewchart($id) {
+		$viewArr["singleGoal"] = $this->goal_model->getGoalData($id);
+		$viewArr["allActions"] = $this->goal_model->getGoalActions($id); 
+		$viewArr["viewPage"] = "goal_chart";
+		$this->load->view('customer/layout',$viewArr);
+	}
 	public function addGoal()
 	{	
 		$viewArr = array();
