@@ -3,35 +3,51 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-title">
 				<h5>Goals</h5>
-			</div>
+			</div>			
 			<div class="ibox-content">
 				<div class="row">
 					<div class="col-sm-3">
+					<?php $adminAllow = $_SESSION['editpermission']; if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
 						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addGoal");?>" modal-title="Add New Goal" data-sub-text="Here you can add a new goal.">Add New Goal</a>
+					<?php }else { ?>
+						<span class="disableded">
+							<a class="btn btn-primary btn-rounded disabled disableded" href="javascript:void(0);">Add New Goal</a>
+						</span>
+					<?php } ?>
 					</div>
 				</div>
-				<?php if(count($goals)>0) { ?>
+				<?php if(!empty($goals) && count($goals)>0) { ?>
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table table-striped table-hover">
 						<thead>
 						<tr>
-							<th>Created Date</th>
-							<th>Title</th>
+							<th>Goal</th>
 							<th>Type</th>
-							<th>Status</th>
+							<!--th>Status</th-->
+							<th>Created Date</th>
 							<th>Action</th>
 						</tr>
 						</thead>
 						<tbody>
 							<?php $i=0; foreach($goals as $goal){ ?>
 							<tr id="goalRow_<?php echo $goal->id;?>">
-							<td><?php echo date("d/m/Y",strtotime($goal->created_at));?></td>
 							<td><?php echo wordwrap($goal->title,20,"<br />");?></td>
 							<td><?php echo(($goal->is_secondary==0)?"Primary":"Secondary");?></td>
-							<td><?php echo(($goal->status==0)?"Active":"Disabled");?></td>
+							<!--td><?php/*  echo(($goal->status==0)?"Active":"Disabled"); */?></td-->
+							<td><?php echo date("m/d/Y",strtotime($goal->created_at));?></td>
 							<td>
+							<a href="<?php echo $this->config->item("viewchart");?>/<?php echo $goal->id;?>"><i class="fa fa-bar-chart text-navy"></i></a>
+							<?php if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
+							<span>
 								<a href="javascript:void(0);" class="modalInvoke" data-href="<?php echo $this->config->item("editGoal");?>/<?php echo $goal->id;?>" modal-title="Edit Goal - <?php echo $goal->title; ?>" data-sub-text="Here You Can Edit Goal"><i class="fa fa-lg fa-edit text-navy"></i></a>
 								<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deleteGoal");?>/<?php echo $goal->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+							</span>
+							<?php }else { ?>
+							<span class="disabled">
+								<a href="javascript:void(0);" class="modalInvoke disabled" data-href="<?php echo $this->config->item("editGoal");?>/<?php echo $goal->id;?>" modal-title="Edit Goal - <?php echo $goal->title; ?>" data-sub-text="Here You Can Edit Goal"><i class="fa fa-lg fa-edit text-navy"></i></a>
+								<a href="javascript:void(0);" class="delete disabled" data-href="<?php echo $this->config->item("deleteGoal");?>/<?php echo $goal->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+							</span>
+							<?php } ?>
 							</td>
 						  </tr>
 						  <?php $i++;} ?>

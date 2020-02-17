@@ -8548,6 +8548,13 @@ body.md-skin {
   .welcome-message {
     display: none;
   }
+  .ibox.float-e-margins {
+    margin: 22px 0;
+
+  }
+.ibox-content {
+    margin-bottom: 64px;
+}
 }
 @media print {
   nav.navbar-static-side {
@@ -8559,4 +8566,258 @@ body.md-skin {
   #page-wrapper {
     margin: 0;
   }
+}
+.values-class .icheckbox_square-green {
+	margin-right: 8px;
+}
+.values-class .i-checks label {
+	font-weight: normal;
+}
+.values-class .i-checks {
+	margin: 6px 0px 7px;
+	font-size: 20px;
+}
+.errr{
+	display:none;
+	color:red;
+}
+.checkers {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-weight: normal;
+}
+a.delete .fa {
+    font-size: 14px;
+}
+.checkers input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+	height: 22px;
+    width: 22px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.checkers:hover input ~ .checkmark {
+  background-color: #fff;
+  border-color: #1ab394;
+}
+.checkers input:checked ~ .checkmark {
+  background-color: #1ab394;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkers input:checked ~ .checkmark:after {
+  display: block;
+}
+.checkers .checkmark:after {
+  left: 7px;
+    top: 4px;
+    width: 7px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+a.dleteval{text-decoration:underline;}
+.clickable{cursor:pointer !important;}
+.m-row{background:#e2e2e2 !important;}
+.card-header span {
+    padding: 9px 0 6px;
+    display: block;
+	cursor: pointer;
+}
+.workout-row{
+	margn-top: 50px;
+}
+.weeks-inner.grey-bg {
+    background: #eee;
+    padding: 11px 0;
+}
+.weeks-row hr {
+    margin: 0 !important;
+	border-top: 1px solid #999;
+}
+.weeks-inner {
+    background: #fff;
+    padding: 11px 0;
+}
+.card-header {
+   
+}
+.affirmation .fa {
+    font-size: 20px;
+    margin-right: 5px;
+    position: relative;
+    top: 3px;
+}
+.action.quations span {
+    margin-bottom: 7px;
+    display: block;
+	font-weight: normal !important;
+}
+.quations label {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+}
+.date span {
+    font-weight: bold;
+}
+.date {
+    text-align: center;
+}
+.action span {
+    font-weight: bold;
+}
+.pointe{
+	cursor: pointer;
+}
+a.disabled {
+  pointer-events: none;
+}
+td.disabled {
+cursor: not-allowed !important;
+}
+.disableded {
+cursor: not-allowed !important;
+}
+.table-row {
+    width: 400px;
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    right: 55px;
+}
+
+@media (max-width:767px){ 
+.table-row {
+    width: 100%;
+    position: relative;
+    z-index: 999;
+    bottom: 0;
+    right: 0;
+}
+}
+.col-md-12.class10 {
+    position: relative;
+    z-index: 1;
+}
+.col-md-12.class9 {
+    position: relative;
+    z-index: 2;
+}
+.col-md-12.class8 {
+    position: relative;
+    z-index: 3;
+}
+.col-md-12.class7 {
+    position: relative;
+    z-index: 4;
+}
+.col-md-12.class6 {
+    position: relative;
+    z-index: 5;
+}
+.col-md-12.class5 {
+    position: relative;
+    z-index: 6;
+}
+.col-md-12.class4 {
+    position: relative;
+    z-index: 7;
+}
+.col-md-12.class3 {
+    position: relative;
+    z-index: 8;
+}
+.col-md-12.class2 {
+    position: relative;
+    z-index: 9;
+}
+.col-md-12.class1 {
+    position: relative;
+    z-index: 10;
+}
+.col-md-12.class0 {
+    position: relative;
+    z-index: 11;
+}
+.marginclass {
+    margin-bottom: 20px !important;
+}
+.weeks-innergrey:nth-child(2n) {
+    background: #eee;
+}
+.graycol:nth-child(2n + 1) {
+    background: #eee;
+}
+.graycol .panel-group {
+    margin-bottom: 0px !important;
+}
+#weeklyDiv .input-group {
+    display: flex;
+}
+#weeklyDiv .checks1 {
+    margin: 6px 6px;
+}
+#weeklyDiv .checkers {
+    padding-right: 0;
+}
+#weeklyDiv .input-group-addon {
+    padding: 9px 12px;
+    width: 36px;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #eee;
+}
+#mi-modal {
+    z-index: 9999 !important;
+    top: 138px;
+}
+.action-inner .week-inner {
+    display: inline-block;
+}
+    .action-inner .affirmation {
+    display: inline-block;
+}
+.action-inner .card-header span {
+    display: inline-block;
+}
+#otherdiv .input-group {
+    display: flex;
+}
+#otherdiv .checks1 {
+    margin: 6px 6px;
+}
+#otherdiv .checkers {
+    padding-right: 0;
+}
+#otherdiv .input-group-addon {
+    padding: 9px 12px;
+    width: 54px;
+}
+.clearfix {
+    display: inline-block;
+    width: 100%;
 }

@@ -5,13 +5,13 @@
 <link href="<?php echo $this->config->item("inspinia_css_url");?>/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
 <div class="ibox-content">
 	<div id="messages" tabindex='1'></div>
-		<form method="POST" action="<?php echo $this->config->item("insertValue")."/".((count($valueData)>0)?$valueData->id:0);?>" id="valueFrm" name="valueFrm" class="form-horizontal">
+		<form method="POST" action="<?php echo $this->config->item("insertValue")."/".((count($valueIdentifier)>0)?$valueIdentifier->id:0);?>" id="valueFrm" name="valueFrm" class="form-horizontal">		<input type="hidden" name="default_value_id" value="<?php echo $ids; ?>" />
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>Title</strong><span style="color:red;">&nbsp;*</span></p>
-						<input type="text" name="title" id="title" class="form-control" value="<?php echo((count($postData)>0 && isset($postData["title"]))?trim($postData["title"]):((count($valueData)>0)?$valueData->title:""));?>"/>
+						<input type="text" name="title" id="title" class="form-control" value="<?php if(!empty($defIdentifier)){ echo $defIdentifier->value_title; } ?>" readonly="readonly"/>
 					</div>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 					<div class="col-sm-10">
 						<p><strong>Current Happiness Level</strong><span style="color:red;">&nbsp;*</span></p>
 						<div class="currentHappinessLevel"></div>
-						<input type="hidden" id="currentHappinessLevelValue" name="current_happiness_level" value="<?php echo((count($postData)>0 && isset($postData["current_happiness_level"]))?trim($postData["current_happiness_level"]):((count($valueData)>0)?$valueData->current_happiness_level:0));?>"/>
+						<input type="hidden" id="currentHappinessLevelValue" name="current_happiness_level" value="<?php if(!empty($valueIdentifier)){ echo $valueIdentifier->current_happiness_level; }else { echo '0'; } ?>"/>
 					</div>
 				</div>
 			</div>
@@ -33,7 +33,7 @@
 					<div class="col-sm-10">
 						<p><strong>Expected Happiness Level</strong><span style="color:red;">&nbsp;*</span></p>
 						<div class="expectedHappinessLevel"></div>
-						<input type="hidden" id="expectedHappinessLevelValue" name="expected_happiness_level" value="<?php echo((count($postData)>0 && isset($postData["expected_happiness_level"]))?trim($postData["expected_happiness_level"]):((count($valueData)>0)?$valueData->expected_happiness_level:0));?>"/>
+						<input type="hidden" id="expectedHappinessLevelValue" name="expected_happiness_level" value="<?php if(!empty($valueIdentifier)){ echo $valueIdentifier->expected_happiness_level; }else { echo '0'; } ?>"/>
 					</div>
 				</div>
 			</div>
@@ -43,7 +43,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>What does this domain mean to you?</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="description_0" id="description_0" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description_0"]))?trim($postData["description_0"]):((count($valueData)>0 && $valueData->details && count($valueData->details)>0 && isset($valueData->details['description_0']))?$valueData->details['description_0']->description:""));?></textarea>
+						<textarea class="form-control" name="description_0" id="description_0" cols="50" rows="3"><?php if(!empty($valueIdentifier)){ echo $valueIdentifier->description_0; } ?></textarea>
 					</div>
 				</div>
 			</div>
@@ -53,7 +53,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>What kind of person would you like to be in this domain?</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="description_1" id="description_1" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description_1"]))?trim($postData["description_1"]):((count($valueData)>0 && $valueData->details && count($valueData->details)>0 && isset($valueData->details['description_1']))?$valueData->details['description_1']->description:""));?></textarea>
+						<textarea class="form-control" name="description_1" id="description_1" cols="50" rows="3"><?php if(!empty($valueIdentifier)){ echo $valueIdentifier->description_1; } ?></textarea>
 					</div>
 				</div>
 			</div>
@@ -63,7 +63,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>How are you doing in this domain now?</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="description_2" id="description_2" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description_2"]))?trim($postData["description_2"]):((count($valueData)>0 && $valueData->details && count($valueData->details)>0 && isset($valueData->details['description_2']))?$valueData->details['description_2']->description:""));?></textarea>
+						<textarea class="form-control" name="description_2" id="description_2" cols="50" rows="3"><?php if(!empty($valueIdentifier)){ echo $valueIdentifier->description_2; } ?></textarea>
 					</div>
 				</div>
 			</div>
@@ -73,7 +73,7 @@
 				<div class="form-group">
 					<div class="col-sm-10">
 						<p><strong>What are some specific short and long-term goals for this domain?</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="description_3" id="description_3" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["description_3"]))?trim($postData["description_3"]):((count($valueData)>0 && $valueData->details && count($valueData->details)>0 && isset($valueData->details['description_3']))?$valueData->details['description_3']->description:""));?></textarea>
+						<textarea class="form-control" name="description_3" id="description_3" cols="50" rows="3"><?php if(!empty($valueIdentifier)){ echo $valueIdentifier->description_3; } ?></textarea>
 					</div>
 				</div>
 			</div>
@@ -113,7 +113,7 @@ $(document).ready(function(){
 					$(".currentHappinessLevel").ionRangeSlider({
 							min: 0,
 							max: 10,
-							from: '<?php echo ((count($valueData)>0)?$valueData->current_happiness_level:0);?>',
+							from: '<?php if(!empty($valueIdentifier)){ echo $valueIdentifier->current_happiness_level; }else { echo '0'; } ?>',
 							type: 'single',
 							step: 1,
 							postfix: " point",
@@ -124,7 +124,7 @@ $(document).ready(function(){
 					$(".expectedHappinessLevel").ionRangeSlider({
 							min: 0,
 							max: 10,
-							from: '<?php echo ((count($valueData)>0)?$valueData->expected_happiness_level:0);?>',
+							from: '<?php if(!empty($valueIdentifier)){ echo $valueIdentifier->expected_happiness_level; }else { echo '0'; } ?>',
 							type: 'single',
 							step: 1,
 							postfix: " point",
@@ -168,7 +168,7 @@ function saveResp(response){
 				});
                
 				$('#commonModalClose').trigger('click');
-				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>");
+				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>&heads=1");
 				setTimeout(function(){
 					$('#viSel_'+response.valueId+'').iCheck('check');
 				}, 3000);
@@ -181,4 +181,5 @@ function saveResp(response){
 		$("#save").prop('disabled', false);
 	}
 }
+
 </script>

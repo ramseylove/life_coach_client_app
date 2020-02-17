@@ -12,4 +12,7 @@ $config['ala_pre_meeting'] = "ala_pre_meeting";
 $config['ala_user'] = "ala_user";
 $config['ala_value_identifiers'] = "ala_value_identifiers";
 $config['ala_value_identifier_details'] = "ala_value_identifier_details";
+$config['ala_default_values'] = "ala_default_values";
+$config['ala_action_question'] = "ala_action_question";
+$config['ala_tags'] = "ala_tags";
 ?>

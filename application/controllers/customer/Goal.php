@@ -10,27 +10,21 @@ class Goal extends CE_Controller {
 	public function index($page=0)
 	{	
 		$this->load->library('pagination');
-
 		$config['base_url'] = $this->config->item("goalCtrl")."/index";
 		$config['total_rows'] = $this->goal_model->getGoalsCount();
 		$config['per_page'] = ROWS_PER_PAGE;
-		
 		$config['prev_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-left">';
 		$config['prev_tag_close'] = '</i></button>';
-		
 		$config['next_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-right">';
 		$config['next_tag_close'] = '</i></button>';
-		
 		$config['cur_tag_open'] = '<button type="button" class="btn btn-primary">';
 		$config['cur_tag_close'] = '</button>';	
-		
 		$config['num_tag_open'] = '<button type="button" class="btn btn-white">';
 		$config['num_tag_close'] = '</button>';
 		$this->pagination->initialize($config);
-		
 		$viewArr = array();
 		$goals = $this->goal_model->getGoals($page);
-		
+		$viewArr["lastPostMeeting"] = $this->goal_model->getLastPostMeeting();		
 		$viewArr["goals"] = $goals;
 		
 		if(isset($_GET["pagination"]))
@@ -43,7 +37,12 @@ class Goal extends CE_Controller {
 			$this->load->view('customer/layout',$viewArr);
 		}
 	}
-	
+	public function viewchart($id) {
+		$viewArr["singleGoal"] = $this->goal_model->getGoalData($id);
+		$viewArr["allActions"] = $this->goal_model->getGoalActions($id); 
+		$viewArr["viewPage"] = "goal_chart";
+		$this->load->view('customer/layout',$viewArr);
+	}
 	public function addGoal()
 	{	
 		$viewArr = array();

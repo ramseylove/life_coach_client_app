@@ -37,7 +37,7 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="col-sm-10">
-						<p><strong>Phone</strong><span style="color:red;">&nbsp;*</span></p>
+						<p><strong>Phone</strong></p>
 						<input type="text" class="form-control" name="phone" id="phone" value="<?php echo((count($postData)>0 && isset($postData["phone"]))?trim($postData["phone"]):((count($userData)>0)?$userData->phone:""));?>"/>
 					</div>
 				</div>
