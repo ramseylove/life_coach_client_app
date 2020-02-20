@@ -15,8 +15,8 @@
 					<table class="table table-striped">
 						<thead>
 						<tr>
-							<th>Sr No</th>
-							<th>Created Date</th>
+							<th>Id</th>
+							<th>Created</th>
 							<th>Name</th>
 							<th>Email</th>
 							<th>Phone</th>

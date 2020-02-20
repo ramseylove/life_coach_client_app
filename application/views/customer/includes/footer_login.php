@@ -1,7 +1,7 @@
 <hr/>
      <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-               Survey Application
+               Ala.expert
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 text-right">
                <small>© <?php echo date('Y').'-'.date('Y', strtotime('+1year', strtotime(date('Y-m-d'))));?></small>

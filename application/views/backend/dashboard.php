@@ -12,7 +12,7 @@
 			}
 		?>
         <div class="dashpage">
-          <h2>Welcome to Admin Panel for survey application.</h2>
+          <h2>Welcome Ala's Admin Panel</h2>
         </div>
       </div>
 </div>

@@ -51,7 +51,7 @@
 						</form>
 					</div>
                     <p class="m-t">
-                        <small>Survey Application &copy; 2014</small>
+                        <small>Ala.expert &copy; 2020</small>
                     </p>
                 </div>
             </div>

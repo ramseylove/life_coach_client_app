@@ -255,18 +255,12 @@
 			<div class="row wrapper border-bottom white-bg page-heading actions-class">
 				<div class="row">
 					<div class="col-lg-12">
-						<h2>Goals and Value Identifiers</h2>
+						<h2>Goal and Value Identifiers</h2>
+					</div>
+					<div class="col-sm-12">
+						<h5>Please set your goals and Values here</h5>
 					</div>
 					<hr>
-					<div class="col-sm-12">
-						<?php $adminAllow = $_SESSION['editpermission']; if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
-						<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addGoal");?>" modal-title="Add New Goal" data-sub-text="Here you can add a new goal.">Add New Goal</a>
-					<?php }else { ?>
-						<span class="disableded">
-							<a class="btn btn-primary btn-rounded disabled disableded" href="javascript:void(0);">Add New Goal</a>
-						</span>
-					<?php } ?>
-					</div>
 				</div>
             </div>
 			<div class="wrapper wrapper-content animated fadeInRight">	
@@ -276,6 +270,15 @@
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
 								<h5>Goals</h5>
+								<div class="ibox-tools">
+								<?php $adminAllow = $_SESSION['editpermission']; if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
+									<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addGoal");?>" modal-title="Add New Goal" data-sub-text="Here you can add a new goal.">Add New Goal</a>
+								<?php }else { ?>
+									<span class="disableded">
+									<a class="btn btn-primary btn-rounded disabled disableded" href="javascript:void(0);">Add New Goal</a>
+									</span>
+								<?php } ?>
+								</div>
 							</div>
 							<div class="ibox-content">
 								<table class="table table-hover">
@@ -324,10 +327,13 @@
 					<div class="col-md-6">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
-								<h5>Value Identifiers</h5>
+								<h5>Value Identifier</h5>
+								<div class="ibox-tools">
+									<a class="btn btn-primary btn-rounded marginclass" href="Javascript:void(0)" data-toggle="modal" data-target="#valuesModel">Click to add new</a>
+								</div>
 							</div>
 							<div class="ibox-content">
-								<a class="btn btn-primary btn-rounded marginclass" href="Javascript:void(0)" data-toggle="modal" data-target="#valuesModel">Click to add new</a>
+								
 								<div class="values-class">
 								<?php foreach($defaultValues as $dValues) { ?>
 									<div class="checks1">

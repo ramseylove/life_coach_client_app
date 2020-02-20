@@ -26,7 +26,7 @@
                         <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a>-->
                     </form>
                     <p class="m-t">
-                        <small>Survey Application &copy; 2014</small>
+                        <small>Ala.Expert &copy; 2020</small>
                     </p>
                 </div>
             </div>

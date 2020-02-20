@@ -22,7 +22,7 @@
 					</ul>
 				</div>
 				<div class="logo-element">
-					SA 
+					ALA 
 				</div>
 			</li>
 			<li <?php echo (($viewPage == 'manage_actions')?'class="active"':''); ?>>

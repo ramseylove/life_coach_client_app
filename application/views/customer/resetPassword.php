@@ -29,7 +29,7 @@
 						<button type="submit" class="btn btn-primary block full-width m-b">Reset Now</button>
 					</form>
                     <p class="m-t">
-                        <small>Survey Application &copy; 2014</small>
+                        <small>Ala.expert &copy; 2020</small>
                     </p>
                 </div>
             </div>
