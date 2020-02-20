@@ -258,7 +258,13 @@
 						<h2>Goal and Value Identifiers</h2>
 					</div>
 					<div class="col-sm-12">
-						<h5>Please set your goals and Values here</h5>
+					<?php $adminAllow = $_SESSION['editpermission']; if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
+					<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addGoal");?>" modal-title="Add New Goal" data-sub-text="Here you can add a new goal.">Add New Goal</a>
+					<?php }else { ?>
+					<span class="disableded">
+					<a class="btn btn-primary btn-rounded disabled disableded" href="javascript:void(0);">Add New Goal</a>
+					</span>
+					<?php } ?>
 					</div>
 					<hr>
 				</div>
@@ -271,13 +277,7 @@
 							<div class="ibox-title">
 								<h5>Goals</h5>
 								<div class="ibox-tools">
-								<?php $adminAllow = $_SESSION['editpermission']; if(empty($lastPostMeeting) || $adminAllow == 0) { ?>
-									<a class="btn btn-primary btn-rounded modalInvoke" href="javascript:void(0);" data-href="<?php echo $this->config->item("addGoal");?>" modal-title="Add New Goal" data-sub-text="Here you can add a new goal.">Add New Goal</a>
-								<?php }else { ?>
-									<span class="disableded">
-									<a class="btn btn-primary btn-rounded disabled disableded" href="javascript:void(0);">Add New Goal</a>
-									</span>
-								<?php } ?>
+								
 								</div>
 							</div>
 							<div class="ibox-content">
