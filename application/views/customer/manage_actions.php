@@ -329,7 +329,7 @@
 							<div class="ibox-title">
 								<h5>Value Identifier</h5>
 								<div class="ibox-tools">
-									<a class="btn btn-primary btn-rounded marginclass" href="Javascript:void(0)" data-toggle="modal" data-target="#valuesModel">Click to add new</a>
+									<a class="label label-primary float-right" href="Javascript:void(0)" data-toggle="modal" data-target="#valuesModel">Add Value</a>
 								</div>
 							</div>
 							<div class="ibox-content">
