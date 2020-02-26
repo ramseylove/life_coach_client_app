@@ -121,6 +121,13 @@ class Login extends MY_Controller {
 		$currenttime = date('H:i:s');
 		$currentplus15 = strtotime("+15 minutes", strtotime($currenttime));
 		$currenttime15 = date('H:i:s', $currentplus15);
+		
+		// sendgrid details
+		$url = 'https://sendgrid.com/';
+		$sendgrid_username = 'atriadev';
+		$sendgrid_password = '[w4G2#0):u-:nk\-5#';
+		
+		
 		$actions = $this->login_model->getDashboardActions();
 		foreach($actions as $action) {
 			$userData = $this->login_model->getUserData($action->user_id);
@@ -131,9 +138,11 @@ class Login extends MY_Controller {
 							if($currentdate == $remind->date) {
 								if($remind->time >= $currenttime && $remind->time <= $currenttime15) {
 									$this->load->library('email');
-									$from = 'Ala';
-									$to = $userData->email;
-									$subject = 'Ala servey application - Action Reminder';
+									// $from = 'Ala';
+									// $to = $userData->email;
+									// $subject = 'Ala servey application - Action Reminder';
+								
+									
 									$message = '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta name="viewport" content="width=device-width" /><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Alerts e.g. approaching your limit</title><link href="styles.css" media="all" rel="stylesheet" type="text/css" /><style>
 	* {
 		margin: 0;
@@ -348,13 +357,44 @@ class Login extends MY_Controller {
 			width: 100% !important;
 		}
 	}</style></head><body><table class="body-wrap"><tr><td></td><td class="container" width="600"><div class="content"><table class="main" width="100%" cellpadding="0" cellspacing="0"><tr><td class="alert alert-good">Ala Servey Application</td></tr><tr><td class="content-wrap"><table width="100%" cellpadding="0" cellspacing="0"><tr><td class="content-block">“This is a friendly reminder to complete this action:” '.$action->action_title.'</td></tr><tr><td class="content-block"><a href="'.base_url().'customer/action" class="btn-primary" style="color:#fff;">Go To Dashboard</a></td></tr><tr><td class="content-block">Thanks</td></tr></table></td></tr></table><div class="footer"><table width="100%"><tr><td class="aligncenter content-block"></td></tr></table></div></div></td><td></td></tr></table></tbody></html>';
-									$this->email->set_newline("\r\n");
-									$this->email->set_mailtype("html");
-									$this->email->from($from);
-									$this->email->to($to);
-									$this->email->subject($subject);
-									$this->email->message($message);
-									$this->email->send();
+									// $this->email->set_newline("\r\n");
+									// $this->email->set_mailtype("html");
+									// $this->email->from($from);
+									// $this->email->to($to);
+									// $this->email->subject($subject);
+									// $this->email->message($message);
+									// $this->email->send();
+									
+								$params = array(
+									'api_user' => $sendgrid_username,
+									'api_key' => $sendgrid_password,
+									'to' => $userData->email,
+									'subject'  => 'Ala servey application - Action Reminder',
+									'html' => '' . $message . '',
+									'from'  => 'ala.aldahneem@ala.expert',
+
+								);
+								
+									$request = $url . 'api/mail.send.json';
+
+									// Generate curl request
+									$session = curl_init($request);
+
+									// Tell curl to use HTTP POST
+									curl_setopt($session, CURLOPT_POST, true);
+
+									// Tell curl that this is the body of the POST
+									curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+
+									// Tell curl not to return headers, but do return the response
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+
+									// obtain response
+									$response = curl_exec($session);
+									curl_close($session);
+								
 								}
 							}
 						}
@@ -363,9 +403,13 @@ class Login extends MY_Controller {
 							if($dayname == $remind->dayname) { 
 								if($remind->time >= $currenttime && $remind->time <= $currenttime15) {
 									 $this->load->library('email');
-									$from = 'Ala';
-									$to = $userData->email;
-									$subject = 'Ala servey application - Action Reminder';
+									// $from = 'Ala';
+									// $to = $userData->email;
+									// $subject = 'Ala servey application - Action Reminder';
+									
+								
+									
+									
 									$message = '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta name="viewport" content="width=device-width" /><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Alerts e.g. approaching your limit</title><link href="styles.css" media="all" rel="stylesheet" type="text/css" /><style>
 	* {
 		margin: 0;
@@ -580,13 +624,43 @@ class Login extends MY_Controller {
 			width: 100% !important;
 		}
 	}</style></head><body><table class="body-wrap"><tr><td></td><td class="container" width="600"><div class="content"><table class="main" width="100%" cellpadding="0" cellspacing="0"><tr><td class="alert alert-good">Ala Servey Application</td></tr><tr><td class="content-wrap"><table width="100%" cellpadding="0" cellspacing="0"><tr><td class="content-block">“This is a friendly reminder to complete this action:” '.$action->action_title.'</td></tr><tr><td class="content-block"><a href="'.base_url().'customer/action" class="btn-primary" style="color:#fff;">Go To Dashboard</a></td></tr><tr><td class="content-block">Thanks</td></tr></table></td></tr></table><div class="footer"><table width="100%"><tr><td class="aligncenter content-block"></td></tr></table></div></div></td><td></td></tr></table></tbody></html>';
-									$this->email->set_newline("\r\n");
-									$this->email->set_mailtype("html");
-									$this->email->from($from);
-									$this->email->to($to);
-									$this->email->subject($subject);
-									$this->email->message($message);
-									$this->email->send();
+	
+									// $this->email->set_newline("\r\n");
+									// $this->email->set_mailtype("html");
+									// $this->email->from($from);
+									// $this->email->to($to);
+									// $this->email->subject($subject);
+									// $this->email->message($message);
+									// $this->email->send();
+									
+								$params = array(
+									'api_user' => $sendgrid_username,
+									'api_key' => $sendgrid_password,
+									'to' => $userData->email,
+									'subject'  => 'Ala servey application - Action Reminder',
+									'html' => '' . $message . '',
+									'from'  => 'ala.aldahneem@ala.expert',
+
+								);
+									$request = $url . 'api/mail.send.json';
+
+									// Generate curl request
+									$session = curl_init($request);
+
+									// Tell curl to use HTTP POST
+									curl_setopt($session, CURLOPT_POST, true);
+
+									// Tell curl that this is the body of the POST
+									curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+
+									// Tell curl not to return headers, but do return the response
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+
+									// obtain response
+									$response = curl_exec($session);
+									curl_close($session);
 								}
 							}
 						}
@@ -594,9 +668,10 @@ class Login extends MY_Controller {
 						if($remind->is_finished == 0) {
 							if($remind->time >= $currenttime && $remind->time <= $currenttime15) {
 								 $this->load->library('email');
-									$from = 'Ala';
-									$to = $userData->email;
-									$subject = 'Ala servey application - Action Reminder';
+									// $from = 'Ala';
+									// $to = $userData->email;
+									// $subject = 'Ala servey application - Action Reminder';
+									
 									$message = '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta name="viewport" content="width=device-width" /><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Alerts e.g. approaching your limit</title><link href="styles.css" media="all" rel="stylesheet" type="text/css" /><style>
 	* {
 		margin: 0;
@@ -811,13 +886,43 @@ class Login extends MY_Controller {
 			width: 100% !important;
 		}
 	}</style></head><body><table class="body-wrap"><tr><td></td><td class="container" width="600"><div class="content"><table class="main" width="100%" cellpadding="0" cellspacing="0"><tr><td class="alert alert-good">Ala Servey Application</td></tr><tr><td class="content-wrap"><table width="100%" cellpadding="0" cellspacing="0"><tr><td class="content-block">“This is a friendly reminder to complete this action:” '.$action->action_title.'</td></tr><tr><td class="content-block"><a href="'.base_url().'customer/action" class="btn-primary" style="color:#fff;">Go To Dashboard</a></td></tr><tr><td class="content-block">Thanks</td></tr></table></td></tr></table><div class="footer"><table width="100%"><tr><td class="aligncenter content-block"></td></tr></table></div></div></td><td></td></tr></table></tbody></html>';
-									$this->email->set_newline("\r\n");
-									$this->email->set_mailtype("html");
-									$this->email->from($from);
-									$this->email->to($to);
-									$this->email->subject($subject);
-									$this->email->message($message);
-									$this->email->send();
+									// $this->email->set_newline("\r\n");
+									// $this->email->set_mailtype("html");
+									// $this->email->from($from);
+									// $this->email->to($to);
+									// $this->email->subject($subject);
+									// $this->email->message($message);
+									// $this->email->send();
+									
+									$params = array(
+									
+										'api_user' => $sendgrid_username,
+										'api_key' => $sendgrid_password,
+										'to' => $userData->email,
+										'subject'  => 'Ala servey application - Action Reminder',
+										'html' => '' . $message . '',
+										'from'  => 'ala.aldahneem@ala.expert',
+									
+								);
+									$request = $url . 'api/mail.send.json';
+
+									// Generate curl request
+									$session = curl_init($request);
+
+									// Tell curl to use HTTP POST
+									curl_setopt($session, CURLOPT_POST, true);
+
+									// Tell curl that this is the body of the POST
+									curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+
+									// Tell curl not to return headers, but do return the response
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+
+									// obtain response
+									$response = curl_exec($session);
+									curl_close($session);
 							}
 						}
 					}
