@@ -30,6 +30,12 @@ class Login extends MY_Controller {
 	}
 	public function forgotEmailCheck(){
 		$viewArr = array();
+		
+		// sendgrid details
+		$url = 'https://sendgrid.com/';
+		$sendgrid_username = 'atriadev';
+		$sendgrid_password = '[w4G2#0):u-:nk\-5#';
+		
 		$result = $this->login_model->forgotEmailCheck($_POST['forgot_email']);
 		if(!$result){
 			$error_message = '<div class="alert alert-danger"><center><b style="color:#333333;">Email not exist in database.</b></center></div>';
@@ -38,9 +44,9 @@ class Login extends MY_Controller {
 			$random = rand(100000,999999);
 			$result1 = $this->login_model->updateuserrandom($_POST['forgot_email'],$random);
 			$this->load->library('email');
-			$from = 'Ala';
-			$to = $_POST['forgot_email'];
-			$subject = 'Ala servey application - Reset Password';
+			// $from = 'Ala';
+			// $to = $_POST['forgot_email'];
+			// $subject = 'Ala servey application - Reset Password';
 			
 			$message = '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta name="viewport" content="width=device-width" /><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Alerts e.g. approaching your limit</title><link href="styles.css" media="all" rel="stylesheet" type="text/css" /><style>
 * {
@@ -256,13 +262,47 @@ a {
         width: 100% !important;
     }
 }</style></head><body><table class="body-wrap"><tr><td></td><td class="container" width="600"><div class="content"><table class="main" width="100%" cellpadding="0" cellspacing="0"><tr><td class="alert alert-good">Ala Servey Application</td></tr><tr><td class="content-wrap"><table width="100%" cellpadding="0" cellspacing="0"><tr><td class="content-block">Ala Servey reset password email</td></tr><tr><td class="content-block">We have recieved a reset password request from you. Click below Reset Password button for reset your password.</td></tr><tr><td class="content-block"><a href="'.base_url().'customer/login/resetPassword/'.$result->id.'/'.$random.'" class="btn-primary" style="color:#fff;">Reset Password</a></td></tr><tr><td class="content-block">Thanks</td></tr></table></td></tr></table><div class="footer"><table width="100%"><tr><td class="aligncenter content-block"></td></tr></table></div></div></td><td></td></tr></table></tbody></html>';
-			$this->email->set_newline("\r\n");
-			$this->email->set_mailtype("html");
-			$this->email->from($from);
-			$this->email->to($to);
-			$this->email->subject($subject);
-			$this->email->message($message);
-			if($this->email->send()) {
+			// $this->email->set_newline("\r\n");
+			// $this->email->set_mailtype("html");
+			// $this->email->from($from);
+			// $this->email->to($to);
+			// $this->email->subject($subject);
+			// $this->email->message($message);
+			
+			
+				$params = array(
+				'api_user' => $sendgrid_username,
+				'api_key' => $sendgrid_password,
+				'to' => $_POST['forgot_email'],
+				'subject'  => 'Ala servey application - Reset Password',
+				'html' => '' . $message . '',
+				'from'  => 'ala.aldahneem@ala.expert',
+          
+			);
+			
+				$request = $url . 'api/mail.send.json';
+
+				// Generate curl request
+				$session = curl_init($request);
+
+				// Tell curl to use HTTP POST
+				curl_setopt($session, CURLOPT_POST, true);
+
+				// Tell curl that this is the body of the POST
+				curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+
+				// Tell curl not to return headers, but do return the response
+				curl_setopt($session, CURLOPT_HEADER, false);
+				curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+
+				// obtain response
+				$response = curl_exec($session);
+				curl_close($session);
+				$email_response= json_decode($response);
+			
+				
+			if($email_response->message=='success') {
 				$error_message = '<div class="alert alert-success"><center><b style="color:#333333;">A link is sent to you for reset password. Please check your email.</b></center></div>';
 				$viewArr["error_message"] = $error_message;	
 			}else {
@@ -270,7 +310,7 @@ a {
 				$viewArr["error_message"] = $error_message;	
 			}
 		}
-		echo json_encode($viewArr);
+		echo json_encode($viewArr); exit;
 	}
 	public function resetPassword($id='',$rendom=''){
 		$viewArr = array();
