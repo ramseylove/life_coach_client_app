@@ -5,6 +5,7 @@ class Action extends CE_Controller {
     {		
         parent::__construct();   
 		$this->load->model('customer/action_model');
+		$this->load->model('customer/value_model');
     } 
 	
 	public function index($page=0)
@@ -29,17 +30,70 @@ class Action extends CE_Controller {
 		$this->pagination->initialize($config);
 		
 		$viewArr = array();
+		$actions = $this->action_model->getDashboardActions($page);
+		$viewArr["goals"] = $this->action_model->getGoals();
+		$viewArr["lastPostMeeting"] = $this->action_model->getLastPostMeeting();
+		$viewArr["actions"] = $actions;
+		$values = $this->value_model->getValues($page);
+		$viewArr["values"] = $values;
+		$viewArr["defaultValues"] = $this->value_model->getDefaultValues();
+		$viewArr["userAddedValues"] = $this->value_model->getUserAddedValues();
+		$userAllValues = $this->value_model->getUserAllValues();
+		$addedAll = array();
+		$i = 0;
+		foreach($userAllValues as $userA) {
+			$addedAll[$i] = $userA->default_value_id;
+			$i++;
+		}
+		$viewArr["userAllValues"] = $addedAll; 
+		/* echo '<pre>'; print_r($viewArr); die; */
+		if(isset($_GET["pagination"]))
+		{
+			$this->load->view('customer/manage_actions',$viewArr);
+		}
+		else if(isset($_GET["heads"])) {
+			$this->load->view('customer/manage_actions',$viewArr);
+		}
+		else{
+			$viewArr["viewPage"] = "manage_actions";
+			$this->load->view('customer/layout',$viewArr);
+		}
+	}
+	
+	public function allActions($page=0)
+	{	
+		$this->load->library('pagination');
+
+		$config['base_url'] = $this->config->item("goalCtrl")."/index";
+		$config['total_rows'] = $this->action_model->getActionsCount();
+		$config['per_page'] = ROWS_PER_PAGE;
+		
+		$config['prev_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-left">';
+		$config['prev_tag_close'] = '</i></button>';
+		
+		$config['next_tag_open'] = '<button type="button" class="btn btn-white"><i class="fa fa-chevron-right">';
+		$config['next_tag_close'] = '</i></button>';
+		
+		$config['cur_tag_open'] = '<button type="button" class="btn btn-primary">';
+		$config['cur_tag_close'] = '</button>';	
+		
+		$config['num_tag_open'] = '<button type="button" class="btn btn-white">';
+		$config['num_tag_close'] = '</button>';
+		$this->pagination->initialize($config);
+		
+		$viewArr = array();
+		$viewArr["lastPostMeeting"] = $this->action_model->getLastPostMeeting();
 		$actions = $this->action_model->getActions($page);
 		
 		$viewArr["actions"] = $actions;
 		
 		if(isset($_GET["pagination"]))
 		{
-			$this->load->view('customer/manage_actions',$viewArr);
+			$this->load->view('customer/manage_allactions',$viewArr);
 		}
 		else
 		{
-			$viewArr["viewPage"] = "manage_actions";
+			$viewArr["viewPage"] = "manage_allactions";
 			$this->load->view('customer/layout',$viewArr);
 		}
 	}
@@ -50,6 +104,7 @@ class Action extends CE_Controller {
 		$viewArr["actionData"] = array();
 		$viewArr["postData"] = array();
 		$viewArr["actionTypeData"] = $this->action_model->getActionTypeData();
+		$viewArr["lastPostMeeting"] = $this->action_model->getLastPostMeeting();
 		$viewArr["goals"] = $this->action_model->getGoals();
 		if($_GET && isset($_GET['postMeetingId']))
 		{
@@ -67,7 +122,7 @@ class Action extends CE_Controller {
 		exit;
 	}
 	
-	public function completeAction($actionId)
+	public function completeAction($actionId, $remId = 0)
 	{	
 		$actionData = $this->action_model->getActionData($actionId);
 		if($actionData)
@@ -81,8 +136,15 @@ class Action extends CE_Controller {
 				$viewArr["postData"] = $this->session->userdata("postData");
 				$this->session->unset_userdata("postData");
 			}
-		
-			$html = $this->load->view('customer/complete_action',$viewArr,TRUE);
+			$viewArr['questions'] = $this->action_model->getQuestions($actionId);
+			
+			if(!empty($viewArr['questions'])) {
+				$viewArr['remId'] = $remId;
+				$html = $this->load->view('customer/complete_action',$viewArr,TRUE);
+			}else {
+				$rrr = $this->insertCompleteActionnew($actionId,$remId);
+				$html = 1234;
+			}			
 		}
 		else
 		{
@@ -91,8 +153,20 @@ class Action extends CE_Controller {
 		echo $html;
 		exit;
 	}
-	
-	public function editAction($actionId)
+	public function insertCompleteActionnew($actionId=0,$remId=0) {
+		$message = array();
+		$pass = true;
+		if($pass) {
+			$this->action_model->updateActionAsComplete($actionId);
+			if($remId != 0) {
+				$this->action_model->updateRemindersAsComplete($remId);
+			}
+			$_SESSION['actcom'] = 1;
+			$message[] = "<div class='alert alert-success'><p style='color:green;'>Action Completed successfully.</p></div>";
+		}
+		return array("success"=>$pass,"message"=>$message,"actionId"=>$actionId);
+	}
+	public function editAction($actionId,$remId = 0)
 	{	
 		$actionData = $this->action_model->getActionData($actionId);
 		if($actionData)
@@ -107,8 +181,10 @@ class Action extends CE_Controller {
 			}
 			
 			$viewArr["actionData"] = $actionData;
+			$viewArr["remIds"] =$remId;
 			$viewArr["actionTypeData"] = $this->action_model->getActionTypeData();
 			$viewArr["goals"] = $this->action_model->getGoals();
+			$viewArr["questions"] = $this->action_model->getQuestions($actionId);
 			$html = $this->load->view('customer/add_action',$viewArr,TRUE);
 		}
 		else
@@ -119,53 +195,37 @@ class Action extends CE_Controller {
 		exit;
 	}
 	
-	public function insertCompleteAction($actionId=0)
-	{
-		$message = array();
-		$pass = true;
-		
-		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
-		$this->form_validation->set_rules('action_complete_0', 'Answer-1', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('action_complete_1', 'Answer-2', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('action_complete_2', 'Answer-3', 'trim|required|xss_clean');
-		
-		if ($this->form_validation->run() == FALSE)
+	public function addActionToNextWeek($actionId,$remId = 0)
+	{	
+		$actionData = $this->action_model->getActionData($actionId);
+		if($actionData)
 		{
-			$pass = false;
-			if(form_error('action_complete_0'))
-			{
-				$message[] = form_error('action_complete_0');
-			}
-			if(form_error('action_complete_1'))
-			{
-				$message[] = form_error('action_complete_1');
-			}
-			if(form_error('action_complete_2'))
-			{
-				$message[] = form_error('action_complete_2');
-			}
-		}
-		if($pass)
-		{
-			$res = $this->action_model->insertCompleteAction($actionId);
-			if($res)
-			{
-				$this->action_model->updateActionAsComplete($actionId);
-				$message[] = "<div class='alert alert-success'><p style='color:green;'>Action Completed successfully.</p></div>";
-			}
-			else
-			{
-				$pass = false;
-				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Failed to complete this action. Please try again.</p></div>";
-			}
-		}
+			$viewArr = array();
+			$viewArr["postData"] = array();
 		
-		echo json_encode(array("success"=>$pass,"message"=>$message,"actionId"=>$actionId));
+			if($this->session->userdata("postData"))
+			{
+				$viewArr["postData"] = $this->session->userdata("postData");
+				$this->session->unset_userdata("postData");
+			}
+			
+			$viewArr["actionData"] = $actionData;
+			$viewArr["remIds"] =$remId;
+			$viewArr["actionTypeData"] = $this->action_model->getActionTypeData();
+			$viewArr["goals"] = $this->action_model->getGoals();
+			$viewArr["questions"] = $this->action_model->getQuestions($actionId); 
+			$html = $this->load->view('customer/add_actionto_next_week',$viewArr,TRUE);
+		}
+		else
+		{
+			$html = "<h4>No Action Data Found.</h4>";
+		}
+		echo $html;
 		exit;
-	}	
+	}
 	
-	public function insertAction($actionId=0)
-	{
+	public function insertActionToNextWeek($actionId=0)
+	{	
 		$message = array();
 		$pass = true;
 		
@@ -201,7 +261,149 @@ class Action extends CE_Controller {
 			$pass = false;
 			$message[] = '<div class="alert alert-warning"><p style="color:red;">Invalid Goals. Please select correct goals.</p></div>';
 		}
+		/* foreach($_POST['question'] as $question) {
+			if($question == '') {
+				$pass = false;
+				$message[] = '<div class="alert alert-warning"><p style="color:red;">Please add all questions text. Questions should not be empty.</p></div>';
+				break;
+			}
+		} */
+		if($pass)
+		{
+			if($actionId==0)
+			{
+				$pass = false;
+				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Action id not found for insert.</p></div>";
+			}
+			else
+			{
+				$res = $this->action_model->insertActionToNextWeek($actionId);
+			}
+			
+			if($res && trim($res)!="exist")
+			{
+				$message[] = "<div class='alert alert-success'><p style='color:green;'>Action saved successfully.</p></div>";
+			}
+			elseif($res && trim($res)=="exist")
+			{
+				$pass = false;
+				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Action with entered title already exists.</p></div>";
+			}
+		}
+		if(isset($_POST['general_topic'])) {
+			$_SESSION['general_topicw'] =  $_POST['general_topic'];
+		}
+		if(isset($_POST['session_value'])) {
+			$_SESSION['session_valuew'] =  $_POST['session_value'];
+		}
+		if(isset($_POST['notes'])) {
+			$_SESSION['notesw'] =  $_POST['notes'];
+		}
+		echo json_encode(array("success"=>$pass,"message"=>$message,"actionId"=>$actionId));
+		exit;
+	}
+	
+	public function insertCompleteAction($actionId=0)
+	{
+		$message = array();
+		$pass = true;
 		
+		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
+		/* $this->form_validation->set_rules('action_complete_0', 'Answer-1', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('action_complete_1', 'Answer-2', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('action_complete_2', 'Answer-3', 'trim|required|xss_clean');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$pass = false;
+			if(form_error('action_complete_0'))
+			{
+				$message[] = form_error('action_complete_0');
+			}
+			if(form_error('action_complete_1'))
+			{
+				$message[] = form_error('action_complete_1');
+			}
+			if(form_error('action_complete_2'))
+			{
+				$message[] = form_error('action_complete_2');
+			}
+		} */
+		$datass = $_POST;
+		unset($datass['remId']);
+		foreach($datass as $question) {
+			if($question == '') {
+				$pass = false;
+				$message[] = '<div class="alert alert-warning"><p style="color:red;">Please add all answers text. Answers should not be empty.</p></div>';
+				break;
+			}
+		}
+		if($pass)
+		{
+			$res = $this->action_model->insertCompleteAction($actionId);
+			if($res)
+			{
+				$this->action_model->updateActionAsComplete($actionId);
+				if(isset($_POST['remId']) && $_POST['remId'] != 0) {
+					$this->action_model->updateRemindersAsComplete($_POST['remId']);
+				}
+				$message[] = "<div class='alert alert-success'><p style='color:green;'>Action Completed successfully.</p></div>";
+			}
+			else
+			{
+				$pass = false;
+				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Failed to complete this action. Please try again.</p></div>";
+			}
+		}
+		
+		echo json_encode(array("success"=>$pass,"message"=>$message,"actionId"=>$actionId));
+		exit;
+	}	
+	
+	public function insertAction($actionId=0)
+	{	
+		$message = array();
+		$pass = true;
+		
+		$this->form_validation->set_error_delimiters('<div class="alert alert-warning"><p style="color:red;">', '</p></div>');
+		$this->form_validation->set_rules('title', 'Action Title', 'trim|required|xss_clean');
+		/* if($this->input->post('type') && trim($this->input->post('type'))==1)
+		{
+			$this->form_validation->set_rules('remDate', 'Goal Description', 'trim|required|xss_clean');
+		}
+		$this->form_validation->set_rules('remTime', 'Goal Description', 'trim|required|xss_clean'); */
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			$pass = false;
+			if(form_error('title'))
+			{
+				$message[] = form_error('title');
+			}
+			if($this->input->post('type') && trim($this->input->post('type'))==1)
+			{
+				if(form_error('remDate'))
+				{
+					$message[] = form_error('remDate');
+				}
+			}
+			if(form_error('remTime'))
+			{
+				$message[] = form_error('remTime');
+			}
+		}
+		if(!$this->input->post('goals') || !is_array($this->input->post('goals')) || (is_array($this->input->post('goals')) && count($this->input->post('goals'))==0))
+		{
+			$pass = false;
+			$message[] = '<div class="alert alert-warning"><p style="color:red;">Invalid Goals. Please select correct goals.</p></div>';
+		}
+		/* foreach($_POST['question'] as $question) {
+			if($question == '') {
+				$pass = false;
+				$message[] = '<div class="alert alert-warning"><p style="color:red;">Please add all questions text. Questions should not be empty.</p></div>';
+				break;
+			}
+		} */
 		if($pass)
 		{
 			if($actionId==0)
@@ -223,13 +425,21 @@ class Action extends CE_Controller {
 				$message[] = "<div class='alert alert-warning'><p style='color:red;'>Action with entered title already exists.</p></div>";
 			}
 		}
-		
+		if(isset($_POST['general_topic'])) {
+			$_SESSION['general_topicw'] =  $_POST['general_topic'];
+		}
+		if(isset($_POST['session_value'])) {
+			$_SESSION['session_valuew'] =  $_POST['session_value'];
+		}
+		if(isset($_POST['notes'])) {
+			$_SESSION['notesw'] =  $_POST['notes'];
+		}
 		echo json_encode(array("success"=>$pass,"message"=>$message,"actionId"=>$actionId));
 		exit;
 	}
 	
 	public function deleteAction($actionId)
-	{
+	{	
 		$pass = false;
 		$message = array();
 		$actionData = $this->action_model->getActionData($actionId);
@@ -250,7 +460,15 @@ class Action extends CE_Controller {
 		{
 			$message[] = "<div class='alert alert-warning'><p style='color:red;'>Action data not found.</p></div>";
 		}
-		
+		if(isset($_POST['general_topic'])) {
+			$_SESSION['general_topicw'] =  $_POST['general_topic'];
+		}
+		if(isset($_POST['session_value'])) {
+			$_SESSION['session_valuew'] =  $_POST['session_value'];
+		}
+		if(isset($_POST['notes'])) {
+			$_SESSION['notesw'] =  $_POST['notes'];
+		}
 		echo json_encode(array("success"=>$pass,"message"=>$message,"actionId"=>$actionId));
 		exit;
 	}

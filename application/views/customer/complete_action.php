@@ -1,36 +1,38 @@
 <div class="ibox-content">
 	<div id="actionCompleteMessages" tabindex='1'></div>
 		<form method="POST" action="<?php echo $this->config->item("insertCompleteAction")."/".((count($actionData)>0)?$actionData->id:0);?>" id="actionCompleteFrm" name="actionCompleteFrm" class="form-horizontal">
+		<input type="hidden" name="remId" value="<?php if(isset($remId) && $remId != 0) { echo $remId; } ?>">
+		<?php
+		if(!empty($questions)) {
+			if(isset($remId) && $remId != 0) {
+			foreach($questions as $key => $val) {
+			if($remId == $val->remId) {
+		?>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
-					<div class="col-sm-10">
-						<p><strong>Answer - 1</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="action_complete_0" id="action_complete_0" cols="50" rows="2"><?php echo((count($postData)>0 && isset($postData["action_complete_0"]))?trim($postData["action_complete_0"]):'');?></textarea>
+					<div class="col-sm-10">						
+						<p><strong><?php echo $val->question; ?></strong><span style="color:red;">&nbsp;*</span></p>
+						<textarea class="form-control textare" name="action_complete--<?php echo $val->id; ?>" id="action_complete_0" cols="50" rows="2"></textarea>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
+			<?php 
+			}}}else { 
+			foreach($questions as $key => $val) {
+			?>
+			<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
-					<div class="col-sm-10">
-						<p><strong>Answer - 2</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="action_complete_1" id="action_complete_1" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["action_complete_1"]))?trim($postData["action_complete_1"]):'');?></textarea>
+					<div class="col-sm-10">						
+						<p><strong><?php echo $val->question; ?></strong><span style="color:red;">&nbsp;*</span></p>
+						<textarea class="form-control textare" name="action_complete--<?php echo $val->id; ?>" id="action_complete_0" cols="50" rows="2"></textarea>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="form-group">
-					<div class="col-sm-10">
-						<p><strong>Answer - 3</strong><span style="color:red;">&nbsp;*</span></p>
-						<textarea class="form-control" name="action_complete_2" id="action_complete_2" cols="50" rows="3"><?php echo((count($postData)>0 && isset($postData["action_complete_2"]))?trim($postData["action_complete_2"]):'');?></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
+			<?php }}} ?>
 		<div class="row">		  
 			<div class="col-md-12">	
 				<div class="form-group">
@@ -84,7 +86,7 @@ function saveResp(response){
 				});
                
 				$('#commonModalClose').trigger('click');
-				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>");
+				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>&heads=1");
 				
             }, 500);
 		}
@@ -94,4 +96,14 @@ function saveResp(response){
 		$("#saveAction").prop('disabled', false);
 	}
 }
+/* function myval() {
+	$("textarea.textare").each(function(){
+		var text = $(this).val();
+		alert(text);
+		if(text == '') {
+			alert('hello');
+			return false;
+		}
+	});
+} */
 </script>

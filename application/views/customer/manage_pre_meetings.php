@@ -7,14 +7,34 @@
 			<div class="ibox-content">
 				<div class="row">
 					<div class="col-sm-3">
+					<?php 
+						$disable = 'disable';
+						if(!empty($lastPreMeeting) && !empty($lastPostMeeting)) {
+							/* $weeek = $lastPreMeeting->weekno + 1; */
+							if($lastPreMeeting->weekno == $lastPostMeeting->weekno) {
+								$disable = 'enable';
+							}
+						}else if(empty($lastPreMeeting) && !empty($lastPostMeeting)) {
+							$disable = 'enable';
+						}else if(empty($lastPreMeeting) && empty($lastPostMeeting)) {
+							$disable = 'disable';
+						}
+						if($disable == 'enable') {
+					?>
 						<a class="btn btn-primary btn-rounded" href="<?php echo $this->config->item("addPreMeeting");?>" title="Add New Pre-Meeting">Add New Pre-Meeting</a>
+						<?php }else { ?>
+						<span class="disableded">
+						<a class="btn btn-primary btn-rounded disabled disableded" href="javascript:void(0);" title="Add New Pre-Meeting">Add New Pre-Meeting</a>
+						</span>
+						<?php } ?>
 					</div>
 				</div>
 				<?php if(count($preMeetings)>0) { ?>
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table table-striped table-hover">
 						<thead>
 						<tr>
+							<th>Week Meeting</th>
 							<th>Created Date</th>
 							<th>Acknowledgment</th>
 							<th>Action</th>
@@ -23,12 +43,23 @@
 						<tbody>
 							<?php $i=0; foreach($preMeetings as $preMeeting){ ?>
 							<tr id="pmRow_<?php echo $preMeeting->id;?>">
-							<td><?php echo date("d/m/Y",strtotime($preMeeting->created_at));?></td>
+							<td><?php foreach($weekTags as $weekTag) { if($weekTag->id == $preMeeting->weekno) { echo $weekTag->weektag; }} ?></td>
+							<td><?php echo date("m/d/Y",strtotime($preMeeting->created_at));?></td>
 							<td title="<?php echo $preMeeting->acknowledgment; ?>"><?php echo ((strlen($preMeeting->acknowledgment)>20)?substr($preMeeting->acknowledgment, 0, 20).'...':$preMeeting->acknowledgment);?></td>
+							<?php
+								$adminAllow = $_SESSION['adminLogin'];
+								if($adminAllow == 1) {
+							?>
 							<td>
 								<a href="<?php echo $this->config->item("editPreMeeting");?>/<?php echo $preMeeting->id;?>" title="Edit Pre-Meeting - <?php echo $preMeeting->acknowledgment; ?>"><i class="fa fa-lg fa-edit text-navy"></i></a>
 								<a href="javascript:void(0);" class="delete" data-href="<?php echo $this->config->item("deletePreMeeting");?>/<?php echo $preMeeting->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
 							</td>
+							<?php }else { ?>
+								<td class="disabled">
+									<a href="javascript:void(0);" class="disabled" title="Edit Pre-Meeting - <?php echo $preMeeting->acknowledgment; ?>"><i class="fa fa-lg fa-edit text-navy"></i></a>
+									<a href="javascript:void(0);" class="delete disabled" data-href="<?php echo $this->config->item("deletePreMeeting");?>/<?php echo $preMeeting->id;?>"><i class="fa fa-lg fa-window-close text-navy"></i></a>
+								</td>
+							<?php } ?>
 						  </tr>
 						  <?php $i++;} ?>
 						</tbody>

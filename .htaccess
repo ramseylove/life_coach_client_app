@@ -1,5 +1,4 @@
 RewriteEngine on
-RewriteBase /client_app
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond $1 !^(index.php|robots.txt)

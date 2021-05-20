@@ -40,7 +40,7 @@
 			<div class="col-md-12">	
 				<div class="form-group">
 					<div class="col-sm-10">
-						<input type="button" class="btn btn-primary" id="save" value="Save"/>
+						<input type="button" class="btn btn-primary" id="save" value="Save" onclick="return validate()" />
 						<button class="btn" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>		
@@ -94,7 +94,7 @@ function saveResp(response){
 				});
                
 				$('#commonModalClose').trigger('click');
-				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>");
+				$(".centralView").load(window.location.href+"<?php echo(($_GET && !isset($_GET['pagination']))?'?'.http_build_query($_GET).'&pagination=1':'?pagination=1')?>&heads=1");
 				
             }, 500);
 		}

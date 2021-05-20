@@ -30,9 +30,9 @@ defined('FILE_READ_MODE')  OR define('FILE_READ_MODE', 0644);
 defined('FILE_WRITE_MODE') OR define('FILE_WRITE_MODE', 0666);
 defined('DIR_READ_MODE')   OR define('DIR_READ_MODE', 0755);
 defined('DIR_WRITE_MODE')  OR define('DIR_WRITE_MODE', 0755);
-defined('BRAND')  OR define('BRAND', 'ALA - Survey Application');
-defined('COMPANY')  OR define('COMPANY','Etters International');
-defined('LOCATION')  OR define('LOCATION','CA United States');
+defined('BRAND')  OR define('BRAND', 'ALA - Client Application');
+defined('COMPANY')  OR define('COMPANY','Ala.expert');
+defined('LOCATION')  OR define('LOCATION','WI United States');
 define('URI_SEGMENT_PARAM_1','4');
 define('URI_SEGMENT_PARAM_2','5');
 
