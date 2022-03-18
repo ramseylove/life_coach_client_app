@@ -1,3 +1,6 @@
+#ignore user assets
 assets/
+uploads/
 
+# ignore environment files
 .env*
